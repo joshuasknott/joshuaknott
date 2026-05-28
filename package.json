@@ -9,15 +9,12 @@
     "preview": "vite preview --host 127.0.0.1"
   },
   "devDependencies": {
+    "jimp": "^1.6.1",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"
   },
   "dependencies": {
-    "@types/three": "^0.184.1",
-    "@types/topojson-client": "^3.1.5",
     "lucide": "^1.16.0",
-    "three": "^0.184.0",
-    "topojson-client": "^3.1.0",
-    "world-atlas": "^2.0.2"
+    "mapbox-gl": "^3.12.0"
   }
 }
