@@ -105,6 +105,10 @@
       return;
     }
 
+    // The intro text is present in HTML for no-JavaScript users and crawlers.
+    typedTextEl.textContent = '';
+    typedSubTextEl.textContent = '';
+
     // Type first line
     typeText(typedTextEl, TEXT_LINE1, TYPING_SPEED)
       .then(function () {

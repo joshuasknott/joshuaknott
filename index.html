@@ -3,12 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Joshua Knott — Portfolio</title>
-  <meta name="description" content="Joshua Knott — software developer, builder, and student. Explore my projects and work.">
-  <meta property="og:title" content="Joshua Knott — Portfolio">
-  <meta property="og:description" content="Software developer, builder, and student. Explore my projects and work.">
+  <title>Joshua Knott | Software Developer, AI Builder & University of Surrey Student</title>
+  <meta name="description" content="Joshua Knott is a software developer, AI builder, and Politics and International Relations student at the University of Surrey. Explore Joshua Knott's projects and work.">
+  <meta name="author" content="Joshua Knott">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://joshuaknott.tech/">
+  <meta property="og:title" content="Joshua Knott | Software Developer & AI Builder">
+  <meta property="og:description" content="The official website of Joshua Knott, a software developer, AI builder, and University of Surrey student.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://joshuaknott.tech/">
+  <meta property="og:site_name" content="Joshua Knott">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Joshua Knott | Software Developer & AI Builder">
+  <meta name="twitter:description" content="The official website of Joshua Knott, a software developer, AI builder, and University of Surrey student.">
+  <meta name="twitter:creator" content="@joshuasknott">
   <meta name="theme-color" content="#f7f7f4">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://joshuaknott.tech/#joshua-knott",
+        "name": "Joshua Knott",
+        "givenName": "Joshua",
+        "familyName": "Knott",
+        "url": "https://joshuaknott.tech/",
+        "email": "mailto:joshhknott@gmail.com",
+        "sameAs": [
+          "https://github.com/joshuasknott",
+          "https://www.linkedin.com/in/joshuasknott/",
+          "https://x.com/joshuasknott"
+        ],
+        "affiliation": {
+          "@type": "CollegeOrUniversity",
+          "name": "University of Surrey",
+          "url": "https://www.surrey.ac.uk/"
+        },
+        "knowsAbout": [
+          "Software Development",
+          "Artificial Intelligence",
+          "Politics",
+          "International Relations",
+          "Student Societies"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://joshuaknott.tech/#website",
+        "name": "Joshua Knott",
+        "url": "https://joshuaknott.tech/",
+        "description": "The official website and portfolio of Joshua Knott.",
+        "publisher": {
+          "@id": "https://joshuaknott.tech/#joshua-knott"
+        }
+      }
+    ]
+  }
+  </script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,17 +70,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
+  <noscript>
+    <style>
+      .intro { display: none; }
+      .portfolio { opacity: 1; transform: none; pointer-events: auto; }
+      .fade-in { opacity: 1; transform: none; }
+    </style>
+  </noscript>
 </head>
 <body>
 
   <!-- Intro -->
   <div class="intro" id="intro">
     <div class="intro__content">
-      <h1 class="intro__text">
-        <span id="typed-text"></span><span class="intro__cursor" id="cursor-text"></span>
-      </h1>
+      <p class="intro__text">
+        <span id="typed-text">hello, i'm joshua.</span><span class="intro__cursor" id="cursor-text"></span>
+      </p>
       <p class="intro__subtext">
-        <span id="typed-subtext"></span><span class="intro__cursor hidden" id="cursor-subtext"></span>
+        <span id="typed-subtext">welcome to my portfolio!</span><span class="intro__cursor hidden" id="cursor-subtext"></span>
       </p>
     </div>
   </div>
@@ -37,7 +98,7 @@
 
       <!-- Header -->
       <header class="header fade-in" id="header">
-        <span class="header__name">Joshua Knott</span>
+        <h1 class="header__name">Joshua Knott</h1>
         <nav class="header__socials" aria-label="Social links">
           <a href="https://github.com/joshuasknott" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
             <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -67,7 +128,7 @@
       <section class="section fade-in" id="about">
         <h2 class="section__title">About</h2>
         <p class="about__text">
-          I am a Politics and International Relations undergraduate at the University of Surrey who builds software. My work sits at the intersection of technology, politics, and AI.
+          I'm Joshua Knott, a Politics and International Relations undergraduate at the University of Surrey who builds software. My work sits at the intersection of technology, politics, and AI.
         </p>
         <p class="about__text">
           Outside of my university course and building software, I lead student societies at Surrey. I am currently the President of the Artificial Intelligence & Data Science Society and Vice President of the Neurotech Society, having previously served as President of the Business Society.
@@ -88,13 +149,6 @@
                   <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
                 </svg>
               </a>
-              <a href="#" class="project__link" target="_blank" rel="noopener noreferrer" aria-label="Memvella website">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                  <polyline points="15 3 21 3 21 9"/>
-                  <line x1="10" y1="14" x2="21" y2="3"/>
-                </svg>
-              </a>
             </div>
           </div>
           <p class="project__description">
@@ -110,13 +164,6 @@
               <a href="https://github.com/joshuasknott/founder-os" class="project__link" target="_blank" rel="noopener noreferrer" aria-label="FounderOS GitHub repository">
                 <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-                </svg>
-              </a>
-              <a href="#" class="project__link" target="_blank" rel="noopener noreferrer" aria-label="FounderOS website">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                  <polyline points="15 3 21 3 21 9"/>
-                  <line x1="10" y1="14" x2="21" y2="3"/>
                 </svg>
               </a>
             </div>
@@ -141,32 +188,6 @@
           <p class="project__description">
             SurreySocieties is a monorepo managing the public website portals and committee admin dashboards for three University of Surrey student organisations: the Artificial Intelligence Society, the Business Society, and the Neurotech Society, built with Astro, Convex, Clerk, and Tailwind CSS.
           </p>
-          <div class="project__sites">
-            <a href="#" class="project__site-link" target="_blank" rel="noopener noreferrer">
-              AI & Data Science Society
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                <polyline points="15 3 21 3 21 9"/>
-                <line x1="10" y1="14" x2="21" y2="3"/>
-              </svg>
-            </a>
-            <a href="#" class="project__site-link" target="_blank" rel="noopener noreferrer">
-              Neurotech Society
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                <polyline points="15 3 21 3 21 9"/>
-                <line x1="10" y1="14" x2="21" y2="3"/>
-              </svg>
-            </a>
-            <a href="#" class="project__site-link" target="_blank" rel="noopener noreferrer">
-              Business Society
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                <polyline points="15 3 21 3 21 9"/>
-                <line x1="10" y1="14" x2="21" y2="3"/>
-              </svg>
-            </a>
-          </div>
         </article>
 
         <!-- Polis -->
@@ -177,13 +198,6 @@
               <a href="https://github.com/joshuasknott/polis" class="project__link" target="_blank" rel="noopener noreferrer" aria-label="Polis GitHub repository">
                 <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-                </svg>
-              </a>
-              <a href="#" class="project__link" target="_blank" rel="noopener noreferrer" aria-label="Polis website">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                  <polyline points="15 3 21 3 21 9"/>
-                  <line x1="10" y1="14" x2="21" y2="3"/>
                 </svg>
               </a>
             </div>
