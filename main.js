@@ -6,10 +6,10 @@
 (function () {
   'use strict';
 
-  const TEXT_LINE1 = "hello, i'm joshua.";
-  const TEXT_LINE2 = "welcome to my portfolio!";
-  const TYPING_SPEED = 70;         // ms per character
-  const PAUSE_AFTER_TYPING = 1500; // ms before transitioning
+  const TEXT_LINE1 = "hello, i'm josh.";
+  const TEXT_LINE2 = "welcome to my website!";
+  const TYPING_SPEED = 40;         // ms per character
+  const PAUSE_AFTER_TYPING = 1000; // ms before transitioning
   const OBSERVER_THRESHOLD = 0.1;
 
   // --- Typing Animation ---
@@ -118,7 +118,7 @@
             document.getElementById('cursor-text').classList.add('hidden');
             document.getElementById('cursor-subtext').classList.remove('hidden');
             typeText(typedSubTextEl, TEXT_LINE2, TYPING_SPEED).then(resolve);
-          }, 500);
+          }, 350);
         });
       })
       .then(function () {
