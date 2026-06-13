@@ -8,8 +8,8 @@
 
   const TEXT_LINE1 = "hello, i'm josh.";
   const TEXT_LINE2 = "welcome to my website!";
-  const TYPING_SPEED = 40;         // ms per character
-  const PAUSE_AFTER_TYPING = 1000; // ms before transitioning
+  const TYPING_SPEED = 50;         // ms per character
+  const PAUSE_AFTER_TYPING = 1200; // ms before transitioning
   const OBSERVER_THRESHOLD = 0.1;
 
   // --- Typing Animation ---
@@ -118,7 +118,7 @@
             document.getElementById('cursor-text').classList.add('hidden');
             document.getElementById('cursor-subtext').classList.remove('hidden');
             typeText(typedSubTextEl, TEXT_LINE2, TYPING_SPEED).then(resolve);
-          }, 350);
+          }, 400);
         });
       })
       .then(function () {
