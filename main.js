@@ -122,6 +122,7 @@
         });
       })
       .then(function () {
+        document.getElementById('cursor-subtext').classList.add('hidden');
         setTimeout(transitionToPortfolio, PAUSE_AFTER_TYPING);
       });
   });
