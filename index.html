@@ -89,6 +89,7 @@
       .intro { display: none; }
       .portfolio { opacity: 1; transform: none; pointer-events: auto; }
       .fade-in { opacity: 1; transform: none; }
+      #contributions { display: none; }
     </style>
   </noscript>
 </head>
@@ -269,7 +270,24 @@
         </article>
       </section>
 
+      <!-- Contributions -->
+      <section class="section fade-in" id="contributions">
+        <h2 class="section__title">Contributions</h2>
+        <div id="contributions-grid" class="contributions" aria-label="GitHub contribution calendar for joshuasknott">
+          <div class="contributions__loading">Loading contributions…</div>
+        </div>
+      </section>
+
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container footer__inner">
+        <p class="footer__updated">
+          Last updated <time id="last-updated" datetime="">—</time>
+        </p>
+      </div>
+    </footer>
   </div>
 
   <script src="main.js"></script>

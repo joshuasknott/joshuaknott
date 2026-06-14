@@ -1,0 +1,42 @@
+name: Update Stats
+
+# Generates data/stats.json (account-wide contribution calendar + latest
+# commit timestamp on this repo) and commits it back so the static site
+# can read it with zero client-side API calls.
+
+on:
+  push:
+    branches: [main]
+  # Allow manual runs from the Actions tab
+  workflow_dispatch:
+
+# Permissions: read repo contents + the auto-injected GITHUB_TOKEN.
+# Commits made with GITHUB_TOKEN do NOT re-trigger workflows, so no loops.
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate stats
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_LOGIN: joshuasknott
+          GH_REPO: joshuasknott/joshuaknott
+        run: node .github/scripts/update-stats.js
+
+      - name: Commit updated stats
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/stats.json
+          if git diff --cached --quiet; then
+            echo "No changes to stats."
+          else
+            git commit -m "chore: update site stats"
+            git push
+          fi
