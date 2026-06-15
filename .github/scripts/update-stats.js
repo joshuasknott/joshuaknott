@@ -40,7 +40,7 @@ function graphQL(query, variables) {
 
   const body = JSON.stringify({ query, variables });
 
-  // Use fetch (Node 18+ on Actions runners).
+  // Use curl (works on all Actions runners without fetch version concerns).
   const result = require('child_process').execSync(
     `curl -sS -X POST "${ENDPOINT}" ` +
       `-H "Authorization: bearer ${token}" ` +
@@ -50,18 +50,23 @@ function graphQL(query, variables) {
     { input: body, encoding: 'utf8' }
   );
 
+  // Log the raw response so failures are diagnosable. The token is never
+  // echoed (it's only in the request header, not the response body).
+  console.log('GraphQL raw response (first 800 chars):');
+  console.log(typeof result === 'string' ? result.slice(0, 800) : String(result));
+
   let json;
   try {
     json = JSON.parse(result);
   } catch (e) {
-    throw new Error('GraphQL response was not JSON: ' + result.slice(0, 500));
+    throw new Error('GraphQL response was not JSON.');
   }
 
   if (json.errors) {
     throw new Error('GraphQL errors: ' + JSON.stringify(json.errors));
   }
   if (!json.data) {
-    throw new Error('GraphQL returned no data: ' + result.slice(0, 500));
+    throw new Error('GraphQL returned no data.');
   }
   return json.data;
 }
