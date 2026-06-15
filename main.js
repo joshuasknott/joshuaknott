@@ -107,6 +107,13 @@
 
     container.innerHTML = '';
     container.appendChild(grid);
+
+    // Render the total count above the grid
+    var countEl = document.getElementById('contributions-count');
+    if (countEl) {
+      var total = stats.totalContributions || 0;
+      countEl.textContent = total.toLocaleString('en-GB') + ' contribution' + (total === 1 ? '' : 's');
+    }
   }
 
   // Map a day's contribution count to a 0-4 intensity level.

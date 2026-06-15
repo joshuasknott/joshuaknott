@@ -323,6 +323,13 @@ ul {
   color: var(--color-text-tertiary);
 }
 
+.contributions__count {
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+}
+
 .contributions__grid {
   display: grid;
   grid-auto-flow: column;
