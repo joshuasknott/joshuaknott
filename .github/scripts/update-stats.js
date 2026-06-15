@@ -71,7 +71,7 @@ function graphQL(query, variables) {
   return json.data;
 }
 
-async function getContributions() {
+function getContributions() {
   const { start, end } = dateRange();
   const from = start.toISOString();
   const to = end.toISOString();
