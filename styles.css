@@ -15,12 +15,12 @@
 
   /* Typography */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-size-xs: 0.8125rem;   /* 13px */
-  --font-size-sm: 0.875rem;    /* 14px */
-  --font-size-base: 1rem;      /* 16px */
-  --font-size-lg: 1.125rem;    /* 18px */
-  --font-size-xl: 1.25rem;     /* 20px */
-  --font-size-2xl: 1.5rem;     /* 24px */
+  --font-size-xs: 0.875rem;    /* 14px */
+  --font-size-sm: 0.9375rem;   /* 15px */
+  --font-size-base: 1.0625rem; /* 17px */
+  --font-size-lg: 1.25rem;     /* 20px */
+  --font-size-xl: 1.5rem;      /* 24px */
+  --font-size-2xl: 1.75rem;    /* 28px */
   --font-size-hero: clamp(2.5rem, 6vw, 4.5rem);
 
   /* Spacing */
@@ -34,7 +34,7 @@
   --space-4xl: 6rem;
 
   /* Layout */
-  --max-width: 640px;
+  --max-width: 800px;
 
   /* Transitions */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -224,7 +224,6 @@ ul {
   font-size: var(--font-size-lg);
   line-height: 1.6;
   color: var(--color-text-secondary);
-  max-width: 560px;
 }
 
 .about__text:not(:last-child) {
@@ -280,7 +279,6 @@ ul {
   font-size: var(--font-size-sm);
   line-height: 1.65;
   color: var(--color-text-secondary);
-  max-width: 520px;
 }
 
 .project__sites {
@@ -311,8 +309,12 @@ ul {
 
 /* --- Contributions --- */
 .contributions {
-  max-width: 560px;
-  overflow-x: auto;
+  /* Cell + gap sized so the full 53-week year always fits the column.
+     Scales smoothly with viewport via clamp() — no hard breakpoints. */
+  --contrib-cell: clamp(5px, 1.3vw, 11px);
+  --contrib-gap: clamp(1px, 0.25vw, 2px);
+  max-width: 100%;
+  overflow: hidden;
   padding-bottom: var(--space-xs);
 }
 
@@ -324,14 +326,15 @@ ul {
 .contributions__grid {
   display: grid;
   grid-auto-flow: column;
-  grid-template-rows: repeat(7, 11px);
-  grid-auto-columns: 11px;
-  gap: 3px;
+  grid-template-rows: repeat(7, var(--contrib-cell));
+  grid-auto-columns: var(--contrib-cell);
+  gap: var(--contrib-gap);
+  width: max-content;
 }
 
 .contributions__cell {
-  width: 11px;
-  height: 11px;
+  width: var(--contrib-cell);
+  height: var(--contrib-cell);
   border-radius: 2px;
   background-color: var(--contrib-0, rgba(38, 37, 30, 0.06));
 }
@@ -374,7 +377,25 @@ ul {
 }
 
 /* --- Responsive --- */
+
+/* Tablet and small laptops */
+@media (max-width: 768px) {
+  .container {
+    padding: var(--space-3xl) var(--space-xl);
+  }
+
+  .intro__text {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+}
+
+/* Mobile phones */
 @media (max-width: 480px) {
+  :root {
+    --font-size-base: 1rem;      /* 16px */
+    --font-size-lg: 1.125rem;    /* 18px */
+  }
+
   .container {
     padding: var(--space-2xl) var(--space-md);
   }
@@ -393,10 +414,6 @@ ul {
 
   .project__header {
     flex-wrap: wrap;
-  }
-
-  .about__text {
-    font-size: var(--font-size-base);
   }
 }
 
