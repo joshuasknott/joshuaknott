@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Polis">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g)"/>
+  <!-- classical columns motif -->
+  <g fill="#ffffff" opacity="0.5">
+    <rect x="150" y="200" width="10" height="60"/>
+    <rect x="172" y="200" width="10" height="60"/>
+    <rect x="194" y="200" width="10" height="60"/>
+    <rect x="144" y="188" width="66" height="8"/>
+    <rect x="144" y="262" width="66" height="8"/>
+  </g>
+  <text x="400" y="250" font-family="Inter, sans-serif" font-size="150" font-weight="300" fill="#ffffff" opacity="0.28" text-anchor="middle" dominant-baseline="middle" letter-spacing="-6">P</text>
+  <text x="48" y="404" font-family="Inter, sans-serif" font-size="26" font-weight="500" fill="#ffffff" letter-spacing="1">Polis</text>
+  <g transform="translate(640,378)">
+    <rect width="112" height="32" rx="16" fill="#ffffff" opacity="0.18"/>
+    <text x="56" y="21" font-family="Inter, sans-serif" font-size="13" font-weight="500" fill="#ffffff" text-anchor="middle">Coming soon</text>
+  </g>
+</svg>

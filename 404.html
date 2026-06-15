@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page not found | Joshua Knott</title>
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f4">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#16160f">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-bg: #f7f7f4;
+      --color-text: #26251e;
+      --color-text-secondary: rgba(38, 37, 30, 0.55);
+      --color-text-tertiary: rgba(38, 37, 30, 0.35);
+      --color-divider: rgba(38, 37, 30, 0.08);
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-bg: #16160f;
+        --color-text: #f2efe6;
+        --color-text-secondary: rgba(242, 239, 230, 0.6);
+        --color-text-tertiary: rgba(242, 239, 230, 0.38);
+        --color-divider: rgba(242, 239, 230, 0.1);
+      }
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-family);
+      color: var(--color-text);
+      background-color: var(--color-bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      -webkit-font-smoothing: antialiased;
+    }
+    .card {
+      max-width: 520px;
+      text-align: center;
+    }
+    .code {
+      font-size: clamp(4rem, 16vw, 7rem);
+      font-weight: 300;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--color-text);
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+    p {
+      font-size: 1.0625rem;
+      line-height: 1.6;
+      color: var(--color-text-secondary);
+      margin-bottom: 2rem;
+    }
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--color-bg);
+      background-color: var(--color-text);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 150ms ease, transform 150ms var(--ease-out);
+    }
+    .back:hover { color: var(--color-bg); opacity: 0.88; transform: translateY(-1px); }
+    .back svg { width: 16px; height: 16px; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="code">404</div>
+    <h1>This page doesn't exist</h1>
+    <p>The link may be broken or the page may have moved. Head back to the homepage to get back on track.</p>
+    <a class="back" href="/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 12H5"/>
+        <path d="m12 19-7-7 7-7"/>
+      </svg>
+      Back to joshuaknott.tech
+    </a>
+  </main>
+</body>
+</html>

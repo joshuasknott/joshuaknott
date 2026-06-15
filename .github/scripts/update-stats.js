@@ -163,8 +163,29 @@ function main() {
   const outPath = path.join(outDir, 'stats.json');
   fs.writeFileSync(outPath, JSON.stringify(stats, null, 2) + '\n', 'utf8');
 
+  // Keep sitemap.xml <lastmod> in sync so it never drifts.
+  bumpSitemapLastmod();
+
   console.log(`Latest commit: ${updatedAt}`);
   console.log(`Written to ${outPath}`);
+}
+
+// Rewrite the <lastmod> in sitemap.xml to today's date (UTC).
+function bumpSitemapLastmod() {
+  const sitemapPath = path.join(process.cwd(), 'sitemap.xml');
+  if (!fs.existsSync(sitemapPath)) {
+    console.warn('sitemap.xml not found; skipping lastmod bump.');
+    return;
+  }
+  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  const xml = fs.readFileSync(sitemapPath, 'utf8');
+  const updated = xml.replace(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/, `<lastmod>${today}</lastmod>`);
+  if (updated !== xml) {
+    fs.writeFileSync(sitemapPath, updated, 'utf8');
+    console.log(`Sitemap lastmod bumped to ${today}.`);
+  } else {
+    console.log(`Sitemap lastmod already ${today}.`);
+  }
 }
 
 try {
