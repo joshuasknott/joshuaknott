@@ -25,6 +25,10 @@ jobs:
       - name: Generate stats
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: a Personal Access Token (classic) with read:user scope,
+          # required because the default GITHUB_TOKEN cannot read the
+          # contribution calendar. Create the secret if the grid stays empty.
+          STATS_TOKEN: ${{ secrets.STATS_TOKEN }}
           GH_LOGIN: joshuasknott
           GH_REPO: joshuasknott/joshuaknott
         run: node .github/scripts/update-stats.js

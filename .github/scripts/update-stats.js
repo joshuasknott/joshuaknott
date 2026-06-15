@@ -32,10 +32,11 @@ function dateRange() {
 }
 
 function graphQL(query, variables) {
-  // GH_TOKEN is auto-injected in Actions. The contribution calendar is
-  // public data; the default token can read it for any user.
-  const token = process.env.GH_TOKEN;
-  if (!token) throw new Error('GH_TOKEN is required');
+  // Prefer STATS_TOKEN (a Personal Access Token with read:user scope, tied
+  // to a user identity) when provided; fall back to the auto-injected
+  // GITHUB_TOKEN, which is repo-scoped and may not resolve user identity.
+  const token = process.env.STATS_TOKEN || process.env.GH_TOKEN;
+  if (!token) throw new Error('A GitHub token (STATS_TOKEN or GH_TOKEN) is required');
 
   const body = JSON.stringify({ query, variables });
 
@@ -49,9 +50,18 @@ function graphQL(query, variables) {
     { input: body, encoding: 'utf8' }
   );
 
-  const json = JSON.parse(result);
+  let json;
+  try {
+    json = JSON.parse(result);
+  } catch (e) {
+    throw new Error('GraphQL response was not JSON: ' + result.slice(0, 500));
+  }
+
   if (json.errors) {
-    throw new Error('GraphQL errors: ' + JSON.stringify(json.errors, null, 2));
+    throw new Error('GraphQL errors: ' + JSON.stringify(json.errors));
+  }
+  if (!json.data) {
+    throw new Error('GraphQL returned no data: ' + result.slice(0, 500));
   }
   return json.data;
 }
@@ -79,7 +89,17 @@ async function getContributions() {
     }`;
 
   const data = graphQL(query, { login: LOGIN, from, to });
+
+  // The repo-scoped GITHUB_TOKEN may return user: null for contribution
+  // queries (token isn't tied to a user identity). Handle gracefully.
+  if (!data || !data.user) {
+    throw new Error('GraphQL returned user: null — the default GITHUB_TOKEN cannot read contribution data. Add a PAT with read:user scope as STATS_TOKEN.');
+  }
+
   const calendar = data.user.contributionsCollection.contributionCalendar;
+  if (!calendar || !Array.isArray(calendar.weeks)) {
+    throw new Error('Contribution calendar missing weeks array: ' + JSON.stringify(data.user).slice(0, 500));
+  }
 
   // Flatten weeks into a flat day list: [{date, count}, ...]
   const days = [];
@@ -97,7 +117,7 @@ async function getContributions() {
 
 function getLatestCommitTimestamp() {
   // Use the REST API to get the latest commit on the default branch.
-  const token = process.env.GH_TOKEN;
+  const token = process.env.STATS_TOKEN || process.env.GH_TOKEN;
   const result = require('child_process').execSync(
     `curl -sS "https://api.github.com/repos/${REPO}/commits/HEAD" ` +
       `-H "Authorization: token ${token}" ` +
