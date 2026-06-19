@@ -311,7 +311,7 @@ ul {
     object-fit: cover;
     border-radius: 10px;
     margin-bottom: var(--space-md);
-    /* SVG placeholders are bright; soften the card against the page. */
+    /* Product screenshots sit a little softer against the page. */
     background-color: var(--color-divider);
     opacity: 0.96;
     transition:
