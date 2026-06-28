@@ -134,20 +134,15 @@ function getContributions() {
 }
 
 function getLatestCommitTimestamp() {
-  // Use the REST API to get the latest commit on the default branch.
-  const token = process.env.STATS_TOKEN || process.env.GH_TOKEN;
-  const result = require("child_process").execSync(
-    `curl -sS "https://api.github.com/repos/${REPO}/commits/HEAD" ` +
-      `-H "Authorization: token ${token}" ` +
-      `-H "Accept: application/vnd.github+json" ` +
-      `-H "User-Agent: ${LOGIN}"`,
-    { encoding: "utf8" },
-  );
-  const json = JSON.parse(result);
-  if (!json.commit) {
-    throw new Error("Could not read latest commit: " + JSON.stringify(json));
-  }
-  return json.commit.committer.date;
+  // The workflow has already checked out the default branch, so read its
+  // timestamp locally instead of spending another API request. GitHub's REST
+  // commits endpoint can temporarily return HTTP 429 even for authenticated
+  // Actions requests.
+  return require("child_process")
+    .execFileSync("git", ["log", "-1", "--format=%cI", "HEAD"], {
+      encoding: "utf8",
+    })
+    .trim();
 }
 
 function main() {
