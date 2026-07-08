@@ -6,10 +6,10 @@
 (function () {
   "use strict";
 
-  const TEXT_LINE1 = "hello, i'm josh.";
-  const TEXT_LINE2 = "welcome to my website!";
-  const TYPING_SPEED = 50; // ms per character
-  const PAUSE_AFTER_TYPING = 1200; // ms before transitioning
+  const TEXT_LINE1 = "hi, i'm josh.";
+  const TEXT_LINE2 = "come in.";
+  const TYPING_SPEED = 38; // ms per character
+  const PAUSE_AFTER_TYPING = 650; // ms before transitioning
   const SKIP_STORAGE_KEY = "jk-intro-played";
 
   let typingTimers = [];
@@ -245,6 +245,50 @@
     return "4";
   }
 
+  // --- Project screenshot modal ---
+
+  function initShotModal() {
+    var modal = document.getElementById("shot-modal");
+    var modalImage = document.getElementById("shot-modal-image");
+    var closeButton = document.querySelector("[data-shot-close]");
+    var activeTrigger = null;
+
+    if (!modal || !modalImage || !closeButton || !modal.showModal) return;
+
+    document.querySelectorAll(".project__shot").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var image = button.querySelector("img");
+        if (!image) return;
+
+        activeTrigger = button;
+        modalImage.src = image.currentSrc || image.src;
+        modalImage.alt = image.alt || "";
+        modal.setAttribute(
+          "aria-label",
+          button.getAttribute("data-shot-title") || "Expanded project screenshot",
+        );
+        modal.showModal();
+        closeButton.focus();
+      });
+    });
+
+    function closeModal() {
+      modal.close();
+    }
+
+    closeButton.addEventListener("click", closeModal);
+
+    modal.addEventListener("click", function (event) {
+      if (event.target === modal) closeModal();
+    });
+
+    modal.addEventListener("close", function () {
+      modalImage.removeAttribute("src");
+      if (activeTrigger) activeTrigger.focus();
+      activeTrigger = null;
+    });
+  }
+
   // --- Init ---
 
   function playIntroAnimation() {
@@ -267,7 +311,7 @@
                 .getElementById("cursor-subtext")
                 .classList.remove("hidden");
               typeText(typedSubTextEl, TEXT_LINE2, TYPING_SPEED).then(resolve);
-            }, 400),
+            }, 250),
           );
         });
       })
@@ -293,6 +337,8 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    initShotModal();
+
     var prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
