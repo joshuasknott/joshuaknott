@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Page not found — Joshua Knott</title>
     <meta name="robots" content="noindex, follow">
-    <meta name="theme-color" content="#f2f3f0">
+    <meta name="theme-color" content="#f7f3e9">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
@@ -13,17 +13,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Instrument+Sans:wght@500;600;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap"
       rel="stylesheet"
     >
     <style>
       :root {
-        --paper: #f2f3f0;
-        --ink: #121826;
-        --muted: #626a79;
-        --line: #cfd3d8;
-        --blue: #315ef7;
-        --coral: #ff6547;
+        --paper: #f7f3e9;
+        --ink: #10213d;
+        --muted: #626d7d;
+        --line: rgba(16, 33, 61, 0.18);
+        --blue: #2a5bd7;
+        --coral: #ff6b50;
       }
 
       * {
@@ -36,73 +36,83 @@
         margin: 0;
         padding: clamp(1rem, 4vw, 3rem);
         background:
-          linear-gradient(rgba(18, 24, 38, 0.05) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(18, 24, 38, 0.05) 1px, transparent 1px),
+          radial-gradient(circle at 12% 4%, rgba(55, 111, 238, 0.08), transparent 29rem),
           var(--paper);
-        background-size: 32px 32px;
         color: var(--ink);
-        font-family: "Bricolage Grotesque", sans-serif;
+        font-family: "Manrope", sans-serif;
       }
 
       main {
         position: relative;
         display: grid;
-        align-content: end;
+        align-content: center;
         width: min(100%, 1100px);
         min-height: calc(100svh - clamp(2rem, 8vw, 6rem));
         margin: auto;
         padding: clamp(2rem, 7vw, 6rem);
         overflow: hidden;
         border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.72);
+        border-radius: clamp(1rem, 2.5vw, 1.8rem);
+        background: rgba(255, 254, 250, 0.7);
+        box-shadow: 0 30px 80px rgba(16, 33, 61, 0.14);
+        isolation: isolate;
       }
 
       main::before {
         position: absolute;
-        top: 8%;
-        right: 8%;
-        width: clamp(5rem, 16vw, 11rem);
-        aspect-ratio: 1;
-        border-radius: 50%;
-        background: var(--blue);
+        z-index: -1;
+        top: 0;
+        right: 0;
+        width: 48%;
+        height: 100%;
+        background: url("/assets/og-portfolio-v2.webp") center / cover no-repeat;
         content: "";
+        opacity: 0.96;
       }
 
       main::after {
         position: absolute;
-        top: 7%;
-        right: calc(8% + clamp(4rem, 14vw, 10rem));
-        width: clamp(1rem, 3vw, 2rem);
+        top: 13%;
+        left: 8%;
+        width: 0.75rem;
         aspect-ratio: 1;
+        border-radius: 50%;
         background: var(--coral);
+        box-shadow: 0 0 0 6px rgba(255, 107, 80, 0.12);
         content: "";
       }
 
+      .error-copy {
+        position: relative;
+        z-index: 1;
+        width: 50%;
+        padding-right: clamp(1rem, 3vw, 2.5rem);
+      }
+
       .code {
-        margin-bottom: 0.8rem;
+        margin: 0 0 1rem;
         color: var(--muted);
         font-family: "IBM Plex Mono", monospace;
-        font-size: 0.7rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
+        font-size: 0.66rem;
+        letter-spacing: 0.04em;
       }
 
       h1 {
-        max-width: 8ch;
-        margin: 0 0 1rem;
-        font-size: clamp(4.5rem, 16vw, 11rem);
-        font-weight: 500;
-        letter-spacing: -0.08em;
-        line-height: 0.83;
+        max-width: 7ch;
+        margin: 0 0 1.3rem;
+        font-family: "Instrument Sans", sans-serif;
+        font-size: clamp(4rem, 8vw, 6.2rem);
+        font-weight: 650;
+        letter-spacing: -0.06em;
+        line-height: 0.94;
       }
 
       p {
         max-width: 32rem;
         margin: 0 0 2rem;
         color: var(--muted);
-        font-family: "IBM Plex Mono", monospace;
-        font-size: clamp(0.72rem, 1.3vw, 0.88rem);
-        line-height: 1.7;
+        font-size: clamp(0.86rem, 1.3vw, 0.98rem);
+        line-height: 1.8;
       }
 
       a {
@@ -112,14 +122,12 @@
         justify-self: start;
         padding: 0.85rem 1rem;
         border: 1px solid var(--ink);
-        border-radius: 4px;
+        border-radius: 999px;
         background: var(--ink);
         color: white;
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 0.68rem;
-        font-weight: 500;
+        font-size: 0.7rem;
+        font-weight: 700;
         text-decoration: none;
-        text-transform: uppercase;
         transition:
           transform 160ms ease,
           background-color 160ms ease;
@@ -137,12 +145,30 @@
 
       @media (max-width: 540px) {
         main::before {
-          top: 5%;
-          right: 8%;
+          top: auto;
+          right: 0;
+          bottom: 0;
+          width: 100%;
+          height: 30%;
+          opacity: 0.48;
         }
 
         main::after {
-          top: 4%;
+          top: 8%;
+        }
+
+        main {
+          align-content: start;
+          padding-top: 6rem;
+        }
+
+        .error-copy {
+          width: 100%;
+          padding-right: 0;
+        }
+
+        h1 {
+          font-size: clamp(3.6rem, 18vw, 5rem);
         }
       }
 
@@ -155,13 +181,15 @@
   </head>
   <body>
     <main>
-      <p class="code">404 · Wrong turn</p>
-      <h1>Nothing lives here.</h1>
-      <p>
-        The page may have moved, or the link may be out of date. The selected
-        work is still waiting on the homepage.
-      </p>
-      <a href="/">Back to the portfolio <span aria-hidden="true">↗</span></a>
+      <div class="error-copy">
+        <p class="code">404 · Wrong turn</p>
+        <h1>Nothing lives here.</h1>
+        <p>
+          The page may have moved, or the link may be out of date. The selected
+          work is still waiting on the homepage.
+        </p>
+        <a href="/">Back to the portfolio <span aria-hidden="true">↗</span></a>
+      </div>
     </main>
   </body>
 </html>

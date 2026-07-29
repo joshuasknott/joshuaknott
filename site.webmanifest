@@ -4,8 +4,8 @@
   "description": "Selected product work by software builder Joshua Knott.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f2f3f0",
-  "theme_color": "#f2f3f0",
+  "background_color": "#f7f3e9",
+  "theme_color": "#f7f3e9",
   "icons": [
     {
       "src": "/assets/icon-192.png",

@@ -4,18 +4,149 @@
   function initHeader() {
     var header = document.querySelector("[data-site-header]");
     if (!header) return;
+    var ticking = false;
 
     function updateHeader() {
       header.classList.toggle("is-scrolled", window.scrollY > 16);
+      var scrollable =
+        document.documentElement.scrollHeight - window.innerHeight;
+      var progress = scrollable > 0 ? window.scrollY / scrollable : 0;
+      header.style.setProperty(
+        "--page-progress",
+        String(Math.min(1, Math.max(0, progress))),
+      );
+      ticking = false;
+    }
+
+    function requestHeaderUpdate() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateHeader);
     }
 
     updateHeader();
-    window.addEventListener("scroll", updateHeader, { passive: true });
+    window.addEventListener("scroll", requestHeaderUpdate, { passive: true });
+    window.addEventListener("resize", requestHeaderUpdate, { passive: true });
+  }
+
+  function initHeroShowcase() {
+    var root = document.querySelector("[data-showcase]");
+    if (!root) return;
+
+    var panels = Array.from(root.querySelectorAll("[data-showcase-panel]"));
+    var controls = Array.from(root.querySelectorAll("[data-showcase-control]"));
+    if (!panels.length || panels.length !== controls.length) return;
+
+    var reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    var current = 0;
+    var timer = null;
+    var paused = false;
+    var cycleDuration = 5600;
+
+    function show(index) {
+      current = (index + panels.length) % panels.length;
+      root.setAttribute("data-active-slide", String(current));
+
+      panels.forEach(function (panel, panelIndex) {
+        var isActive = panelIndex === current;
+        panel.classList.toggle("is-active", isActive);
+        panel.setAttribute("aria-hidden", isActive ? "false" : "true");
+        panel.tabIndex = isActive ? 0 : -1;
+      });
+
+      controls.forEach(function (control, controlIndex) {
+        var isActive = controlIndex === current;
+        control.classList.toggle("is-active", isActive);
+        control.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+    }
+
+    function clearCycle() {
+      if (timer !== null) {
+        window.clearTimeout(timer);
+        timer = null;
+      }
+    }
+
+    function scheduleCycle() {
+      clearCycle();
+      root.classList.toggle("is-paused", paused);
+      if (reducedMotion || paused || document.hidden) return;
+
+      timer = window.setTimeout(function () {
+        show(current + 1);
+        scheduleCycle();
+      }, cycleDuration);
+    }
+
+    controls.forEach(function (control) {
+      control.addEventListener("click", function () {
+        show(Number(control.getAttribute("data-showcase-control")) || 0);
+        scheduleCycle();
+      });
+    });
+
+    root.addEventListener("pointerenter", function () {
+      paused = true;
+      scheduleCycle();
+    });
+
+    root.addEventListener("pointerleave", function () {
+      paused = false;
+      scheduleCycle();
+      root.style.removeProperty("--art-x");
+      root.style.removeProperty("--art-y");
+    });
+
+    root.addEventListener("focusin", function () {
+      paused = true;
+      scheduleCycle();
+    });
+
+    root.addEventListener("focusout", function () {
+      window.setTimeout(function () {
+        if (root.contains(document.activeElement)) return;
+        paused = false;
+        scheduleCycle();
+      }, 0);
+    });
+
+    if (
+      !reducedMotion &&
+      window.matchMedia("(pointer: fine)").matches
+    ) {
+      root.addEventListener("pointermove", function (event) {
+        var bounds = root.getBoundingClientRect();
+        var x = (event.clientX - bounds.left) / bounds.width - 0.5;
+        var y = (event.clientY - bounds.top) / bounds.height - 0.5;
+        root.style.setProperty("--art-x", (x * -10).toFixed(2) + "px");
+        root.style.setProperty("--art-y", (y * -8).toFixed(2) + "px");
+      });
+    }
+
+    document.addEventListener("visibilitychange", scheduleCycle);
+    show(0);
+    scheduleCycle();
   }
 
   function initRevealMotion() {
     var elements = Array.from(document.querySelectorAll(".reveal"));
     if (!elements.length) return;
+
+    function revealLocationTarget() {
+      if (!window.location.hash) return;
+
+      try {
+        var target = document.querySelector(window.location.hash);
+        if (!target) return;
+        var revealTarget = target.closest(".reveal");
+        if (revealTarget) revealTarget.classList.add("is-visible");
+      } catch (error) {
+        return;
+      }
+    }
 
     if (
       !("IntersectionObserver" in window) ||
@@ -26,6 +157,9 @@
       });
       return;
     }
+
+    revealLocationTarget();
+    window.addEventListener("hashchange", revealLocationTarget);
 
     var observer = new IntersectionObserver(
       function (entries) {
@@ -49,30 +183,35 @@
   function initProjectNavigation() {
     var projects = Array.from(document.querySelectorAll("[data-project]"));
     var links = Array.from(document.querySelectorAll("[data-project-link]"));
-    if (!projects.length || !links.length || !("IntersectionObserver" in window)) {
-      return;
-    }
+    if (!projects.length || !links.length) return;
 
-    var visibleProjects = new Map();
     var activeProjectId = "";
+    var ticking = false;
 
     function updateActiveProject() {
-      if (!visibleProjects.size) return;
-
-      var active = Array.from(visibleProjects.entries())
-        .filter(function (entry) {
-          return entry[1].isIntersecting;
+      var guide = Math.min(window.innerHeight * 0.38, 380);
+      var active = projects
+        .map(function (project) {
+          var bounds = project.getBoundingClientRect();
+          return {
+            id: project.id,
+            bounds: bounds,
+            containsGuide: bounds.top <= guide && bounds.bottom >= guide,
+            distance: Math.abs(bounds.top - guide),
+          };
         })
         .sort(function (a, b) {
-          return Math.abs(a[1].boundingClientRect.top) -
-            Math.abs(b[1].boundingClientRect.top);
+          if (a.containsGuide !== b.containsGuide) {
+            return a.containsGuide ? -1 : 1;
+          }
+          return a.distance - b.distance;
         })[0];
 
       if (!active) return;
 
       var activeLink = null;
       links.forEach(function (link) {
-        var isActive = link.getAttribute("data-project-link") === active[0];
+        var isActive = link.getAttribute("data-project-link") === active.id;
         if (isActive) {
           link.setAttribute("aria-current", "location");
           activeLink = link;
@@ -81,8 +220,8 @@
         }
       });
 
-      if (active[0] !== activeProjectId && activeLink) {
-        activeProjectId = active[0];
+      if (active.id !== activeProjectId && activeLink) {
+        activeProjectId = active.id;
         var rail = activeLink.parentElement;
         var targetLeft =
           activeLink.offsetLeft +
@@ -95,24 +234,18 @@
             : "smooth",
         });
       }
+      ticking = false;
     }
 
-    var observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          visibleProjects.set(entry.target.id, entry);
-        });
-        updateActiveProject();
-      },
-      {
-        rootMargin: "-28% 0px -58% 0px",
-        threshold: [0, 0.01, 0.2],
-      },
-    );
+    function requestProjectUpdate() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateActiveProject);
+    }
 
-    projects.forEach(function (project) {
-      observer.observe(project);
-    });
+    updateActiveProject();
+    window.addEventListener("scroll", requestProjectUpdate, { passive: true });
+    window.addEventListener("resize", requestProjectUpdate, { passive: true });
   }
 
   function initShotModal() {
@@ -247,6 +380,7 @@
 
     container.replaceChildren(grid);
     renderMonthLabels(days);
+    section.classList.add("is-loaded");
 
     if (count) {
       var total = Number(stats.totalContributions) || 0;
@@ -294,12 +428,48 @@
     if (target) target.textContent = String(new Date().getFullYear());
   }
 
+  function initHashAlignment() {
+    if (!window.location.hash) return;
+
+    function alignTarget() {
+      var target;
+      try {
+        target = document.querySelector(window.location.hash);
+      } catch (error) {
+        return;
+      }
+      if (!target) return;
+
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          target.scrollIntoView({ block: "start", behavior: "auto" });
+        });
+      });
+    }
+
+    function alignWhenStable() {
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(alignTarget);
+      } else {
+        alignTarget();
+      }
+    }
+
+    if (document.readyState === "complete") {
+      alignWhenStable();
+    } else {
+      window.addEventListener("load", alignWhenStable, { once: true });
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initHeader();
+    initHeroShowcase();
     initRevealMotion();
     initProjectNavigation();
     initShotModal();
     initFooterYear();
+    initHashAlignment();
     loadStats();
   });
 })();
