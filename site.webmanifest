@@ -1,11 +1,11 @@
 {
   "name": "Joshua Knott",
   "short_name": "Joshua Knott",
-  "description": "The official website and portfolio of Joshua Knott.",
+  "description": "Selected product work by software builder Joshua Knott.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f7f7f4",
-  "theme_color": "#f7f7f4",
+  "background_color": "#f2f3f0",
+  "theme_color": "#f2f3f0",
   "icons": [
     {
       "src": "/assets/icon-192.png",
