@@ -1,104 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page not found | Joshua Knott</title>
-  <meta name="robots" content="noindex, follow">
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f4">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#16160f">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --color-bg: #f7f7f4;
-      --color-text: #26251e;
-      --color-text-secondary: rgba(38, 37, 30, 0.55);
-      --color-text-tertiary: rgba(38, 37, 30, 0.35);
-      --color-divider: rgba(38, 37, 30, 0.08);
-      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    @media (prefers-color-scheme: dark) {
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Page not found — Joshua Knott</title>
+    <meta name="robots" content="noindex, follow">
+    <meta name="theme-color" content="#f7f3e9">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Instrument+Sans:wght@500;600;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    >
+    <style>
       :root {
-        --color-bg: #16160f;
-        --color-text: #f2efe6;
-        --color-text-secondary: rgba(242, 239, 230, 0.6);
-        --color-text-tertiary: rgba(242, 239, 230, 0.38);
-        --color-divider: rgba(242, 239, 230, 0.1);
+        --paper: #f7f3e9;
+        --ink: #10213d;
+        --muted: #626d7d;
+        --line: rgba(16, 33, 61, 0.18);
+        --blue: #2a5bd7;
+        --coral: #ff6b50;
       }
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: var(--font-family);
-      color: var(--color-text);
-      background-color: var(--color-bg);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      -webkit-font-smoothing: antialiased;
-    }
-    .card {
-      max-width: 520px;
-      text-align: center;
-    }
-    .code {
-      font-size: clamp(4rem, 16vw, 7rem);
-      font-weight: 300;
-      letter-spacing: -0.04em;
-      line-height: 1;
-      color: var(--color-text);
-      margin-bottom: 1.5rem;
-    }
-    h1 {
-      font-size: 1.5rem;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.75rem;
-    }
-    p {
-      font-size: 1.0625rem;
-      line-height: 1.6;
-      color: var(--color-text-secondary);
-      margin-bottom: 2rem;
-    }
-    .back {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.6rem 1.2rem;
-      font-size: 0.9375rem;
-      font-weight: 500;
-      color: var(--color-bg);
-      background-color: var(--color-text);
-      border-radius: 8px;
-      text-decoration: none;
-      transition: opacity 150ms ease, transform 150ms var(--ease-out);
-    }
-    .back:hover { color: var(--color-bg); opacity: 0.88; transform: translateY(-1px); }
-    .back svg { width: 16px; height: 16px; }
-  </style>
-</head>
-<body>
-  <main class="card">
-    <div class="code">404</div>
-    <h1>This page doesn't exist</h1>
-    <p>The link may be broken or the page may have moved. Head back to the homepage to get back on track.</p>
-    <a class="back" href="/">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-        <path d="M19 12H5"/>
-        <path d="m12 19-7-7 7-7"/>
-      </svg>
-      Back to joshuaknott.tech
-    </a>
-  </main>
-</body>
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        display: grid;
+        min-height: 100svh;
+        margin: 0;
+        padding: clamp(1rem, 4vw, 3rem);
+        background:
+          radial-gradient(circle at 12% 4%, rgba(55, 111, 238, 0.08), transparent 29rem),
+          var(--paper);
+        color: var(--ink);
+        font-family: "Manrope", sans-serif;
+      }
+
+      main {
+        position: relative;
+        display: grid;
+        align-content: center;
+        width: min(100%, 1100px);
+        min-height: calc(100svh - clamp(2rem, 8vw, 6rem));
+        margin: auto;
+        padding: clamp(2rem, 7vw, 6rem);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: clamp(1rem, 2.5vw, 1.8rem);
+        background: rgba(255, 254, 250, 0.7);
+        box-shadow: 0 30px 80px rgba(16, 33, 61, 0.14);
+        isolation: isolate;
+      }
+
+      main::before {
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        right: 0;
+        width: 48%;
+        height: 100%;
+        background: url("/assets/og-portfolio-v2.webp") center / cover no-repeat;
+        content: "";
+        opacity: 0.96;
+      }
+
+      main::after {
+        position: absolute;
+        top: 13%;
+        left: 8%;
+        width: 0.75rem;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: var(--coral);
+        box-shadow: 0 0 0 6px rgba(255, 107, 80, 0.12);
+        content: "";
+      }
+
+      .error-copy {
+        position: relative;
+        z-index: 1;
+        width: 50%;
+        padding-right: clamp(1rem, 3vw, 2.5rem);
+      }
+
+      .code {
+        margin: 0 0 1rem;
+        color: var(--muted);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.66rem;
+        letter-spacing: 0.04em;
+      }
+
+      h1 {
+        max-width: 7ch;
+        margin: 0 0 1.3rem;
+        font-family: "Instrument Sans", sans-serif;
+        font-size: clamp(4rem, 8vw, 6.2rem);
+        font-weight: 650;
+        letter-spacing: -0.06em;
+        line-height: 0.94;
+      }
+
+      p {
+        max-width: 32rem;
+        margin: 0 0 2rem;
+        color: var(--muted);
+        font-size: clamp(0.86rem, 1.3vw, 0.98rem);
+        line-height: 1.8;
+      }
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        justify-self: start;
+        padding: 0.85rem 1rem;
+        border: 1px solid var(--ink);
+        border-radius: 999px;
+        background: var(--ink);
+        color: white;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition:
+          transform 160ms ease,
+          background-color 160ms ease;
+      }
+
+      a:hover {
+        transform: translateY(-2px);
+        background: var(--blue);
+      }
+
+      a:focus-visible {
+        outline: 3px solid var(--blue);
+        outline-offset: 4px;
+      }
+
+      @media (max-width: 540px) {
+        main::before {
+          top: auto;
+          right: 0;
+          bottom: 0;
+          width: 100%;
+          height: 30%;
+          opacity: 0.48;
+        }
+
+        main::after {
+          top: 8%;
+        }
+
+        main {
+          align-content: start;
+          padding-top: 6rem;
+        }
+
+        .error-copy {
+          width: 100%;
+          padding-right: 0;
+        }
+
+        h1 {
+          font-size: clamp(3.6rem, 18vw, 5rem);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="error-copy">
+        <p class="code">404 · Wrong turn</p>
+        <h1>Nothing lives here.</h1>
+        <p>
+          The page may have moved, or the link may be out of date. The selected
+          work is still waiting on the homepage.
+        </p>
+        <a href="/">Back to the portfolio <span aria-hidden="true">↗</span></a>
+      </div>
+    </main>
+  </body>
 </html>

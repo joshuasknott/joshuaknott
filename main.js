@@ -1,194 +1,319 @@
-/* ============================================
-   MAIN.JS — Joshua Knott Portfolio
-   Typing animation + contribution grid
-   ============================================ */
-
 (function () {
   "use strict";
 
-  const TEXT_LINE1 = "hi, i'm josh.";
-  const TEXT_LINE2 = "come in.";
-  const TYPING_SPEED = 38; // ms per character
-  const PAUSE_AFTER_TYPING = 650; // ms before transitioning
-  const SKIP_STORAGE_KEY = "jk-intro-played";
+  function initHeader() {
+    var header = document.querySelector("[data-site-header]");
+    if (!header) return;
+    var ticking = false;
 
-  let typingTimers = [];
-  let transitioned = false;
-  let skipListenersBound = false;
+    function updateHeader() {
+      header.classList.toggle("is-scrolled", window.scrollY > 16);
+      var scrollable =
+        document.documentElement.scrollHeight - window.innerHeight;
+      var progress = scrollable > 0 ? window.scrollY / scrollable : 0;
+      header.style.setProperty(
+        "--page-progress",
+        String(Math.min(1, Math.max(0, progress))),
+      );
+      ticking = false;
+    }
 
-  function clearTypingTimers() {
-    typingTimers.forEach(clearTimeout);
-    typingTimers = [];
+    function requestHeaderUpdate() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateHeader);
+    }
+
+    updateHeader();
+    window.addEventListener("scroll", requestHeaderUpdate, { passive: true });
+    window.addEventListener("resize", requestHeaderUpdate, { passive: true });
   }
 
-  // Mark the intro as played so a refresh within the session won't replay it.
-  function markPlayed() {
-    try {
-      sessionStorage.setItem(SKIP_STORAGE_KEY, "1");
-    } catch (e) {}
-  }
+  function initHeroShowcase() {
+    var root = document.querySelector("[data-showcase]");
+    if (!root) return;
 
-  // --- Typing Animation ---
+    var panels = Array.from(root.querySelectorAll("[data-showcase-panel]"));
+    var controls = Array.from(root.querySelectorAll("[data-showcase-control]"));
+    if (!panels.length || panels.length !== controls.length) return;
 
-  function typeText(element, text, speed) {
-    return new Promise(function (resolve) {
-      let i = 0;
+    var reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    var current = 0;
+    var timer = null;
+    var paused = false;
+    var cycleDuration = 5600;
 
-      function tick() {
-        if (i < text.length) {
-          element.textContent += text.charAt(i);
-          i++;
-          typingTimers.push(setTimeout(tick, speed));
-        } else {
-          resolve();
-        }
+    function show(index) {
+      current = (index + panels.length) % panels.length;
+      root.setAttribute("data-active-slide", String(current));
+
+      panels.forEach(function (panel, panelIndex) {
+        var isActive = panelIndex === current;
+        panel.classList.toggle("is-active", isActive);
+        panel.setAttribute("aria-hidden", isActive ? "false" : "true");
+        panel.tabIndex = isActive ? 0 : -1;
+      });
+
+      controls.forEach(function (control, controlIndex) {
+        var isActive = controlIndex === current;
+        control.classList.toggle("is-active", isActive);
+        control.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+    }
+
+    function clearCycle() {
+      if (timer !== null) {
+        window.clearTimeout(timer);
+        timer = null;
       }
+    }
 
-      tick();
-    });
-  }
+    function scheduleCycle() {
+      clearCycle();
+      root.classList.toggle("is-paused", paused);
+      if (reducedMotion || paused || document.hidden) return;
 
-  function transitionToPortfolio() {
-    if (transitioned) return;
-    transitioned = true;
+      timer = window.setTimeout(function () {
+        show(current + 1);
+        scheduleCycle();
+      }, cycleDuration);
+    }
 
-    clearTypingTimers();
-    removeSkipListeners();
-    markPlayed();
-
-    var intro = document.getElementById("intro");
-    var portfolio = document.getElementById("portfolio");
-
-    // Hide blinking cursors
-    document.getElementById("cursor-text").classList.add("hidden");
-    document.getElementById("cursor-subtext").classList.add("hidden");
-
-    // Fade out intro
-    intro.classList.add("hidden");
-
-    // After intro fades, show portfolio and reveal all content together
-    setTimeout(function () {
-      intro.style.display = "none";
-      portfolio.classList.add("visible");
-
-      // Reveal header, About, and all projects together
-      document.querySelectorAll(".fade-in").forEach(function (el) {
-        el.classList.add("visible");
+    controls.forEach(function (control) {
+      control.addEventListener("click", function () {
+        show(Number(control.getAttribute("data-showcase-control")) || 0);
+        scheduleCycle();
       });
-    }, 800);
-  }
-
-  // --- Skip-listeners (click / keypress to skip the intro) ---
-
-  function onSkipKey() {
-    transitionToPortfolio();
-  }
-
-  function removeSkipListeners() {
-    if (!skipListenersBound) return;
-    skipListenersBound = false;
-    document.removeEventListener("keydown", onSkipKey);
-    var intro = document.getElementById("intro");
-    if (intro) intro.removeEventListener("click", transitionToPortfolio);
-  }
-
-  function bindSkipListeners() {
-    if (skipListenersBound) return;
-    skipListenersBound = true;
-    document.addEventListener("keydown", onSkipKey);
-    var intro = document.getElementById("intro");
-    if (intro) intro.addEventListener("click", transitionToPortfolio);
-  }
-
-  // --- Stats / Contributions ---
-
-  function loadStats() {
-    var statsUrl = "/data/stats.json?v=" + Date.now();
-
-    fetch(statsUrl, { cache: "no-store" })
-      .then(function (res) {
-        if (!res.ok) throw new Error("Stats request failed");
-        return res.json();
-      })
-      .then(function (stats) {
-        renderFooter(stats.updatedAt);
-        renderContributions(stats);
-      })
-      .catch(function () {
-        // Stats are non-critical; hide the section on failure.
-        var section = document.getElementById("contributions");
-        if (section) section.style.display = "none";
-      });
-  }
-
-  function renderFooter(updatedAt) {
-    var el = document.getElementById("last-updated");
-    if (!el || !updatedAt) return;
-
-    var date = new Date(updatedAt);
-    el.setAttribute("datetime", updatedAt);
-    el.textContent = date.toLocaleDateString("en-GB", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
     });
+
+    root.addEventListener("pointerenter", function () {
+      paused = true;
+      scheduleCycle();
+    });
+
+    root.addEventListener("pointerleave", function () {
+      paused = false;
+      scheduleCycle();
+      root.style.removeProperty("--art-x");
+      root.style.removeProperty("--art-y");
+    });
+
+    root.addEventListener("focusin", function () {
+      paused = true;
+      scheduleCycle();
+    });
+
+    root.addEventListener("focusout", function () {
+      window.setTimeout(function () {
+        if (root.contains(document.activeElement)) return;
+        paused = false;
+        scheduleCycle();
+      }, 0);
+    });
+
+    if (
+      !reducedMotion &&
+      window.matchMedia("(pointer: fine)").matches
+    ) {
+      root.addEventListener("pointermove", function (event) {
+        var bounds = root.getBoundingClientRect();
+        var x = (event.clientX - bounds.left) / bounds.width - 0.5;
+        var y = (event.clientY - bounds.top) / bounds.height - 0.5;
+        root.style.setProperty("--art-x", (x * -10).toFixed(2) + "px");
+        root.style.setProperty("--art-y", (y * -8).toFixed(2) + "px");
+      });
+    }
+
+    document.addEventListener("visibilitychange", scheduleCycle);
+    show(0);
+    scheduleCycle();
   }
 
-  function renderContributions(stats) {
-    var container = document.getElementById("contributions-grid");
-    if (!container) return;
+  function initRevealMotion() {
+    var elements = Array.from(document.querySelectorAll(".reveal"));
+    if (!elements.length) return;
 
-    // No data (seed file or contribution query failed upstream) — hide the section.
-    if (!stats.days || !stats.days.length) {
-      var section = document.getElementById("contributions");
-      if (section) section.style.display = "none";
+    function revealLocationTarget() {
+      if (!window.location.hash) return;
+
+      try {
+        var target = document.querySelector(window.location.hash);
+        if (!target) return;
+        var revealTarget = target.closest(".reveal");
+        if (revealTarget) revealTarget.classList.add("is-visible");
+      } catch (error) {
+        return;
+      }
+    }
+
+    if (
+      !("IntersectionObserver" in window) ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      elements.forEach(function (element) {
+        element.classList.add("is-visible");
+      });
       return;
     }
 
-    var grid = document.createElement("div");
-    grid.className = "contributions__grid";
+    revealLocationTarget();
+    window.addEventListener("hashchange", revealLocationTarget);
 
-    // Tooltip text, built defensively (title is decorative; the grid is
-    // aria-hidden, so the accessible summary is the count text above it).
-    stats.days.forEach(function (day) {
-      var cell = document.createElement("div");
-      cell.className = "contributions__cell";
-      cell.setAttribute("data-level", levelForCount(day.count));
-      cell.setAttribute(
-        "title",
-        day.count +
-          " contribution" +
-          (day.count === 1 ? "" : "s") +
-          " on " +
-          day.date,
-      );
-      grid.appendChild(cell);
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        rootMargin: "0px 0px -10% 0px",
+        threshold: 0.08,
+      },
+    );
+
+    elements.forEach(function (element) {
+      observer.observe(element);
     });
-
-    container.innerHTML = "";
-    container.appendChild(grid);
-
-    renderMonthLabels(stats.days);
-
-    // Render the total count above the grid
-    var countEl = document.getElementById("contributions-count");
-    if (countEl) {
-      var total = stats.totalContributions || 0;
-      countEl.textContent =
-        total.toLocaleString("en-GB") +
-        " contribution" +
-        (total === 1 ? "" : "s");
-    }
   }
 
-  // Label the first week of each month under the grid, like GitHub does.
-  // The day list is flat (one entry per day, oldest first); a month label is
-  // placed on the week column where the month first appears.
-  function renderMonthLabels(days) {
-    var monthsEl = document.getElementById("contributions-months");
-    if (!monthsEl) return;
+  function initProjectNavigation() {
+    var projects = Array.from(document.querySelectorAll("[data-project]"));
+    var links = Array.from(document.querySelectorAll("[data-project-link]"));
+    if (!projects.length || !links.length) return;
 
-    var MONTHS = [
+    var activeProjectId = "";
+    var ticking = false;
+
+    function updateActiveProject() {
+      var guide = Math.min(window.innerHeight * 0.38, 380);
+      var active = projects
+        .map(function (project) {
+          var bounds = project.getBoundingClientRect();
+          return {
+            id: project.id,
+            bounds: bounds,
+            containsGuide: bounds.top <= guide && bounds.bottom >= guide,
+            distance: Math.abs(bounds.top - guide),
+          };
+        })
+        .sort(function (a, b) {
+          if (a.containsGuide !== b.containsGuide) {
+            return a.containsGuide ? -1 : 1;
+          }
+          return a.distance - b.distance;
+        })[0];
+
+      if (!active) return;
+
+      var activeLink = null;
+      links.forEach(function (link) {
+        var isActive = link.getAttribute("data-project-link") === active.id;
+        if (isActive) {
+          link.setAttribute("aria-current", "location");
+          activeLink = link;
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+
+      if (active.id !== activeProjectId && activeLink) {
+        activeProjectId = active.id;
+        var rail = activeLink.parentElement;
+        var targetLeft =
+          activeLink.offsetLeft +
+          activeLink.offsetWidth / 2 -
+          rail.clientWidth / 2;
+        rail.scrollTo({
+          left: targetLeft,
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "auto"
+            : "smooth",
+        });
+      }
+      ticking = false;
+    }
+
+    function requestProjectUpdate() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateActiveProject);
+    }
+
+    updateActiveProject();
+    window.addEventListener("scroll", requestProjectUpdate, { passive: true });
+    window.addEventListener("resize", requestProjectUpdate, { passive: true });
+  }
+
+  function initShotModal() {
+    var modal = document.getElementById("shot-modal");
+    var image = document.getElementById("shot-modal-image");
+    var caption = document.getElementById("shot-modal-caption");
+    var closeButton = document.querySelector("[data-shot-close]");
+    var triggers = Array.from(document.querySelectorAll("[data-shot]"));
+    var activeTrigger = null;
+
+    if (
+      !modal ||
+      !image ||
+      !caption ||
+      !closeButton ||
+      typeof modal.showModal !== "function"
+    ) {
+      return;
+    }
+
+    triggers.forEach(function (trigger) {
+      trigger.addEventListener("click", function () {
+        var sourceImage = trigger.querySelector("img");
+        if (!sourceImage) return;
+
+        activeTrigger = trigger;
+        image.src = sourceImage.currentSrc || sourceImage.src;
+        image.alt = sourceImage.alt || "";
+        caption.textContent =
+          trigger.getAttribute("data-shot-title") || "Product screenshot";
+        modal.setAttribute("aria-label", caption.textContent);
+        modal.showModal();
+        closeButton.focus();
+      });
+    });
+
+    function closeModal() {
+      if (modal.open) modal.close();
+    }
+
+    closeButton.addEventListener("click", closeModal);
+
+    modal.addEventListener("click", function (event) {
+      if (event.target === modal) closeModal();
+    });
+
+    modal.addEventListener("close", function () {
+      image.removeAttribute("src");
+      image.alt = "";
+      caption.textContent = "";
+      if (activeTrigger) activeTrigger.focus();
+      activeTrigger = null;
+    });
+  }
+
+  function levelForCount(count) {
+    if (count <= 0) return "0";
+    if (count <= 2) return "1";
+    if (count <= 5) return "2";
+    if (count <= 9) return "3";
+    return "4";
+  }
+
+  function renderMonthLabels(days) {
+    var container = document.getElementById("contributions-months");
+    if (!container) return;
+
+    var monthNames = [
       "Jan",
       "Feb",
       "Mar",
@@ -202,169 +327,149 @@
       "Nov",
       "Dec",
     ];
-    var labels = [];
+    var weekCount = Math.ceil(days.length / 7);
     var lastMonth = -1;
 
-    // Group days into weeks of 7. Column 0 is the first (oldest) week.
-    var weekCount = Math.ceil(days.length / 7);
-
-    for (var w = 0; w < weekCount; w++) {
-      var dayIndex = w * 7;
-      var day = days[dayIndex];
-      if (!day) {
-        labels.push("");
-        continue;
-      }
-      var month = new Date(day.date).getMonth();
-      if (month !== lastMonth) {
-        labels.push(MONTHS[month]);
-        lastMonth = month;
-      } else {
-        labels.push("");
-      }
-    }
-
-    monthsEl.innerHTML = "";
-    // Use a CSS grid that mirrors the grid columns so labels align to weeks.
-    monthsEl.style.gridTemplateColumns =
+    container.innerHTML = "";
+    container.style.gridTemplateColumns =
       "repeat(" + weekCount + ", var(--contrib-cell))";
-    labels.forEach(function (label) {
-      var span = document.createElement("span");
-      span.textContent = label;
-      monthsEl.appendChild(span);
-    });
+
+    for (var week = 0; week < weekCount; week += 1) {
+      var day = days[week * 7];
+      var label = document.createElement("span");
+
+      if (day) {
+        var month = new Date(day.date + "T12:00:00").getMonth();
+        if (month !== lastMonth) {
+          label.textContent = monthNames[month];
+          lastMonth = month;
+        }
+      }
+
+      container.appendChild(label);
+    }
   }
 
-  // Map a day's contribution count to a 0-4 intensity level.
-  // Thresholds tuned for a typical personal account's spread.
-  function levelForCount(count) {
-    if (count <= 0) return "0";
-    if (count <= 2) return "1";
-    if (count <= 5) return "2";
-    if (count <= 9) return "3";
-    return "4";
-  }
+  function renderContributions(stats) {
+    var section = document.getElementById("contributions");
+    var container = document.getElementById("contributions-grid");
+    var count = document.getElementById("contributions-count");
+    var days = Array.isArray(stats.days) ? stats.days : [];
 
-  // --- Project screenshot modal ---
-
-  function initShotModal() {
-    var modal = document.getElementById("shot-modal");
-    var modalImage = document.getElementById("shot-modal-image");
-    var closeButton = document.querySelector("[data-shot-close]");
-    var activeTrigger = null;
-
-    if (!modal || !modalImage || !closeButton || !modal.showModal) return;
-
-    document.querySelectorAll(".project__shot").forEach(function (button) {
-      button.addEventListener("click", function () {
-        var image = button.querySelector("img");
-        if (!image) return;
-
-        activeTrigger = button;
-        modalImage.src = image.currentSrc || image.src;
-        modalImage.alt = image.alt || "";
-        modal.setAttribute(
-          "aria-label",
-          button.getAttribute("data-shot-title") || "Expanded project screenshot",
-        );
-        modal.showModal();
-        closeButton.focus();
-      });
-    });
-
-    function closeModal() {
-      modal.close();
+    if (!section || !container || !days.length) {
+      if (section) section.hidden = true;
+      return;
     }
 
-    closeButton.addEventListener("click", closeModal);
+    var grid = document.createElement("div");
+    grid.className = "contributions__grid";
 
-    modal.addEventListener("click", function (event) {
-      if (event.target === modal) closeModal();
+    days.forEach(function (day) {
+      var cell = document.createElement("div");
+      var contributionCount = Number(day.count) || 0;
+      cell.className = "contributions__cell";
+      cell.setAttribute("data-level", levelForCount(contributionCount));
+      cell.title =
+        contributionCount +
+        " contribution" +
+        (contributionCount === 1 ? "" : "s") +
+        " on " +
+        day.date;
+      grid.appendChild(cell);
     });
 
-    modal.addEventListener("close", function () {
-      modalImage.removeAttribute("src");
-      if (activeTrigger) activeTrigger.focus();
-      activeTrigger = null;
+    container.replaceChildren(grid);
+    renderMonthLabels(days);
+    section.classList.add("is-loaded");
+
+    if (count) {
+      var total = Number(stats.totalContributions) || 0;
+      count.textContent =
+        total.toLocaleString("en-GB") +
+        " contribution" +
+        (total === 1 ? "" : "s") +
+        " in the past year";
+    }
+  }
+
+  function renderLastUpdated(updatedAt) {
+    var target = document.getElementById("last-updated");
+    if (!target || !updatedAt) return;
+
+    var date = new Date(updatedAt);
+    if (Number.isNaN(date.getTime())) return;
+
+    target.dateTime = updatedAt;
+    target.textContent = date.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
     });
   }
 
-  // --- Init ---
-
-  function playIntroAnimation() {
-    var typedTextEl = document.getElementById("typed-text");
-    var typedSubTextEl = document.getElementById("typed-subtext");
-
-    // The intro text is present in HTML for no-JavaScript users and crawlers.
-    typedTextEl.textContent = "";
-    typedSubTextEl.textContent = "";
-
-    // Type first line
-    typeText(typedTextEl, TEXT_LINE1, TYPING_SPEED)
-      .then(function () {
-        // Brief pause, switch cursor to second line, then type second line
-        return new Promise(function (resolve) {
-          typingTimers.push(
-            setTimeout(function () {
-              document.getElementById("cursor-text").classList.add("hidden");
-              document
-                .getElementById("cursor-subtext")
-                .classList.remove("hidden");
-              typeText(typedSubTextEl, TEXT_LINE2, TYPING_SPEED).then(resolve);
-            }, 250),
-          );
-        });
+  function loadStats() {
+    fetch("data/stats.json?v=" + Date.now(), { cache: "no-store" })
+      .then(function (response) {
+        if (!response.ok) throw new Error("Stats request failed");
+        return response.json();
       })
-      .then(function () {
-        document.getElementById("cursor-subtext").classList.add("hidden");
-        typingTimers.push(
-          setTimeout(transitionToPortfolio, PAUSE_AFTER_TYPING),
-        );
+      .then(function (stats) {
+        renderContributions(stats);
+        renderLastUpdated(stats.updatedAt);
+      })
+      .catch(function () {
+        var section = document.getElementById("contributions");
+        if (section) section.hidden = true;
       });
   }
 
-  function showPortfolioImmediately() {
-    var typedTextEl = document.getElementById("typed-text");
-    var typedSubTextEl = document.getElementById("typed-subtext");
-    typedTextEl.textContent = TEXT_LINE1;
-    typedSubTextEl.textContent = TEXT_LINE2;
-    document.getElementById("intro").style.display = "none";
-    var portfolio = document.getElementById("portfolio");
-    portfolio.classList.add("visible");
-    document.querySelectorAll(".fade-in").forEach(function (el) {
-      el.classList.add("visible");
-    });
+  function initFooterYear() {
+    var target = document.getElementById("current-year");
+    if (target) target.textContent = String(new Date().getFullYear());
+  }
+
+  function initHashAlignment() {
+    if (!window.location.hash) return;
+
+    function alignTarget() {
+      var target;
+      try {
+        target = document.querySelector(window.location.hash);
+      } catch (error) {
+        return;
+      }
+      if (!target) return;
+
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          target.scrollIntoView({ block: "start", behavior: "auto" });
+        });
+      });
+    }
+
+    function alignWhenStable() {
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(alignTarget);
+      } else {
+        alignTarget();
+      }
+    }
+
+    if (document.readyState === "complete") {
+      alignWhenStable();
+    } else {
+      window.addEventListener("load", alignWhenStable, { once: true });
+    }
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    initHeader();
+    initHeroShowcase();
+    initRevealMotion();
+    initProjectNavigation();
     initShotModal();
-
-    var prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    if (prefersReducedMotion) {
-      showPortfolioImmediately();
-      loadStats();
-      return;
-    }
-
-    var alreadyPlayed = false;
-    try {
-      alreadyPlayed = sessionStorage.getItem(SKIP_STORAGE_KEY) === "1";
-    } catch (e) {
-      // sessionStorage may be unavailable (private mode); play the intro.
-    }
-
-    if (alreadyPlayed) {
-      // Skip the intro for repeat visitors in the same session.
-      showPortfolioImmediately();
-      loadStats();
-      return;
-    }
-
-    playIntroAnimation();
+    initFooterYear();
+    initHashAlignment();
     loadStats();
-    bindSkipListeners();
   });
 })();
