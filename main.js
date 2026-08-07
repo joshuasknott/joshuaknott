@@ -41,9 +41,6 @@
       "(prefers-reduced-motion: reduce)",
     ).matches;
     var current = 0;
-    var timer = null;
-    var paused = false;
-    var cycleDuration = 5600;
 
     function show(index) {
       current = (index + panels.length) % panels.length;
@@ -63,54 +60,10 @@
       });
     }
 
-    function clearCycle() {
-      if (timer !== null) {
-        window.clearTimeout(timer);
-        timer = null;
-      }
-    }
-
-    function scheduleCycle() {
-      clearCycle();
-      root.classList.toggle("is-paused", paused);
-      if (reducedMotion || paused || document.hidden) return;
-
-      timer = window.setTimeout(function () {
-        show(current + 1);
-        scheduleCycle();
-      }, cycleDuration);
-    }
-
     controls.forEach(function (control) {
       control.addEventListener("click", function () {
         show(Number(control.getAttribute("data-showcase-control")) || 0);
-        scheduleCycle();
       });
-    });
-
-    root.addEventListener("pointerenter", function () {
-      paused = true;
-      scheduleCycle();
-    });
-
-    root.addEventListener("pointerleave", function () {
-      paused = false;
-      scheduleCycle();
-      root.style.removeProperty("--art-x");
-      root.style.removeProperty("--art-y");
-    });
-
-    root.addEventListener("focusin", function () {
-      paused = true;
-      scheduleCycle();
-    });
-
-    root.addEventListener("focusout", function () {
-      window.setTimeout(function () {
-        if (root.contains(document.activeElement)) return;
-        paused = false;
-        scheduleCycle();
-      }, 0);
     });
 
     if (
@@ -124,11 +77,26 @@
         root.style.setProperty("--art-x", (x * -10).toFixed(2) + "px");
         root.style.setProperty("--art-y", (y * -8).toFixed(2) + "px");
       });
+
+      root.addEventListener("pointerleave", function () {
+        root.style.removeProperty("--art-x");
+        root.style.removeProperty("--art-y");
+      });
     }
 
-    document.addEventListener("visibilitychange", scheduleCycle);
     show(0);
-    scheduleCycle();
+  }
+
+  function initProjectOrder() {
+    var work = document.querySelector(".work");
+    if (!work) return;
+
+    ["fable", "memvella", "tokenmaxxer", "surreysocieties", "betwfriends"].forEach(
+      function (id) {
+        var project = document.getElementById(id);
+        if (project && project.parentElement === work) work.appendChild(project);
+      },
+    );
   }
 
   function initRevealMotion() {
@@ -463,6 +431,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    initProjectOrder();
     initHeader();
     initHeroShowcase();
     initRevealMotion();
