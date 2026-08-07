@@ -1154,6 +1154,32 @@ button {
   background: rgba(255, 254, 250, 0.72);
 }
 
+.society-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.society-view {
+  display: grid;
+  min-width: 0;
+  gap: 0.55rem;
+  margin: 0;
+}
+
+.society-view--primary {
+  grid-column: 1 / -1;
+}
+
+.society-view figcaption {
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  line-height: 1.4;
+}
+
 .case__stage--surrey::before {
   right: -7%;
   bottom: -10%;
@@ -1855,6 +1881,14 @@ button {
 
   .case__story > p {
     max-width: 39rem;
+  }
+
+  .society-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .society-view--primary {
+    grid-column: auto;
   }
 
   .case__stage,
