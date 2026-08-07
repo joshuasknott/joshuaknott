@@ -29,64 +29,6 @@
     window.addEventListener("resize", requestHeaderUpdate, { passive: true });
   }
 
-  function initHeroShowcase() {
-    var root = document.querySelector("[data-showcase]");
-    if (!root) return;
-
-    var panels = Array.from(root.querySelectorAll("[data-showcase-panel]"));
-    var controls = Array.from(root.querySelectorAll("[data-showcase-control]"));
-    if (!panels.length || panels.length !== controls.length) return;
-
-    var reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    var current = 0;
-
-    function show(index) {
-      current = (index + panels.length) % panels.length;
-      root.setAttribute("data-active-slide", String(current));
-
-      panels.forEach(function (panel, panelIndex) {
-        var isActive = panelIndex === current;
-        panel.classList.toggle("is-active", isActive);
-        panel.setAttribute("aria-hidden", isActive ? "false" : "true");
-        panel.tabIndex = isActive ? 0 : -1;
-      });
-
-      controls.forEach(function (control, controlIndex) {
-        var isActive = controlIndex === current;
-        control.classList.toggle("is-active", isActive);
-        control.setAttribute("aria-pressed", isActive ? "true" : "false");
-      });
-    }
-
-    controls.forEach(function (control) {
-      control.addEventListener("click", function () {
-        show(Number(control.getAttribute("data-showcase-control")) || 0);
-      });
-    });
-
-    if (
-      !reducedMotion &&
-      window.matchMedia("(pointer: fine)").matches
-    ) {
-      root.addEventListener("pointermove", function (event) {
-        var bounds = root.getBoundingClientRect();
-        var x = (event.clientX - bounds.left) / bounds.width - 0.5;
-        var y = (event.clientY - bounds.top) / bounds.height - 0.5;
-        root.style.setProperty("--art-x", (x * -10).toFixed(2) + "px");
-        root.style.setProperty("--art-y", (y * -8).toFixed(2) + "px");
-      });
-
-      root.addEventListener("pointerleave", function () {
-        root.style.removeProperty("--art-x");
-        root.style.removeProperty("--art-y");
-      });
-    }
-
-    show(0);
-  }
-
   function initProjectOrder() {
     var work = document.querySelector(".work");
     if (!work) return;
@@ -433,7 +375,6 @@
   document.addEventListener("DOMContentLoaded", function () {
     initProjectOrder();
     initHeader();
-    initHeroShowcase();
     initRevealMotion();
     initProjectNavigation();
     initShotModal();

@@ -42,7 +42,9 @@ body {
   margin: 0;
   overflow-x: hidden;
   background:
-    radial-gradient(circle at 12% 4%, rgba(55, 111, 238, 0.08), transparent 29rem),
+    radial-gradient(circle at 12% 4%, rgba(55, 111, 238, 0.11), transparent 29rem),
+    radial-gradient(circle at 92% 42%, rgba(42, 91, 215, 0.08), transparent 34rem),
+    radial-gradient(circle at 7% 76%, rgba(42, 91, 215, 0.07), transparent 30rem),
     linear-gradient(180deg, #faf7ef 0, var(--paper) 34rem, var(--paper) 100%);
   color: var(--ink);
   font-family: var(--body);
@@ -255,13 +257,41 @@ button {
 /* Hero */
 
 .hero {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(34rem, 1.05fr);
-  gap: clamp(3rem, 6vw, 6.5rem);
+  grid-template-columns: minmax(0, 0.82fr) minmax(38rem, 1.18fr);
+  gap: clamp(2.5rem, 4.5vw, 5rem);
   align-items: center;
   min-height: min(940px, 100svh);
   padding-top: calc(var(--header-height) + clamp(3.5rem, 6vh, 6rem));
   padding-bottom: clamp(3.5rem, 6vh, 6rem);
+  isolation: isolate;
+}
+
+.hero::before {
+  position: absolute;
+  z-index: -2;
+  top: 2%;
+  right: max(-12vw, -10rem);
+  width: min(76vw, 68rem);
+  height: 94%;
+  background: url("assets/og-portfolio-v2.webp") center / cover no-repeat;
+  content: "";
+  opacity: 0.16;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 18%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 18%, #000 82%, transparent 100%);
+}
+
+.hero::after {
+  position: absolute;
+  z-index: -1;
+  top: 17%;
+  right: 4%;
+  width: clamp(9rem, 18vw, 16rem);
+  aspect-ratio: 1;
+  border: 1px solid rgba(42, 91, 215, 0.16);
+  border-radius: 50%;
+  content: "";
 }
 
 .hero__copy {
@@ -374,33 +404,23 @@ button {
 }
 
 .proof-stack {
-  --art-x: 0px;
-  --art-y: 0px;
   position: relative;
-  min-height: clamp(32rem, min(48vw, calc(100svh - 12rem)), 41rem);
-  overflow: hidden;
+  min-height: 0;
+  padding: clamp(0.65rem, 1.1vw, 1rem);
   border: 1px solid rgba(16, 33, 61, 0.17);
-  border-radius: 1.8rem;
-  background: #efeade;
-  box-shadow: var(--shadow-lg);
+  border-radius: 1.25rem;
+  background: rgba(255, 254, 250, 0.82);
+  box-shadow: 0 24px 64px rgba(16, 33, 61, 0.16);
   isolation: isolate;
 }
 
 .proof-stack::before {
-  position: absolute;
-  z-index: -2;
-  inset: -0.8rem;
-  background:
-    linear-gradient(rgba(247, 243, 233, 0.02), rgba(247, 243, 233, 0.02)),
-    url("assets/og-portfolio-v2.webp") center / cover no-repeat;
-  content: "";
-  transform: translate3d(var(--art-x), var(--art-y), 0) scale(1.035);
-  transition: transform 700ms var(--ease-out);
+  display: none;
 }
 
 .proof-stack::after {
   position: absolute;
-  z-index: 8;
+  z-index: 3;
   inset: 0;
   border: 1px solid rgba(255, 254, 250, 0.38);
   border-radius: inherit;
@@ -409,32 +429,20 @@ button {
 }
 
 .proof-stack__grid {
-  position: absolute;
-  z-index: 4;
-  top: 1.55rem;
-  right: 1.6rem;
-  width: 3.2rem;
-  height: 3.2rem;
-  opacity: 0.58;
-  background-image: radial-gradient(var(--ink) 1px, transparent 1.3px);
-  background-size: 0.65rem 0.65rem;
-  pointer-events: none;
+  display: none;
 }
 
 .proof-window {
-  position: absolute;
+  position: relative;
   z-index: 2;
-  top: 16%;
-  left: 8%;
-  width: 84%;
+  inset: auto;
+  width: 100%;
   overflow: hidden;
   padding: 0;
   border: 1px solid rgba(16, 33, 61, 0.22);
   border-radius: 0.85rem;
   background: var(--white);
-  box-shadow:
-    0 28px 68px rgba(3, 13, 30, 0.3),
-    0 2px 0 rgba(255, 255, 255, 0.9) inset;
+  box-shadow: 0 14px 34px rgba(3, 13, 30, 0.13);
   cursor: zoom-in;
   opacity: 0;
   pointer-events: none;
@@ -577,6 +585,36 @@ button {
   position: relative;
 }
 
+.work-zone::before,
+.work-zone::after {
+  position: absolute;
+  z-index: 0;
+  border: 1px solid rgba(42, 91, 215, 0.16);
+  content: "";
+  pointer-events: none;
+}
+
+.work-zone::before {
+  top: 16rem;
+  left: -13rem;
+  width: 28rem;
+  height: 46rem;
+  border-radius: 50%;
+  background: rgba(55, 111, 238, 0.055);
+  transform: rotate(-18deg);
+}
+
+.work-zone::after {
+  right: -12rem;
+  bottom: 18rem;
+  width: 32rem;
+  height: 32rem;
+  border-radius: 50%;
+  background-image: radial-gradient(rgba(42, 91, 215, 0.24) 1px, transparent 1.2px);
+  background-size: 1rem 1rem;
+  opacity: 0.45;
+}
+
 .proof-strip {
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
@@ -684,6 +722,8 @@ button {
 /* Selected work */
 
 .work {
+  position: relative;
+  z-index: 1;
   padding-top: clamp(6rem, 10vw, 10rem);
   padding-bottom: clamp(7rem, 12vw, 12rem);
 }
@@ -726,8 +766,8 @@ button {
   margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: rgba(255, 254, 250, 0.52);
-  box-shadow: 0 20px 70px rgba(16, 33, 61, 0.06);
+  background: rgba(255, 254, 250, 0.9);
+  box-shadow: 0 16px 55px rgba(16, 33, 61, 0.055);
 }
 
 .case::before {
@@ -878,57 +918,31 @@ button {
 
 .case__stage {
   position: relative;
-  min-height: 39rem;
-  overflow: hidden;
+  min-height: 0;
+  padding: clamp(0.75rem, 1.8vw, 1.35rem);
   border-top: 1px solid var(--line);
-  background-color: var(--paper-deep);
-  background-image:
-    linear-gradient(rgba(16, 33, 61, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16, 33, 61, 0.055) 1px, transparent 1px);
-  background-size: 2rem 2rem;
+  background: rgba(255, 254, 250, 0.72);
   isolation: isolate;
 }
 
 .case__stage::before {
-  position: absolute;
-  z-index: -1;
-  width: 56%;
-  height: 88%;
-  background: var(--case-accent);
-  clip-path: polygon(0 100%, 42% 12%, 100% 0, 100% 100%);
-  content: "";
-  opacity: 0.14;
-  transform: translate(14%, 12%) rotate(2deg);
-  transform-origin: right bottom;
-  transition:
-    opacity 1s ease 250ms,
-    transform 1.3s var(--ease-out) 140ms;
+  display: none;
 }
 
 .case__stage::after {
-  position: absolute;
-  z-index: -1;
-  width: 0.72rem;
-  height: 0.72rem;
-  border-radius: 50%;
-  background: var(--coral);
-  box-shadow:
-    -3rem 0 0 -5px var(--coral),
-    3rem 0 0 -5px var(--coral),
-    0 -3rem 0 -5px var(--coral),
-    0 3rem 0 -5px var(--coral);
-  content: "";
-  opacity: 0.82;
+  display: none;
 }
 
 .product-shot {
-  position: absolute;
+  position: relative;
+  display: block;
+  width: 100%;
   overflow: hidden;
   padding: 0;
   border: 1px solid rgba(16, 33, 61, 0.21);
   border-radius: 0.75rem;
   background: var(--white);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 12px 34px rgba(16, 33, 61, 0.12);
   cursor: zoom-in;
   transition:
     box-shadow 350ms ease,
@@ -936,7 +950,8 @@ button {
 }
 
 .product-shot:hover {
-  box-shadow: 0 38px 90px rgba(16, 33, 61, 0.22);
+  box-shadow: 0 18px 46px rgba(16, 33, 61, 0.16);
+  transform: translateY(-2px);
 }
 
 .product-shot img {
@@ -973,14 +988,13 @@ button {
 }
 
 .product-shot--fable-main {
-  top: 10%;
-  left: 5%;
-  width: 78%;
-  transform: rotate(-0.7deg);
+  inset: auto;
+  width: 100%;
+  transform: none;
 }
 
 .product-shot--fable-main:hover {
-  transform: rotate(-0.7deg) translateY(-5px) scale(1.005);
+  transform: translateY(-2px);
 }
 
 .product-shot--fable-detail {
@@ -995,7 +1009,7 @@ button {
 }
 
 .case__stage--token {
-  background-color: #e5e9eb;
+  background: rgba(255, 254, 250, 0.72);
 }
 
 .case__stage--token::before {
@@ -1010,14 +1024,13 @@ button {
 }
 
 .product-shot--token-main {
-  top: 9%;
-  left: 5%;
-  width: 78%;
-  transform: rotate(0.5deg);
+  inset: auto;
+  width: 100%;
+  transform: none;
 }
 
 .product-shot--token-main:hover {
-  transform: rotate(0.5deg) translateY(-5px) scale(1.005);
+  transform: translateY(-2px);
 }
 
 .product-shot--token-detail {
@@ -1032,8 +1045,8 @@ button {
 }
 
 .case__stage--memvella {
-  min-height: 34rem;
-  background-color: #e5ece5;
+  min-height: 0;
+  background: rgba(255, 254, 250, 0.72);
 }
 
 .case__stage--memvella::before {
@@ -1080,18 +1093,17 @@ button {
 }
 
 .product-shot--memvella {
-  top: 12%;
-  right: 5%;
-  width: 90%;
+  inset: auto;
+  width: 100%;
 }
 
 .product-shot--memvella:hover {
-  transform: translateY(-5px) scale(1.005);
+  transform: translateY(-2px);
 }
 
 .case__stage--bet {
-  min-height: 38rem;
-  background-color: #e9e5ed;
+  min-height: 0;
+  background: rgba(255, 254, 250, 0.72);
 }
 
 .case__stage--bet::before {
@@ -1105,13 +1117,12 @@ button {
 }
 
 .product-shot--bet {
-  top: 8%;
-  left: 7%;
-  width: 86%;
+  inset: auto;
+  width: 100%;
 }
 
 .product-shot--bet:hover {
-  transform: translateY(-5px) scale(1.005);
+  transform: translateY(-2px);
 }
 
 .bet-callout {
@@ -1139,8 +1150,8 @@ button {
 }
 
 .case__stage--surrey {
-  min-height: 43rem;
-  background-color: #e8e6df;
+  min-height: 0;
+  background: rgba(255, 254, 250, 0.72);
 }
 
 .case__stage--surrey::before {
@@ -1155,14 +1166,13 @@ button {
 }
 
 .product-shot--surrey-main {
-  top: 8%;
-  left: 5%;
-  width: 70%;
-  transform: rotate(-0.5deg);
+  inset: auto;
+  width: 100%;
+  transform: none;
 }
 
 .product-shot--surrey-main:hover {
-  transform: rotate(-0.5deg) translateY(-5px) scale(1.004);
+  transform: translateY(-2px);
 }
 
 .surrey-pair {
@@ -1746,7 +1756,7 @@ button {
   }
 
   .proof-stack {
-    min-height: min(42rem, 72vw);
+    min-height: 0;
   }
 
   .case__intro {
@@ -1782,14 +1792,13 @@ button {
   }
 
   .proof-stack {
-    min-height: min(35rem, 82vw);
+    min-height: 0;
     border-radius: 1.3rem;
   }
 
   .proof-window {
-    top: 15%;
-    left: 5%;
-    width: 90%;
+    inset: auto;
+    width: 100%;
   }
 
   .proof-stack__caption {
@@ -1980,13 +1989,12 @@ button {
   }
 
   .proof-stack {
-    min-height: 29rem;
+    min-height: 0;
   }
 
   .proof-window {
-    top: 17%;
-    left: 4%;
-    width: 92%;
+    inset: auto;
+    width: 100%;
   }
 
   .proof-window__bar {
