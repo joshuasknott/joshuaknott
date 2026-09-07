@@ -26,6 +26,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          # The content timestamp must look past generated stats-only commits.
+          fetch-depth: 0
+
+      - name: Test stats updater
+        run: node --test .github/scripts/update-stats.test.js
 
       - name: Generate stats
         env:
