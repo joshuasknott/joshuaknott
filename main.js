@@ -6,6 +6,27 @@
   window.addEventListener("scroll", updateHeader, { passive: true });
   updateHeader();
 
+  const societyImage = document.getElementById("society-shot");
+  const societyViews = document.querySelector(".society-views");
+  if (societyImage && societyViews) {
+    const buttons = [...societyViews.querySelectorAll("[data-society]")];
+    let selection = 0;
+    buttons.forEach((button) => button.addEventListener("click", () => {
+      const request = ++selection;
+      const preload = new Image();
+      preload.onload = () => {
+        if (request !== selection) return;
+        societyImage.src = preload.src;
+        societyImage.alt = button.dataset.alt;
+        societyImage.width = preload.naturalWidth;
+        societyImage.height = preload.naturalHeight;
+        buttons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+      };
+      preload.src = `assets/projects/2026-09/surrey-${button.dataset.society}.webp`;
+    }));
+    societyViews.hidden = false;
+  }
+
   let latestActivity = -Infinity;
   function renderActivity(stats) {
     const activity = document.getElementById("contributions");

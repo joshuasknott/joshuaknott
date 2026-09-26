@@ -458,6 +458,27 @@ button:disabled {
   box-shadow: inset 0 0 0 1px #ffffff09;
   border-radius: inherit;
 }
+.society-views {
+  display: flex;
+  gap: 6px;
+  padding-top: 12px;
+}
+.society-views[hidden] {
+  display: none;
+}
+.society-views button {
+  min-height: 44px;
+  padding: 8px 16px;
+  border-radius: 24px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+}
+.society-views button:hover,
+.society-views button[aria-pressed="true"] {
+  color: var(--ink);
+  background: #e4eec213;
+}
 .project__foot {
   display: flex;
   justify-content: space-between;

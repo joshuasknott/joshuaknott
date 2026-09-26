@@ -102,8 +102,8 @@
       fetchpriority="high"
       media="(max-width: 700px)"
     />
-    <link rel="stylesheet" href="styles.css?v=20260926" />
-    <script src="main.js?v=20260926" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260926-societies" />
+    <script src="main.js?v=20260926-societies" defer></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -496,12 +496,24 @@
           <div class="product-shot">
             <img
               src="assets/projects/2026-09/surrey-ai.webp"
+              id="society-shot"
               alt="Surrey AI Society homepage with its Learn it, Build it, Question it identity"
               width="1265"
               height="712"
               loading="lazy"
               decoding="async"
             />
+          </div>
+          <div class="society-views" role="group" aria-label="Society screenshots" hidden>
+            <button type="button" aria-pressed="true" aria-controls="society-shot"
+              data-society="ai"
+              data-alt="Surrey AI Society homepage with its Learn it, Build it, Question it identity">AI</button>
+            <button type="button" aria-pressed="false" aria-controls="society-shot"
+              data-society="business"
+              data-alt="Surrey Business Society homepage showing the university campus and ways for students to get involved">Business</button>
+            <button type="button" aria-pressed="false" aria-controls="society-shot"
+              data-society="neurotech"
+              data-alt="Surrey Neurotech Society homepage with EEG laboratory imagery and its student neurotechnology programme">Neurotech</button>
           </div>
         </figure>
       </article>
