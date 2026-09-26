@@ -102,8 +102,8 @@
       fetchpriority="high"
       media="(max-width: 700px)"
     />
-    <link rel="stylesheet" href="styles.css?v=20260917" />
-    <script src="main.js?v=20260917" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260926" />
+    <script src="main.js?v=20260926" defer></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -115,7 +115,7 @@
             "givenName": "Joshua",
             "familyName": "Knott",
             "jobTitle": "Software Builder and Politics Student",
-            "description": "Politics and International Relations student at the University of Surrey developing desktop applications and websites.",
+            "description": "Third-year Politics and International Relations student at the University of Surrey, President of Surrey Artificial Intelligence Society, and developer of Mivlet and Memvella.",
             "url": "https://joshuaknott.tech/",
             "image": "https://joshuaknott.tech/assets/joshua-knott-avatar.png",
             "email": "mailto:joshhknott@gmail.com",
@@ -141,7 +141,7 @@
             "workExample": [
               { "@id": "https://joshuaknott.tech/#mivlet" },
               { "@id": "https://joshuaknott.tech/#memvella" },
-              { "@id": "https://joshuaknott.tech/#jsearch" },
+              { "@id": "https://joshuaknott.tech/#ollo" },
               { "@id": "https://joshuaknott.tech/#mote" },
               { "@id": "https://joshuaknott.tech/#tokenmaxxer" },
               { "@id": "https://joshuaknott.tech/#surreysocieties" }
@@ -172,8 +172,8 @@
           },
           {
             "@type": "SoftwareApplication",
-            "@id": "https://joshuaknott.tech/#jsearch",
-            "name": "JSearch",
+            "@id": "https://joshuaknott.tech/#ollo",
+            "name": "ollo",
             "applicationCategory": "ProductivityApplication",
             "creator": { "@id": "https://joshuaknott.tech/#joshua-knott" }
           },
@@ -218,12 +218,6 @@
         <symbol id="arrow-down" viewBox="0 0 24 24">
           <path d="M12 4v16m-6-6 6 6 6-6" />
         </symbol>
-        <symbol id="expand" viewBox="0 0 24 24">
-          <path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5" />
-        </symbol>
-        <symbol id="close" viewBox="0 0 24 24">
-          <path d="m6 6 12 12M6 18 18 6" />
-        </symbol>
       </defs>
     </svg>
     <header class="site-header" id="site-header">
@@ -257,7 +251,9 @@
           <h1 id="arrival-title">
             Joshua Knott
           </h1>
-          <p class="arrival__intro">I’m developing Mivlet, an AI workspace, and
+          <p class="arrival__intro">I’m a third-year Politics and International Relations student
+            at the University of Surrey and President of Surrey Artificial
+            Intelligence Society. I’m developing Mivlet, an AI workspace, and
             Memvella, a memory and routine companion backed by £1,500 in
             Surrey enterprise funding.</p>
           <a class="journey-link" href="#work"
@@ -277,7 +273,7 @@
         <nav class="project-index" aria-label="Selected projects">
           <a href="#mivlet">Mivlet</a
           ><a href="#memvella">Memvella</a
-          ><a href="#jsearch">JSearch</a
+          ><a href="#ollo">ollo</a
           ><a href="#mote">Mote</a
           ><a href="#tokenmaxxer">TokenMaxxer</a
           ><a href="#surreysocieties">Surrey Societies</a>
@@ -305,14 +301,17 @@
             connect apps, and manage what each agent can access.
           </p>
         </div>
-        <figure class="product-gallery" data-gallery="mivlet">
-          <a class="product-shot" href="assets/projects/2026-09/mivlet-conversation-17.webp" data-shot
-            data-caption="Mivlet — current conversation components captured on 17 September 2026 with a sample exchange. No model was invoked."
-            aria-label="Enlarge Mivlet conversation screenshot">
-            <img src="assets/projects/2026-09/mivlet-conversation-17.webp" alt="Mivlet's current agent sidebar, conversation and message composer" width="1718" height="1248" loading="lazy" decoding="async" />
-            <span class="shot-expand"><svg aria-hidden="true"><use href="#expand" /></svg><span>Enlarge</span></span>
-          </a>
-          <figcaption class="gallery-caption"><span>Conversation</span><span>Component preview · Sample content</span></figcaption>
+        <figure class="product-gallery">
+          <div class="product-shot">
+            <img
+              src="assets/projects/2026-09/mivlet-workspace-26.webp"
+              alt="Mivlet’s current AI agent workspace with a sample conversation and its Memories panel"
+              width="1440"
+              height="900"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
         </figure>
       </article>
       <article
@@ -344,61 +343,28 @@
             Cube Fund through competitive pitches.
           </p>
         </div>
-        <figure class="product-gallery" data-gallery="memvella">
-          <a
-            class="product-shot"
-            href="assets/projects/2026-09/memvella-today.webp"
-            data-shot
-            data-caption="Memvella — Today. Current app components, shown with fictional routines and an example care circle."
-            aria-label="Enlarge Memvella Today screenshot"
-            ><img
+        <figure class="product-gallery">
+          <div class="product-shot">
+            <img
               src="assets/projects/2026-09/memvella-today.webp"
-              alt="Memvella's Today page with daily routines, companion access for Rose and family memory photographs"
+              alt="Memvella’s Today page with sample daily routines, companion access and family memory photographs"
               width="1265"
               height="1066"
               loading="lazy"
               decoding="async"
-            /><span class="shot-expand"
-              ><svg aria-hidden="true"><use href="#expand" /></svg
-              ><span>Enlarge</span></span
-            ></a
-          >
-          <figcaption class="gallery-caption">
-            <div
-              class="view-switcher"
-              role="group"
-              aria-label="Memvella screenshots"
-            >
-              <button
-                type="button"
-                aria-pressed="true"
-                data-view="memvella-today"
-                data-alt="Memvella's Today page with daily routines, companion access for Rose and family memory photographs"
-                data-caption="Memvella — Today. Current app components, shown with fictional routines and an example care circle."
-              >
-                Today</button
-              ><button
-                type="button"
-                aria-pressed="false"
-                data-view="memvella-memories"
-                data-alt="Memvella's shared memory collection, with photographs of gardens, family, familiar places and everyday moments"
-                data-caption="Memvella — Memories. Current app components with example memory content."
-              >
-                Memories
-              </button>
-            </div>
-            <span>Sample care circle</span>
-          </figcaption>
+            />
+          </div>
         </figure>
       </article>
       <article
         class="project shell"
-        id="jsearch"
-        aria-labelledby="jsearch-title"
+        id="ollo"
+        aria-labelledby="ollo-title"
       >
+        <span id="jsearch" class="legacy-anchor" aria-hidden="true"></span>
         <div class="project__heading">
           <div>
-            <h2 id="jsearch-title">JSearch</h2>
+            <h2 id="ollo-title">ollo</h2>
           </div>
           <span class="project-status">Private project · In development</span>
         </div>
@@ -410,29 +376,17 @@
             preparation; you review the details and decide what gets sent.
           </p>
         </div>
-        <figure class="product-gallery" data-gallery="jsearch">
-          <a
-            class="product-shot"
-            href="assets/projects/2026-09/jsearch-workspace-17.webp"
-            data-shot
-            data-caption="JSearch — role review workspace. Current app with fictional roles, a sample CV and example fit estimates."
-            aria-label="Enlarge JSearch role review screenshot"
-            ><img
-              src="assets/projects/2026-09/jsearch-workspace-17.webp"
-              alt="JSearch’s current Discover view with role matches, a selected job and fit evidence"
+        <figure class="product-gallery">
+          <div class="product-shot">
+            <img
+              src="assets/projects/2026-09/ollo-workspace-26.webp"
+              alt="ollo’s current role review workspace showing fictional roles, fit evidence and its job search assistant"
               width="1440"
-              height="850"
+              height="900"
               loading="lazy"
               decoding="async"
-            /><span class="shot-expand"
-              ><svg aria-hidden="true"><use href="#expand" /></svg
-              ><span>Enlarge</span></span
-            ></a
-          >
-          <figcaption class="gallery-caption">
-            <span>Role review</span
-            ><span>Sample roles & CV</span>
-          </figcaption>
+            />
+          </div>
         </figure>
       </article>
       <section class="mote-meadow" id="mote" aria-labelledby="mote-title">
@@ -468,58 +422,6 @@
                 decoding="async"
               />
             </div>
-            <div
-              class="pet-picker"
-              role="group"
-              aria-label="Meet Mote's companions"
-            >
-              <button
-                type="button"
-                aria-pressed="true"
-                data-pet="cat"
-                data-pet-alt="Mote's fluffy tabby cat companion"
-              >
-                Cat</button
-              ><button
-                type="button"
-                aria-pressed="false"
-                data-pet="dog"
-                data-pet-alt="Mote's Shiba Inu dog companion"
-              >
-                Dog</button
-              ><button
-                type="button"
-                aria-pressed="false"
-                data-pet="rabbit"
-                data-pet-alt="Mote's lop-eared rabbit companion"
-              >
-                Rabbit</button
-              ><button
-                type="button"
-                aria-pressed="false"
-                data-pet="fox"
-                data-pet-alt="Mote's red fox companion"
-              >
-                Fox</button
-              ><button
-                type="button"
-                aria-pressed="false"
-                data-pet="owl"
-                data-pet-alt="Mote's barn owl companion"
-              >
-                Owl</button
-              ><button
-                type="button"
-                aria-pressed="false"
-                data-pet="tortoise"
-                data-pet-alt="Mote's tortoise companion"
-              >
-                Tortoise
-              </button>
-            </div>
-            <p class="mote-caption" id="pet-caption" aria-live="polite">
-              Cat · Artwork from Mote’s native renderer
-            </p>
           </div>
         </div>
       </section>
@@ -549,29 +451,17 @@
             every provider’s website.
           </p>
         </div>
-        <figure class="product-gallery" data-gallery="tokenmaxxer">
-          <a
-            class="product-shot"
-            href="assets/projects/2026-09/tokenmaxxer-dashboard.webp"
-            data-shot
-            data-caption="TokenMaxxer — account dashboard. Current product demo with example accounts and usage figures."
-            aria-label="Enlarge TokenMaxxer dashboard screenshot"
-            ><img
-              src="assets/projects/2026-09/tokenmaxxer-dashboard.webp"
-              alt="TokenMaxxer's dashboard bringing AI account usage, remaining quotas and reset times into one view"
+        <figure class="product-gallery">
+          <div class="product-shot">
+            <img
+              src="assets/projects/2026-09/tokenmaxxer-dashboard-26.webp"
+              alt="TokenMaxxer’s dashboard with sample AI account usage, remaining quotas and reset times"
               width="1440"
-              height="960"
+              height="914"
               loading="lazy"
               decoding="async"
-            /><span class="shot-expand"
-              ><svg aria-hidden="true"><use href="#expand" /></svg
-              ><span>Enlarge</span></span
-            ></a
-          >
-          <figcaption class="gallery-caption">
-            <span>Account dashboard</span
-            ><span>Sample accounts</span>
-          </figcaption>
+            />
+          </div>
         </figure>
       </article>
       <article
@@ -602,59 +492,17 @@
             events, projects and membership.
           </p>
         </div>
-        <figure class="product-gallery" data-gallery="societies">
-          <a
-            class="product-shot"
-            href="assets/projects/2026-09/surrey-ai.webp"
-            data-shot
-            data-caption="Surrey Artificial Intelligence Society — current local homepage."
-            aria-label="Enlarge Surrey society website screenshot"
-            ><img
+        <figure class="product-gallery">
+          <div class="product-shot">
+            <img
               src="assets/projects/2026-09/surrey-ai.webp"
               alt="Surrey AI Society homepage with its Learn it, Build it, Question it identity"
               width="1265"
               height="712"
               loading="lazy"
               decoding="async"
-            /><span class="shot-expand"
-              ><svg aria-hidden="true"><use href="#expand" /></svg
-              ><span>Enlarge</span></span
-            ></a
-          >
-          <figcaption class="gallery-caption">
-            <div
-              class="view-switcher"
-              role="group"
-              aria-label="Society websites"
-            >
-              <button
-                type="button"
-                aria-pressed="true"
-                data-view="surrey-ai"
-                data-alt="Surrey AI Society homepage with its Learn it, Build it, Question it identity"
-                data-caption="Surrey Artificial Intelligence Society — current local homepage."
-              >
-                AI</button
-              ><button
-                type="button"
-                aria-pressed="false"
-                data-view="surrey-business"
-                data-alt="Surrey Business Society homepage showing the university campus and ways for students to get involved"
-                data-caption="Surrey Business Society — current local homepage."
-              >
-                Business</button
-              ><button
-                type="button"
-                aria-pressed="false"
-                data-view="surrey-neurotech"
-                data-alt="Surrey Neurotech Society homepage with EEG laboratory imagery and its student neurotechnology programme"
-                data-caption="Surrey Neurotech Society — current local homepage."
-              >
-                Neurotech
-              </button>
-            </div>
-            <span>Website previews</span>
-          </figcaption>
+            />
+          </div>
         </figure>
       </article>
       <aside class="side-note shell" id="betwfriends">
@@ -794,30 +642,5 @@
         </footer>
       </section>
     </main>
-    <dialog class="shot-dialog" aria-labelledby="shot-dialog-caption">
-      <div class="shot-dialog__bar">
-        <p id="shot-dialog-caption"></p>
-        <button
-          class="shot-dialog__close"
-          type="button"
-          aria-label="Close screenshot"
-        >
-          <svg aria-hidden="true"><use href="#close" /></svg>
-        </button>
-      </div>
-      <div
-        class="shot-dialog__viewport"
-        tabindex="0"
-        role="region"
-        aria-label="Product screenshot; scroll to inspect"
-      >
-        <img id="shot-dialog-image" alt="" />
-      </div>
-      <div class="shot-dialog__footer">
-        <button type="button" class="shot-dialog__zoom" aria-pressed="false">
-          View actual size</button
-        ><span>Escape to close</span>
-      </div>
-    </dialog>
   </body>
 </html>

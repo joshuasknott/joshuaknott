@@ -1,5 +1,13 @@
 # Portfolio product captures — 12 September 2026
 
+## 26 September update
+
+- `mivlet-workspace-26.webp`: current AgentSidebar, ConversationIdentity, ConversationFeed, Composer, WorkspaceRightNav and WorkspaceMemories components imported from the Mivlet checkout on 26 September. Includes the current uncommitted Memories panel work. Fictional account, agents, conversation and memories; no provider or connector invoked. No Grok Bot appears in the sidebar. Captured at 1440 × 900.
+- `ollo-workspace-26.webp`: current Ollo source copied into an isolated development preview with the existing fictional roles and CV database. Captured at 1440 × 900. Model connection, job refresh and pause responses use local fixtures; no provider requests, real user records or application submissions. Replaces the JSearch image and branding.
+- `tokenmaxxer-dashboard-26.webp`: current `/demo/desktop` route with built-in example accounts. Captured directly in the browser at 1440 × 914, ending after the first four complete account cards instead of cutting through the next row.
+
+The portfolio now displays one image per project, without image selectors, captions or an enlarge viewer. Sample content remains identified in image alt text and this provenance file.
+
 ## 17 September update
 
 - `mivlet-conversation-17.webp`: current AgentSidebar, ConversationFeed and Composer components imported directly from the working Mivlet checkout into an isolated capture page. Fictional conversation and account; no provider invoked. This replaces the previous three-view Mivlet gallery on the portfolio. Original capture: 1718 × 1248.
@@ -7,7 +15,7 @@
 
 The remaining files below retain their 12 September provenance. Product source files were not edited for these captures.
 
-These assets are screenshots of the projects' current interfaces or exports from their renderer. They are not generated UI mockups. Captions on the portfolio distinguish demonstrations from live product usage.
+These assets are screenshots of the projects' interfaces or exports from their renderer. They are not generated UI mockups. Image alt text and this file distinguish demonstrations from live product usage.
 
 | Files                                                             | Capture source                                                                                                                                                                                                                                                 |
 | ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
