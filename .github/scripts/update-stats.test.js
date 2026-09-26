@@ -4,7 +4,24 @@ const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
 const { execFileSync } = require("node:child_process");
-const { dateRange, graphQL, readPreviousStats, getLatestCommitTimestamp } = require("./update-stats.js");
+const { dateRange, graphQL, getContributions, readPreviousStats, getLatestCommitTimestamp } = require("./update-stats.js");
+
+test("contribution totals use GitHub's profile period including partial weeks", async (t) => {
+  const previous = process.env.STATS_TOKEN;
+  process.env.STATS_TOKEN = "synthetic-token";
+  t.after(() => { if (previous === undefined) delete process.env.STATS_TOKEN; else process.env.STATS_TOKEN = previous; });
+  t.mock.method(globalThis, "fetch", async (_url, options) => {
+    const { query, variables } = JSON.parse(options.body);
+    assert.doesNotMatch(query, /contributionsCollection\(/);
+    assert.equal(variables.from, undefined);
+    assert.equal(variables.to, undefined);
+    return Response.json({ data: { user: { contributionsCollection: { contributionCalendar: {
+      totalContributions: 2011,
+      weeks: [{ contributionDays: [{ date: "2026-09-17", contributionCount: 12 }] }],
+    } } } } });
+  });
+  assert.deepEqual(await getContributions(), { totalContributions: 2011, days: [{ date: "2026-09-17", count: 12 }] });
+});
 
 test("the contribution range starts on Sunday and stays within a year on every weekday", () => {
   for (let day = 6; day <= 12; day++) {

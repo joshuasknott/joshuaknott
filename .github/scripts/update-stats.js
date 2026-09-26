@@ -75,14 +75,11 @@ async function graphQL(query, variables) {
 }
 
 async function getContributions() {
-  const { start, end } = dateRange();
-  const from = start.toISOString();
-  const to = end.toISOString();
-
+  // Match the rolling year on GitHub's profile, without trimming partial weeks.
   const query = `
-    query($login: String!, $from: DateTime!, $to: DateTime!) {
+    query($login: String!) {
       user(login: $login) {
-        contributionsCollection(from: $from, to: $to) {
+        contributionsCollection {
           contributionCalendar {
             totalContributions
             weeks {
@@ -96,7 +93,7 @@ async function getContributions() {
       }
     }`;
 
-  const data = await graphQL(query, { login: LOGIN, from, to });
+  const data = await graphQL(query, { login: LOGIN });
 
   // The repo-scoped GITHUB_TOKEN may return user: null for contribution
   // queries (token isn't tied to a user identity). Handle gracefully.
@@ -153,11 +150,13 @@ async function main() {
   // auth/rate-limit/network issue.
   let totalContributions = previousStats.totalContributions || 0;
   let days = Array.isArray(previousStats.days) ? previousStats.days : [];
+  let contributionsUpdatedAt = previousStats.contributionsUpdatedAt || previousStats.generatedAt || previousStats.updatedAt;
 
   try {
     const contributions = await getContributions();
     totalContributions = contributions.totalContributions;
     days = contributions.days;
+    contributionsUpdatedAt = new Date().toISOString();
     console.log(
       `Contributions: ${totalContributions} total over ${days.length} days.`,
     );
@@ -166,6 +165,7 @@ async function main() {
       "⚠ Contribution calendar unavailable; keeping previous data:",
       err.message,
     );
+    process.exitCode = 1;
   }
 
   const updatedAt = getLatestCommitTimestamp();
@@ -174,6 +174,7 @@ async function main() {
     updatedAt,
     totalContributions,
     days,
+    contributionsUpdatedAt,
     generatedAt: new Date().toISOString(),
   };
 
@@ -223,7 +224,7 @@ function bumpSitemapLastmod(updatedAt) {
   }
 }
 
-module.exports = { dateRange, graphQL, readPreviousStats, getLatestCommitTimestamp };
+module.exports = { dateRange, graphQL, getContributions, readPreviousStats, getLatestCommitTimestamp };
 
 if (require.main === module) {
   main().catch((err) => {
