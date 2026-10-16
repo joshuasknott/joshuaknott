@@ -14,6 +14,7 @@ function setup() {
     const listeners = new Map(), attributes = new Map(), classes = new Set();
     return {
       dataset, hidden: false, children: [], currentTime: 0, readyState: 0, paused: true,
+      style: { setProperty() {} },
       classList: {
         add: name => classes.add(name), remove: name => classes.delete(name),
         toggle: (name, enabled) => enabled ? classes.add(name) : classes.delete(name),
@@ -51,8 +52,7 @@ function setup() {
   const filters = element();
   const filterButtons = ['all', 'products', 'websites', 'experiments'].map(filter => element({ filter }));
   filters.querySelectorAll = () => filterButtons;
-  const ids = new Map(['filter-status', 'dialog-title', 'dialog-category', 'dialog-description',
-    'dialog-mote-logo', 'capture-note', 'dialog-image', 'media-error', 'dialog-links', 'walkthrough']
+  const ids = new Map(['filter-status', 'dialog-image', 'dialog-links', 'walkthrough']
     .map(id => [id, element()]));
   const closeButton = element();
   const dialog = Object.assign(element(), {
@@ -94,12 +94,40 @@ test('every project cover and title opens the modal, including website projects'
       await app.click(trigger);
       assert.equal(app.dialog.open, true, card.id);
       const project = projects.find(project => project.id === card.id);
-      assert.equal(app.ids.get('dialog-title').textContent, project.name);
+      assert.equal(app.dialog.getAttribute('aria-label'), `${project.name} preview`);
       assert.equal(app.ids.get('dialog-image').hidden, Boolean(project.video));
+      assert.equal(app.ids.get('walkthrough').paused, !project.video);
+      const destination = project.visit || project.source;
+      const links = app.ids.get('dialog-links').children;
+      assert.equal(links.length, destination ? 1 : 0);
+      if (destination) {
+        assert.equal(links[0].href, destination);
+        assert.equal(links[0].textContent, `View ${project.displayName || project.name}`);
+      }
       await app.dialog.close();
+      assert.equal(app.ids.get('walkthrough').paused, true);
       assert.equal(app.document.activeElement, trigger, 'closing restores the clicked project');
     }
   }
+});
+
+test('a blocked modal autoplay falls back to the project screen without affecting another modal', async () => {
+  const app = setup();
+  let rejectPlayback;
+  app.ids.get('walkthrough').play = () => new Promise((_resolve, reject) => { rejectPlayback = reject; });
+  await app.click(app.cards.find(card => card.id === 'mivlet').cover);
+  await app.dialog.close();
+  app.ids.get('walkthrough').play = async () => {};
+  await app.click(app.cards.find(card => card.id === 'ollo').cover);
+  rejectPlayback(new Error('Playback aborted'));
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(app.ids.get('dialog-image').hidden, true);
+  assert.equal(app.ids.get('walkthrough').hidden, false);
+
+  app.ids.get('walkthrough').play = async () => { throw new Error('Autoplay blocked'); };
+  await app.click(app.cards.find(card => card.id === 'mivlet').cover);
+  assert.equal(app.ids.get('dialog-image').hidden, false);
+  assert.equal(app.ids.get('walkthrough').hidden, true);
 });
 
 test('hover previews remain inline and stop when the project opens', async () => {

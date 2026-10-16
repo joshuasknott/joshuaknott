@@ -87,8 +87,8 @@
       as="image"
       fetchpriority="high"
     />
-    <link rel="stylesheet" href="styles.css?v=20261016-credentials-row" />
-    <script src="main.js?v=20261016-project-dialogs" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20261016-screen-modal" />
+    <script src="main.js?v=20261016-screen-modal" defer></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -1415,54 +1415,33 @@
     <dialog
       class="project-dialog"
       id="project-dialog"
-      aria-labelledby="dialog-title"
-      aria-describedby="dialog-description"
+      aria-label="Project preview"
     >
-      <div class="project-dialog__top">
-        <div>
-          <p class="dialog-category" id="dialog-category"></p>
-          <div class="dialog-title-row">
-            <img
-              class="project-card__logo"
-              id="dialog-mote-logo"
-              src="assets/brand/mote.png"
-              alt=""
-              width="25"
-              height="25"
-              hidden
-            />
-            <h2 id="dialog-title"></h2>
-          </div>
-        </div>
-        <button class="dialog-close" type="button" aria-label="Close project">
-          <img
-            class="icon"
-            src="assets/icons/x.svg"
-            alt=""
-            width="20"
-            height="20"
-          />
-        </button>
-      </div>
+      <button class="dialog-close" type="button" aria-label="Close project">
+        <img
+          class="icon"
+          src="assets/icons/x.svg"
+          alt=""
+          width="20"
+          height="20"
+        />
+      </button>
       <div class="project-dialog__media">
         <video
           id="walkthrough"
-          controls
+          autoplay
+          muted
+          loop
           playsinline
+          disablepictureinpicture
+          disableremoteplayback
+          tabindex="-1"
           preload="none"
           hidden
         ></video
         ><img id="dialog-image" alt="" width="1440" height="900" hidden />
       </div>
-      <div class="project-dialog__details">
-        <p id="dialog-description"></p>
-        <p class="capture-note" id="capture-note"></p>
-        <p class="media-error" role="status" id="media-error" hidden>
-          The walkthrough could not load. You can still explore this project
-          below.
-        </p>
-        <div class="project-dialog__links" id="dialog-links"></div>
-      </div>
+      <div class="project-dialog__links" id="dialog-links"></div>
     </dialog>
     <script type="application/json" id="project-data">
       [

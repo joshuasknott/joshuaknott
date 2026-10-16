@@ -488,112 +488,82 @@ p {
   height: 13px;
 }
 .project-dialog {
+  --modal-gutter: 24px;
   padding: 0;
-  border: 1px solid #ffffff40;
-  border-radius: 18px;
-  width: min(1100px, calc(100% - 48px));
-  max-height: calc(100dvh - 60px);
-  background: #f7f5ff;
+  border: 0;
+  border-radius: 8px;
+  width: min(1600px, calc(100vw - var(--modal-gutter) * 2), calc((100dvh - var(--modal-gutter) * 2) * var(--media-ratio, 1.6)));
+  max-width: none;
+  max-height: calc(100dvh - var(--modal-gutter) * 2);
+  overflow: hidden;
+  background: #0c0914;
   color: var(--ink);
   box-shadow: 0 28px 100px #0b061b60;
-  overscroll-behavior: contain;
 }
 .project-dialog::backdrop {
   background: #0b071bbd;
   backdrop-filter: blur(8px);
 }
-.project-dialog__top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  padding: 20px 28px;
-}
-.dialog-category {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 5px;
-}
-.project-dialog h2 {
-  font-size: 27px;
-  letter-spacing: -1px;
-  font-weight: 650;
-}
-.dialog-title-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
 .dialog-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
   display: grid;
   place-items: center;
-  border: 1px solid var(--line);
+  border: 1px solid #ded5e9;
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  background: transparent;
-  flex: none;
+  background: #f7f5ffeb;
 }
 .dialog-close:hover {
-  background: #e8e2f8;
+  background: #fff;
 }
 .project-dialog__media {
-  background: #0c0914;
+  position: relative;
   width: 100%;
-  min-height: 150px;
+  aspect-ratio: var(--media-ratio, 1.6);
 }
 .project-dialog__media video,
 .project-dialog__media > img {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
-  max-height: 62dvh;
-  height: auto;
+  height: 100%;
   object-fit: contain;
-  margin-inline: auto;
 }
-.project-dialog__details {
-  padding: 22px 28px 26px;
+.project-dialog__links {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  z-index: 2;
+  max-width: calc(100% - 28px);
 }
-.project-dialog__details > p:first-child {
-  font-size: 15px;
-  line-height: 1.7;
-  max-width: 810px;
-  color: #4b4269;
+.project-dialog__links > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  border: 1px solid #ded5e9;
+  border-radius: 100px;
+  background: #f7f5ffeb;
+  padding: 10px 16px;
+  font-size: 12px;
+}
+.project-dialog__links > a:hover {
+  background: #fff;
+}
+.project-dialog__links .icon {
+  width: 14px;
+  height: 14px;
 }
 .capture-note {
   font-size: 11px;
   line-height: 1.6;
   color: #706687;
   margin-top: 10px;
-}
-.project-dialog__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 18px;
-}
-.project-dialog__links > a {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--line);
-  border-radius: 100px;
-  padding: 10px 17px;
-  font-size: 12px;
-}
-.project-dialog__links > a:hover {
-  background: #e9e1fb;
-}
-.project-dialog__links .icon {
-  width: 14px;
-  height: 14px;
-}
-.media-error {
-  padding: 12px 0;
-  font-size: 13px;
-  color: #7a344f;
 }
 body.has-dialog {
   overflow: hidden;
@@ -742,43 +712,27 @@ body.has-dialog {
     font-size: 10px;
   }
   .project-dialog {
-    width: calc(100% - 20px);
-    max-height: calc(100dvh - 24px);
-    border-radius: 12px;
-  }
-  .project-dialog__top {
-    padding: 17px 16px;
-  }
-  .project-dialog h2 {
-    font-size: 21px;
-    letter-spacing: -0.6px;
-  }
-  .dialog-category {
-    font-size: 10px;
+    --modal-gutter: 10px;
+    border-radius: 6px;
   }
   .dialog-close {
-    width: 36px;
-    height: 36px;
+    top: 8px;
+    right: 8px;
+    width: 44px;
+    height: 44px;
   }
-  .project-dialog__media video,
-  .project-dialog__media > img {
-    max-height: 52dvh;
+  .project-dialog__links {
+    bottom: 8px;
+    right: 8px;
+    max-width: calc(100% - 16px);
   }
-  .project-dialog__details {
-    padding: 16px 17px 20px;
-  }
-  .project-dialog__details > p:first-child {
-    font-size: 13px;
+  .project-dialog__links > a {
+    min-height: 44px;
+    font-size: 11px;
+    padding: 9px 13px;
   }
   .capture-note {
     font-size: 10px;
-  }
-  .project-dialog__links {
-    gap: 8px;
-  }
-  .project-dialog__links > a {
-    font-size: 11px;
-    padding: 9px 13px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

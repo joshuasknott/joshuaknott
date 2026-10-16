@@ -48,7 +48,6 @@
   const dialog = document.getElementById("project-dialog");
   const video = document.getElementById("walkthrough");
   const image = document.getElementById("dialog-image");
-  const mediaError = document.getElementById("media-error");
   const hoverPointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const previewStates = [];
@@ -140,6 +139,20 @@
 
   let opener = null;
   let previousHash = "";
+  let modalRequest = 0;
+  const fitModal = () => {
+    const width = video.hidden ? image.naturalWidth : video.videoWidth;
+    const height = video.hidden ? image.naturalHeight : video.videoHeight;
+    if (width && height) dialog.style.setProperty("--media-ratio", width / height);
+  };
+  const showModalPoster = () => {
+    video.pause();
+    video.hidden = true;
+    image.hidden = false;
+    fitModal();
+  };
+  video?.addEventListener("loadedmetadata", fitModal);
+  image?.addEventListener("load", fitModal);
   const linkFor = (href, label) => {
     const anchor = document.createElement("a");
     anchor.href = href;
@@ -157,24 +170,17 @@
     stopPreviews();
     const project = projects.find((item) => item.id === id);
     if (!project || !dialog || typeof dialog.showModal !== "function") return;
+    const request = ++modalRequest;
     const card = cards.find((item) => item.id === id);
     if (card?.hidden) setFilter("all");
     opener =
       trigger ||
       document.querySelector(`[data-project="${id}"]`) ||
       document.activeElement;
-    document.getElementById("dialog-title").textContent = project.name;
-    document.getElementById("dialog-mote-logo").hidden = project.id !== "mote";
-    document.getElementById("dialog-category").textContent = {
-      products: "Product",
-      websites: "Website",
-      experiments: "Experiment",
-    }[project.category];
-    document.getElementById("dialog-description").textContent =
-      project.description;
-    document.getElementById("capture-note").textContent =
-      project.note || "Current project source reviewed on 6 October 2026.";
-    mediaError.hidden = true;
+    dialog.setAttribute("aria-label", `${project.name} preview`);
+    const poster = card?.querySelector(".project-card__image");
+    dialog.style.setProperty("--media-ratio", poster?.naturalWidth && poster.naturalHeight
+      ? poster.naturalWidth / poster.naturalHeight : 1.6);
     image.src = project.poster;
     image.alt = project.alt || `${project.name} running locally`;
     image.hidden = Boolean(project.video);
@@ -189,14 +195,8 @@
     }
     const links = document.getElementById("dialog-links");
     links.replaceChildren();
-    if (project.visit) links.append(linkFor(project.visit, "Open project"));
-    if (project.source) links.append(linkFor(project.source, "View source"));
-    if (project.video) {
-      const download = linkFor(project.video, "Download walkthrough");
-      download.removeAttribute("target");
-      download.download = `${project.id}-walkthrough.mp4`;
-      links.append(download);
-    }
+    const destination = project.visit || project.source;
+    if (destination) links.append(linkFor(destination, `View ${project.displayName || project.name}`));
     if (!dialog.open) {
       previousHash = location.hash.startsWith("#project-")
         ? "#work"
@@ -206,6 +206,11 @@
       history.pushState(null, "", `#project-${project.id}`);
     }
     dialog.querySelector(".dialog-close").focus();
+    if (project.video) {
+      video.play().catch(() => {
+        if (request === modalRequest && dialog.open) showModalPoster();
+      });
+    }
   };
   document.querySelectorAll("[data-project]").forEach((trigger) =>
     trigger.addEventListener("click", (event) => {
@@ -220,7 +225,7 @@
   dialog?.addEventListener("keydown", (event) => {
     if (event.key !== "Tab" || !dialog.open) return;
     const stops = [
-      ...dialog.querySelectorAll("button, a[href], video[controls]"),
+      ...dialog.querySelectorAll("button, a[href]"),
     ].filter((element) => !element.disabled && element.getClientRects().length);
     const first = stops[0],
       last = stops.at(-1);
@@ -244,6 +249,7 @@
       dialog.close();
   });
   dialog?.addEventListener("close", () => {
+    modalRequest++;
     video.pause();
     video.removeAttribute("src");
     video.load();
@@ -257,9 +263,7 @@
   });
   video?.addEventListener("error", () => {
     if (!video.hasAttribute("src")) return;
-    video.hidden = true;
-    image.hidden = false;
-    mediaError.hidden = false;
+    showModalPoster();
   });
   const openFromHash = () => {
     if (location.hash.startsWith("#project-"))

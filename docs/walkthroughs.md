@@ -2,7 +2,7 @@
 
 Reviewed locally on 7 October 2026. These are the recordings from 6 October; this review does not establish that the underlying product issues have since been fixed.
 
-The portfolio contains 15 projects, 11 full recordings and four still website covers (the three societies and Memvella). Video covers play muted on hover or keyboard focus. Clicking or tapping any project cover or name opens a modal with the full recording or screenshot, capture notes and available source/site links. Reduced-motion users start playback explicitly in the modal.
+The portfolio contains 15 projects, 11 full recordings and four still website covers (the three societies and Memvella). Video covers play muted on hover or keyboard focus. Clicking or tapping any project cover or name opens a larger screen-only modal. Recordings autoplay muted on repeat without player controls; still projects show their screenshot. A single View link opens the available project site or source. Reduced motion disables hover playback; the modal starts after the visitor explicitly opens it.
 
 All 11 original files decoded without errors. They use H.264, have streaming metadata at the beginning of the file, and contain **no audio track**. Original durations range from 8 to 30 seconds. The main limitations are demonstration content and pacing, rather than broken video files.
 
