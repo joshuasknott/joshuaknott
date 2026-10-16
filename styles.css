@@ -973,7 +973,22 @@ body.has-dialog {
 @media (min-width: 1401px) {
   .credential:last-child { padding-left: 30px; gap: 18px; }
 }
-@media (max-width: 1400px) {
+@media (min-width: 951px) and (max-width: 1400px) {
+  .credentials__inner {
+    width: calc(100% - 64px);
+    padding-block: 28px;
+  }
+  .credential { padding-left: 18px; gap: 12px; }
+  .credential > img { width: 54px; height: 54px; }
+  .credential:nth-child(2) > img { width: 48px; height: 48px; }
+  .credential h2 { font-size: 18px; }
+  .credential p { font-size: 15px; }
+  .credential small { font-size: 12px; }
+  .credential--university { padding-left: 0; }
+  .credential--university > img { width: 210px; height: auto; }
+  .credential--university p { padding-left: 56px; font-size: 14px; }
+}
+@media (max-width: 950px) {
   .credentials__inner {
     width: calc(100% - 64px);
     grid-template-columns: repeat(2, minmax(0, 1fr));
