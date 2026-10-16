@@ -9,12 +9,17 @@ test('activity uses the newest successful snapshot and retains it on remote fail
   const requests = new Map();
   const document = {
     documentElement: { dataset: {} },
+    addEventListener() {},
     querySelector: () => null, querySelectorAll: () => [],
     getElementById: id => elements.get(id),
     createElement: () => ({ dataset: {}, setAttribute() {}, appendChild() {} }),
   };
+  const window = {
+    addEventListener() {}, scrollY: 0,
+    matchMedia: query => ({ media: query, matches: false, addEventListener() {} }),
+  };
   vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../../main.js'), 'utf8'), {
-    document, window: { addEventListener() {}, scrollY: 0 }, AbortSignal,
+    document, window, location: { hash: '' }, AbortSignal,
     fetch: url => new Promise((resolve, reject) => requests.set(url, { resolve, reject })),
   });
   const flush = () => new Promise(resolve => setImmediate(resolve));
@@ -30,7 +35,7 @@ test('activity uses the newest successful snapshot and retains it on remote fail
   // A new page load with an unavailable remote still renders its local data.
   requests.clear();
   vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../../main.js'), 'utf8'), {
-    document, window: { addEventListener() {}, scrollY: 0 }, AbortSignal,
+    document, window, location: { hash: '' }, AbortSignal,
     fetch: url => new Promise((resolve, reject) => requests.set(url, { resolve, reject })),
   });
   requests.get('data/stats.json').resolve({ ok: true, json: async () => snapshot(2011, '2026-09-17T17:00:00Z') });

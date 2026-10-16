@@ -1,0 +1,10 @@
+GitHub and LinkedIn brand icons: Font Awesome Free 6.7.2 by Fonticons, Inc.
+https://fontawesome.com/license/free
+Icons are licensed under Creative Commons Attribution 4.0 International:
+https://creativecommons.org/licenses/by/4.0/
+Copyright 2024 Fonticons, Inc. SVG paths are unmodified; CSS applies display color.
+
+Other interface icons: Phosphor Icons
+https://github.com/phosphor-icons/core
+Copyright (c) 2023 Phosphor Icons. MIT License.
+The original license is included in Phosphor-LICENSE.txt.

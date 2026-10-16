@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/readme/og-portfolio.webp" width="720" alt="joshuaknott.tech portfolio artwork" />
+  <img src="assets/og-portfolio-20261006.png" width="720" alt="Joshua Knott’s current portfolio with flowing violet artwork" />
 </p>
 
 I study Politics and International Relations at Surrey. I’m President of the AI Society, Vice President of Neurotech, and I build products I’d actually use.
@@ -24,56 +24,50 @@ I study Politics and International Relations at Surrey. I’m President of the A
 ## Mivlet
 
 <p align="center">
-  <img src="docs/readme/mivlet-lockup-light.png" width="200" alt="Mivlet" />
+  <img src="assets/brand/mivlet-wordmark.png" width="200" alt="Mivlet" />
 </p>
 
 One place for your AI agents — local-first, provider-neutral.
 
 <p align="center">
-  <img src="docs/readme/mivlet-main.png" width="720" alt="Mivlet main window" />
-</p>
-
-<p align="center">
-  <img src="docs/readme/mivlet-workspace.png" width="720" alt="Mivlet workspace" />
+  <img src="assets/projects/2026-10/mivlet.webp" width="720" alt="Mivlet’s current native workspace with a real model response" />
 </p>
 
 ## ollo
 
 <p align="center">
-  <img src="docs/readme/ollo-lockup.png" width="220" alt="ollo" />
+  <img src="assets/brand/ollo.png" width="220" alt="ollo" />
 </p>
 
 Your next role, with a little help — private Windows job-search workspace.
 
 <p align="center">
-  <img src="docs/readme/workspace.png" width="720" alt="ollo workspace" />
+  <img src="assets/projects/2026-10/ollo.webp" width="720" alt="ollo’s current signed-in native workspace" />
 </p>
 
 ## Memvella
 
 <p align="center">
-  <img src="docs/readme/memvella-logo-light.svg" width="180" alt="Memvella" />
+  <img src="assets/brand/memvella-current.svg" width="52" alt="Memvella’s current flower mark" />
 </p>
 
 Memory support that doesn’t feel clinical. Founded for early-stage memory loss and the people around them. [memvella.me](https://memvella.me) · £1,500 from Surrey’s Innovation and Enterprise Hub.
 
 <p align="center">
-  <img src="docs/readme/memvella-og.png" width="720" alt="Memvella marketing" />
-</p>
-
-<p align="center">
-  <img src="docs/readme/memvella-family-album.webp" width="360" alt="Memvella family album" />
-  &nbsp;
-  <img src="docs/readme/memvella-garden-memory.webp" width="360" alt="Memvella garden memory" />
+  <img src="assets/projects/2026-10/memvella.webp" width="720" alt="Memvella’s current welcome screen" />
 </p>
 
 ## Surrey Societies
 
-Three society sites — AI, Business, Neurotech — each with its own content and admin.
+Three society sites — AI, Business, Neurotech — with shared infrastructure and distinct identities.
 
-| AI | Business | Neurotech |
-| :---: | :---: | :---: |
-| <img src="docs/readme/surrey-ai-current.webp" width="260" alt="Surrey AI Society" /> | <img src="docs/readme/surrey-business-current.webp" width="260" alt="Surrey Business Society" /> | <img src="docs/readme/surrey-neurotech-current.webp" width="260" alt="Surrey Neurotech Society" /> |
+|                                            AI                                            |                                               Business                                               |                                               Neurotech                                                |
+| :--------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
+| <img src="assets/projects/2026-10/surrey-ai.webp" width="260" alt="Surrey AI Society" /> | <img src="assets/projects/2026-10/surrey-business.webp" width="260" alt="Surrey Business Society" /> | <img src="assets/projects/2026-10/surrey-neurotech.webp" width="260" alt="Surrey Neurotech Society" /> |
+
+The portfolio includes 15 projects and 11 walkthroughs recorded from current local source on 6 October 2026. The three society cards open their public websites directly. The AI Society cover was captured from the fully loaded public homepage on the same date. The native and browser clips show actual interactions. Each project’s dialog records what was verified and any configuration limits. Memvella’s family workspace is omitted while email verification remains unresolved.
+
+Projects sit on a compact canvas with names and logos beneath each cover. Walkthroughs play inline on hover or keyboard focus, and tap toggles playback on phones. Project names open the full recording and details. Videos load on demand and pause when they leave the screen; reduced-motion users start playback explicitly. Memvella’s cover opens its website. [Walkthrough review and next fixes](docs/walkthroughs.md).
 
 ---
 
