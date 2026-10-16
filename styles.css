@@ -215,6 +215,9 @@ p {
   gap: 32px 34px;
   padding: 8px 7px 20px;
 }
+.project-grid + .project-grid {
+  margin-top: 38px;
+}
 .project-card {
   min-width: 0;
   align-self: start;
@@ -276,28 +279,6 @@ p {
 .project-card--portrait .project-card__preview {
   padding: 7px;
 }
-.project-card__action {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  border: 1px solid #ded5e9;
-  background: #fffefaee;
-  color: #241641;
-  border-radius: 100px;
-  padding: 8px 12px;
-  min-height: 36px;
-  font-size: 11px;
-  line-height: 1;
-  box-shadow: 0 2px 8px #10081b12;
-}
-.project-card__action .icon {
-  width: 14px;
-  height: 14px;
-}
 .project-card__caption {
   display: flex;
   align-items: flex-start;
@@ -323,8 +304,21 @@ p {
   text-decoration: underline;
   text-underline-offset: 4px;
 }
+.project-card__category {
+  display: block;
+  margin-top: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
 .project-grid.is-filtered .project-card {
   padding-top: 0;
+}
+.project-grid.is-filtered {
+  margin-top: 0;
 }
 @media (max-width: 1100px) {
   .project-grid {
@@ -355,10 +349,6 @@ p {
   }
   .project-card h3 {
     font-size: 18px;
-  }
-  .project-card__action {
-    min-height: 44px;
-    padding-inline: 13px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -848,11 +838,11 @@ body.has-dialog {
   }
 }
 
-/* Match each studio composition's proportions so its screens stay in frame. */
+/* Leave the society roles visible beneath the studio on the first screen. */
 .arrival {
   position: relative;
   isolation: isolate;
-  aspect-ratio: 2 / 1;
+  height: clamp(300px, 55svh, 620px);
   overflow: hidden;
   background: #100a1c;
   color: #fff8f0;
@@ -866,24 +856,25 @@ body.has-dialog {
 .arrival__art img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  object-position: center 48%;
 }
 .arrival__inner {
   position: absolute;
-  top: 21%;
+  top: 22%;
   left: 0;
   right: 0;
   padding-inline: 24px;
   font-family: "Times New Roman", Times, serif;
+  text-shadow: 0 2px 14px #100a1c;
 }
 .arrival__greeting {
-  font-size: clamp(22px, 2.53vw, 48px);
+  font-size: clamp(22px, 2vw, 36px);
   line-height: 1.1;
 }
 .arrival h1 {
   margin-top: 14px;
-  font-size: clamp(52px, 7.1vw, 142px);
+  font-size: clamp(52px, 5.5vw, 106px);
   font-weight: 600;
   letter-spacing: -0.055em;
   line-height: 1;
@@ -891,7 +882,7 @@ body.has-dialog {
 .arrival__tagline {
   margin-top: 6px;
   color: #e7d7f8;
-  font-size: clamp(22px, 3.16vw, 60px);
+  font-size: clamp(22px, 2.4vw, 44px);
   line-height: 1.2;
   letter-spacing: 0;
 }
@@ -993,28 +984,28 @@ body.has-dialog {
   .credential--university { padding-left: 0; }
 }
 @media (max-width: 700px) {
-  .arrival { aspect-ratio: 1122 / 1402; }
-  .arrival__inner { top: 10%; padding-inline: 20px; }
-  .arrival h1 { font-size: clamp(46px, 12.5vw, 86px); letter-spacing: -0.05em; }
-  .arrival__greeting { font-size: clamp(24px, 5vw, 30px); }
-  .arrival__tagline { max-width: 400px; margin: 18px auto 0; font-size: clamp(21px, 4.7vw, 28px); line-height: 1.15; }
-  .credentials__inner { width: calc(100% - 40px); padding-block: 28px; gap: 0; grid-template-columns: 1fr; }
-  .credential { padding: 22px 0; border-left: 0; border-top: 1px solid #ddd5e5; gap: 22px; }
-  .credential > img { width: 70px; height: 70px; }
-  .credential:nth-child(2) > img { width: 64px; height: 64px; }
-  .credential h2 { font-size: 21px; }
-  .credential p { font-size: 19px; }
-  .credential small { font-size: 15px; }
-  .credential--university { padding: 0 0 24px; border: 0; }
-  .credential--university > img { width: 250px; height: auto; }
-  .credential--university p { font-size: 17px; }
+  .arrival { height: clamp(240px, 40svh, 340px); }
+  .arrival__inner { top: 12%; padding-inline: 20px; }
+  .arrival h1 { font-size: clamp(42px, 10.8vw, 68px); letter-spacing: -0.05em; }
+  .arrival__greeting { font-size: 23px; }
+  .arrival__tagline { max-width: 400px; margin: 12px auto 0; font-size: clamp(20px, 4.5vw, 26px); line-height: 1.15; }
+  .credentials__inner { width: calc(100% - 40px); padding-block: 20px; gap: 0; grid-template-columns: 1fr; }
+  .credential { padding: 14px 0; border-left: 0; border-top: 1px solid #ddd5e5; gap: 18px; }
+  .credential > img { width: 56px; height: 56px; }
+  .credential:nth-child(2) > img { width: 52px; height: 52px; }
+  .credential h2 { font-size: 19px; }
+  .credential p { font-size: 17px; }
+  .credential small { font-size: 13px; margin-top: 4px; }
+  .credential--university { padding: 0 0 16px; border: 0; }
+  .credential--university > img { width: 210px; height: auto; }
+  .credential--university p { font-size: 16px; padding-left: 56px; }
 }
 @media (max-width: 360px) {
-  .arrival__inner { top: 8%; }
+  .arrival__inner { top: 12%; }
   .arrival__tagline { margin-top: 14px; font-size: 18px; }
   .credential { gap: 17px; }
-  .credential:not(.credential--university) > img { width: 62px; height: 62px; }
-  .credential h2 { font-size: 20px; }
-  .credential p { font-size: 18px; }
-  .credential small { font-size: 14px; }
+  .credential:not(.credential--university) > img { width: 48px; height: 48px; }
+  .credential h2 { font-size: 18px; }
+  .credential p { font-size: 16px; }
+  .credential small { font-size: 12px; }
 }

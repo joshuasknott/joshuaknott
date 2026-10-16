@@ -3,7 +3,7 @@
   const filters = document.querySelector(".project-filters");
   const cards = [...document.querySelectorAll(".project-card")];
   const filterStatus = document.getElementById("filter-status");
-  const grid = document.querySelector(".project-grid");
+  const grids = [...document.querySelectorAll(".project-grid")];
   let stopPreviews = () => {};
   const setFilter = (category) => {
     stopPreviews();
@@ -20,7 +20,10 @@
           String(button.dataset.filter === category),
         ),
       );
-    grid?.classList.toggle("is-filtered", category !== "all");
+    grids.forEach((grid) => {
+      grid.hidden = category !== "all" && grid.dataset.projectGroup !== category;
+      grid.classList.toggle("is-filtered", category !== "all");
+    });
     if (filterStatus)
       filterStatus.textContent = `${count} project${count === 1 ? "" : "s"} shown`;
   };
@@ -51,46 +54,34 @@
   const previewStates = [];
   let activePreview = null;
 
-  const updatePreviewLabel = (state, playing) => {
-    state.button.setAttribute("aria-pressed", String(playing));
-    state.button.setAttribute(
-      "aria-label",
-      `${playing ? "Pause" : "Play"} ${state.project.name} preview`,
-    );
-  };
   const stopPreview = (state) => {
     state.request++;
     state.media.pause();
     state.card.classList.remove("is-playing");
-    state.manual = false;
-    updatePreviewLabel(state, false);
     if (activePreview === state) activePreview = null;
   };
   stopPreviews = () => {
     if (activePreview) stopPreview(activePreview);
   };
-  const startPreview = async (state, manual = false) => {
+  const startPreview = async (state) => {
     if (state.card.hidden || dialog?.open || document.hidden) return;
-    if (!manual && (reducedMotion.matches || !hoverPointer.matches || state.dismissed)) return;
+    if (reducedMotion.matches || !hoverPointer.matches) return;
     // A stationary pointer must not interrupt the project selected with Tab.
-    if (!manual && activePreview && activePreview !== state &&
-        document.activeElement === activePreview.button) return;
+    if (activePreview && activePreview !== state &&
+        document.activeElement === activePreview.cover) return;
     if (activePreview === state) return;
     stopPreviews();
     activePreview = state;
-    state.manual = manual;
     const request = ++state.request;
     if (!state.media.hasAttribute("src")) {
       state.media.src = state.project.preview || state.project.video;
     }
     // Each new tour starts at the beginning, with the poster visible until playback.
     if (state.media.readyState > 0) state.media.currentTime = 0;
-    updatePreviewLabel(state, true);
     try {
       await state.media.play();
       if (request !== state.request) return;
       state.card.classList.add("is-playing");
-      updatePreviewLabel(state, true);
     } catch {
       if (request !== state.request) return;
       stopPreview(state);
@@ -98,16 +89,11 @@
   };
 
   projects.forEach((project) => {
-    if (!project.video || project.visitOnly) return;
+    if (!project.video) return;
     const card = cards.find((item) => item.id === project.id);
     const cover = card?.querySelector(".project-card__visual");
     if (!cover) return;
-    // Keep static links as the no-JavaScript fallback; enhance to an inline player.
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = cover.className;
-    button.append(...cover.childNodes);
-    cover.replaceWith(button);
+    // Keep the project link: hover previews it, while activation opens details.
     const media = document.createElement("video");
     media.className = "project-card__preview";
     media.muted = true;
@@ -117,33 +103,19 @@
     media.preload = "none";
     media.setAttribute("aria-hidden", "true");
     media.tabIndex = -1;
-    button.append(media);
+    cover.append(media);
     const state = {
-      card, button, media, project, request: 0, manual: false, dismissed: false,
+      card, cover, media, project, request: 0,
     };
     previewStates.push(state);
-    updatePreviewLabel(state, false);
     card.addEventListener("pointerenter", (event) => {
       if (event.pointerType === "mouse") startPreview(state);
     });
     card.addEventListener("pointerleave", () => {
-      state.dismissed = false;
-      if (!state.manual && document.activeElement !== button) stopPreview(state);
+      if (document.activeElement !== cover) stopPreview(state);
     });
-    button.addEventListener("focus", () => startPreview(state));
-    button.addEventListener("blur", () => {
-      state.dismissed = false;
-      stopPreview(state);
-    });
-    button.addEventListener("click", () => {
-      if (activePreview === state) {
-        state.dismissed = true;
-        stopPreview(state);
-      } else {
-        state.dismissed = false;
-        startPreview(state, true);
-      }
-    });
+    cover.addEventListener("focus", () => startPreview(state));
+    cover.addEventListener("blur", () => stopPreview(state));
     media.addEventListener("error", () => {
       stopPreview(state);
     });
@@ -184,10 +156,6 @@
   const openProject = (id, trigger) => {
     stopPreviews();
     const project = projects.find((item) => item.id === id);
-    if (project?.visitOnly && project.visit) {
-      window.location.assign(project.visit);
-      return;
-    }
     if (!project || !dialog || typeof dialog.showModal !== "function") return;
     const card = cards.find((item) => item.id === id);
     if (card?.hidden) setFilter("all");

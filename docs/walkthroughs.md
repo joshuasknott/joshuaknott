@@ -2,7 +2,7 @@
 
 Reviewed locally on 7 October 2026. These are the recordings from 6 October; this review does not establish that the underlying product issues have since been fixed.
 
-The portfolio contains 15 projects, 11 full recordings and four direct website covers (the three societies and Memvella). Video covers now play muted on hover or keyboard focus, with explicit play/pause on touch devices. Reduced-motion users start playback explicitly. Project names open the full recording, capture notes and available source/site links.
+The portfolio contains 15 projects, 11 full recordings and four still website covers (the three societies and Memvella). Video covers play muted on hover or keyboard focus. Clicking or tapping any project cover or name opens a modal with the full recording or screenshot, capture notes and available source/site links. Reduced-motion users start playback explicitly in the modal.
 
 All 11 original files decoded without errors. They use H.264, have streaming metadata at the beginning of the file, and contain **no audio track**. Original durations range from 8 to 30 seconds. The main limitations are demonstration content and pacing, rather than broken video files.
 
@@ -21,7 +21,7 @@ All 11 original files decoded without errors. They use H.264, have streaming met
 | 3danatomy / PELAGIC | The clip is a short view of rotation, layers and separated structures. | Add a focused tour of one anatomical system and concise labels. The current file plays correctly. |
 | Elsewhere | Uses labelled authored samples and an isolated database; live moderation is not configured. | Configure and verify moderation before demonstrating a public posting flow. Record composition, submission and the thought appearing with labelled sample content. |
 
-The society websites continue to open directly. Their unused local MP4 files are not counted among the 11 linked walkthroughs.
+The society websites are available through the links inside each project modal. Their unused local MP4 files are not counted among the 11 linked walkthroughs.
 
 For a consistent next recording pass, use one successful task per product, start with visible activity, remove idle time, and use fictional content. Add concise captions for silent viewing and optional narration/system sound to the full recording. Keep muted, short loops for hover previews and retain the longer recordings for detail views.
 
