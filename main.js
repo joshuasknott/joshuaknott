@@ -46,6 +46,7 @@
     document.getElementById("project-data")?.textContent || "[]",
   );
   const dialog = document.getElementById("project-dialog");
+  const cvDialog = document.getElementById("cv-dialog");
   const video = document.getElementById("walkthrough");
   const image = document.getElementById("dialog-image");
   const hoverPointer = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -63,7 +64,7 @@
     if (activePreview) stopPreview(activePreview);
   };
   const startPreview = async (state) => {
-    if (state.card.hidden || dialog?.open || document.hidden) return;
+    if (state.card.hidden || dialog?.open || cvDialog?.open || document.hidden) return;
     if (reducedMotion.matches || !hoverPointer.matches) return;
     // A stationary pointer must not interrupt the project selected with Tab.
     if (activePreview && activePreview !== state &&
@@ -273,6 +274,47 @@
   openFromHash();
   window.addEventListener("hashchange", openFromHash);
   window.addEventListener("popstate", openFromHash);
+
+  let cvOpener = null;
+  const cvPages = cvDialog?.querySelector(".cv-dialog__pages");
+  const cvZoom = cvDialog?.querySelector(".cv-dialog__zoom");
+  document.querySelectorAll("[data-cv-preview]").forEach((trigger) => {
+    trigger.addEventListener("click", (event) => {
+      // Keep normal PDF navigation when JavaScript/dialogs are unavailable,
+      // or when visitors explicitly open the link in another tab.
+      if (!cvDialog || typeof cvDialog.showModal !== "function" ||
+          event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      stopPreviews();
+      cvOpener = trigger;
+      const preview = cvPages.querySelector("img");
+      if (!preview.hasAttribute("src")) preview.src = preview.dataset.src;
+      cvDialog.showModal();
+      document.body.classList.add("has-dialog");
+      cvPages.scrollTo(0, 0);
+    });
+  });
+  cvZoom?.addEventListener("click", () => {
+    const zoomed = cvPages.classList.toggle("is-zoomed");
+    cvZoom.setAttribute("aria-pressed", String(zoomed));
+    cvZoom.setAttribute("aria-label", zoomed ? "Zoom out of CV" : "Zoom in on CV");
+    cvZoom.title = zoomed ? "Click to zoom out" : "Click to zoom in";
+  });
+  cvDialog?.querySelector(".cv-dialog__close").addEventListener("click", () => cvDialog.close());
+  cvDialog?.addEventListener("click", (event) => {
+    if (event.target !== cvDialog) return;
+    const bounds = cvDialog.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right ||
+        event.clientY < bounds.top || event.clientY > bounds.bottom) cvDialog.close();
+  });
+  cvDialog?.addEventListener("close", () => {
+    if (!dialog?.open) document.body.classList.remove("has-dialog");
+    cvPages.classList.remove("is-zoomed");
+    cvZoom.setAttribute("aria-pressed", "false");
+    cvZoom.setAttribute("aria-label", "Zoom in on CV");
+    cvZoom.title = "Click to zoom in";
+    cvOpener?.focus({ preventScroll: true });
+  });
 
   let latestActivity = -Infinity;
   function renderActivity(stats) {

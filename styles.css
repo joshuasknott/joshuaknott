@@ -500,7 +500,8 @@ p {
   color: var(--ink);
   box-shadow: 0 28px 100px #0b061b60;
 }
-.project-dialog::backdrop {
+.project-dialog::backdrop,
+.cv-dialog::backdrop {
   background: #0b071bbd;
   backdrop-filter: blur(8px);
 }
@@ -569,6 +570,81 @@ body.has-dialog {
   overflow: hidden;
 }
 
+.cv-dialog {
+  width: min(880px, calc(100% - 32px));
+  max-width: none;
+  height: min(1200px, calc(100dvh - 48px));
+  max-height: none;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 28px 100px #0b061b60;
+}
+.cv-dialog[open] { display: flex; flex-direction: column; }
+.cv-dialog__header {
+  display: flex;
+  align-items: center;
+  flex: none;
+  gap: 16px;
+  padding: 6px 12px 6px 24px;
+  border-bottom: 1px solid #eeedf2;
+}
+.cv-dialog__header h2 { margin-right: auto; font-size: 14px; font-weight: 500; }
+.cv-dialog__header a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  font-size: 13px;
+}
+.cv-dialog__header a:hover { text-decoration: underline; }
+.cv-dialog__header .icon { width: 16px; height: 16px; }
+.cv-dialog__close {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+}
+.cv-dialog__close:hover { background: #f4f2f8; }
+.cv-dialog__pages {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.cv-dialog__zoom {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: #fff;
+  cursor: zoom-in;
+}
+.cv-dialog__zoom:focus-visible,
+.cv-dialog__pages:focus-visible { outline-offset: -3px; }
+.cv-dialog__pages img { width: 100%; height: auto; }
+.cv-dialog__pages.is-zoomed .cv-dialog__zoom {
+  width: 1200px;
+  max-width: none;
+  cursor: zoom-out;
+}
+@media (max-width: 600px) {
+  .cv-dialog {
+    width: calc(100% - 16px);
+    height: fit-content;
+    max-height: calc(100dvh - 24px);
+  }
+  .cv-dialog__header { padding-left: 16px; gap: 12px; }
+  .cv-dialog__pages { flex: 0 1 auto; }
+  .cv-dialog__pages.is-zoomed .cv-dialog__zoom { width: 850px; }
+}
 @media (max-width: 1200px) {
   .shell {
     width: calc(100% - 88px);
