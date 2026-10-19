@@ -99,10 +99,14 @@ test('every project cover and title opens the modal, including website projects'
       assert.equal(app.ids.get('walkthrough').paused, !project.video);
       const destination = project.visit || project.source;
       const links = app.ids.get('dialog-links').children;
-      assert.equal(links.length, destination ? 1 : 0);
+      assert.equal(links.length, destination ? 1 + Number(Boolean(project.showSource && project.source)) : 0);
       if (destination) {
         assert.equal(links[0].href, destination);
         assert.equal(links[0].textContent, `View ${project.displayName || project.name}`);
+      }
+      if (project.showSource) {
+        assert.equal(links[1].href, project.source);
+        assert.equal(links[1].textContent, 'View source');
       }
       await app.dialog.close();
       assert.equal(app.ids.get('walkthrough').paused, true);

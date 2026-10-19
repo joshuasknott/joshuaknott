@@ -198,6 +198,9 @@
     links.replaceChildren();
     const destination = project.visit || project.source;
     if (destination) links.append(linkFor(destination, `View ${project.displayName || project.name}`));
+    if (project.visit && project.showSource && project.source) {
+      links.append(linkFor(project.source, "View source"));
+    }
     if (!dialog.open) {
       previousHash = location.hash.startsWith("#project-")
         ? "#work"
