@@ -542,6 +542,12 @@ p {
   z-index: 2;
   max-width: calc(100% - 28px);
 }
+/* Keep the animals at the bottom of Mote's recording visible. */
+.project-dialog[aria-label="Mote preview"] .project-dialog__links {
+  top: 14px;
+  right: 70px;
+  bottom: auto;
+}
 .project-dialog__links > a {
   display: inline-flex;
   align-items: center;
@@ -801,6 +807,10 @@ body.has-dialog {
     bottom: 8px;
     right: 8px;
     max-width: calc(100% - 16px);
+  }
+  .project-dialog[aria-label="Mote preview"] .project-dialog__links {
+    top: 8px;
+    right: 64px;
   }
   .project-dialog__links > a {
     min-height: 44px;

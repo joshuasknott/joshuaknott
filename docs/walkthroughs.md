@@ -13,7 +13,7 @@ All 11 original files decoded without errors. They use H.264, have streaming met
 | ollo | The recording shows “No confirmed matches yet” and an empty application tracker. | Diagnose the search configuration/provider results, then record a successful search, role review and application-tracking flow. Keep sample data clearly identified. |
 | TokenMaxxer | The capture note reports failed Z.ai and DeepSeek refreshes. | Repair or reconnect those integrations and record successful quota updates and reset windows. Do not edit failures out and imply they work. |
 | BetWFriends | Shows group setup and the bet composer using demo credit. Live payments and settlement were not tested. | Record a complete fictional bet-to-settlement flow in the supported test environment, identifying demo credit. Verify real payment support separately before claiming it. |
-| Mote | The full 23-second recording spends roughly its first 17 seconds in the picker. | The new six-second hover clip starts with the animals moving. For a new full walkthrough, show a brief selection followed quickly by the desktop behaviour. |
+| Mote | The previous 23-second recording spent roughly its first 17 seconds in the picker. | The 21 October refresh starts immediately with the native desktop behaviour and keeps the picker out of the recording. |
 | mantaray | Demonstrates rotation, dissection and isolation using an artist-built educational model and schematic cartilage. | Keep that qualification. Add brief labels explaining what each control reveals. |
 | Poppycheese | Refreshed 21 October 2026 after collision and ramp repairs. | Current gameplay recording and hover clip use real keyboard input. The project details link to the playable game at `/games/poppycheese/`. |
 | Pianoforte | The recording is portrait, silent, and does not verify live AI tutor replies. | Capture system audio so viewers can hear the piano in the full walkthrough. Record a successful lesson; verify the tutor separately before showing it as working. Hover should remain muted. |
@@ -23,6 +23,10 @@ All 11 original files decoded without errors. They use H.264, have streaming met
 
 The society websites are available through the links inside each project modal. Their unused local MP4 files are not counted among the 11 linked walkthroughs.
 
+Mote refresh provenance (21 October 2026): live layered overlays, the production simulation and renderer, a clean native recording backdrop with a real test window, and scripted pointer input. The recording contains no audio.
+
+The refreshed Mote full clip is 20 seconds at 1600x900; its hover preview is eight seconds at 960x540. Both are H.264 with streaming metadata first. The updated poster shows the running animals. Local checks covered playback, hover, keyboard opening and Escape focus restoration, touch opening/closing, reduced-motion hover behaviour, and the affected desktop/mobile views at 1440x900 and 390x844. No console errors or horizontal overflow were observed. Mote's View link sits above the scene so it does not cover the animals.
+
 For a consistent next recording pass, use one successful task per product, start with visible activity, remove idle time, and use fictional content. Add concise captions for silent viewing and optional narration/system sound to the full recording. Keep muted, short loops for hover previews and retain the longer recordings for detail views.
 
-Local validation: all 11 previews played in the browser with one active preview at a time. JavaScript syntax and whitespace checks passed. Desktop/tablet/phone visual checks and playback/interaction checks are recorded with the task's local QA artifacts. No publication was performed.
+Original 7 October validation: all 11 previews played in the browser with one active preview at a time. JavaScript syntax and whitespace checks passed. Desktop/tablet/phone visual checks and playback/interaction checks are recorded with that task's local QA artifacts. That review did not publish a release.
