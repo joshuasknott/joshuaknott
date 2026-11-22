@@ -10,9 +10,11 @@ Read `AGENTS.md`, `README.md`, `design-qa.md` and `docs/walkthroughs.md`
 before editing. The current README and current-desktop notes describe a
 13-project workstation with nine visitor-controlled recordings, descriptive
 detail pages, a coastal cover, question composer and animated CV reader.
-Those choices are preserved, including monochrome project covers and mobile
+Those choices were preserved in the initial polish, including project covers and mobile
 expansion. The screen-only modal notes in the older walkthrough document
 describe main, not this workstation; the document now labels that distinction.
+The subsequent [media and assistant update](portfolio-v2-qa.md) replaces abstract
+covers with real captures and refreshes public website media.
 
 ## Audit and fixes
 
