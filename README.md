@@ -65,11 +65,7 @@ Three society sites — AI, Business, Neurotech — with shared infrastructure a
 | :--------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
 | <img src="assets/projects/2026-10/surrey-ai.webp" width="260" alt="Surrey AI Society" /> | <img src="assets/projects/2026-10/surrey-business.webp" width="260" alt="Surrey Business Society" /> | <img src="assets/projects/2026-10/surrey-neurotech.webp" width="260" alt="Surrey Neurotech Society" /> |
 
-The portfolio includes 15 projects and 11 walkthroughs recorded from current local source on 6 October 2026. Every project cover and name opens a larger screen-only modal with its recording or screenshot and one available website/source link. The AI Society cover was captured from the fully loaded public homepage on the same date. The native and browser clips show actual interactions. Recording evidence and configuration limits are documented in the walkthrough review. Memvella’s family workspace is omitted while email verification remains unresolved.
-
-Mote’s refreshed walkthrough was recorded on 21 October 2026 in the native Windows app. It uses a clean recording backdrop, a real window to explore, and the current native desktop behaviour.
-
-Projects sit on a compact canvas with names and logos beneath each cover. Walkthroughs play inline on hover or keyboard focus. Clicking or tapping a cover or project name opens a large modal: recordings autoplay muted on repeat, without player controls, headings or descriptions. A small View link opens the project website or source when available. Videos load on demand; hover previews pause offscreen, and modal playback stops when closed. Reduced motion keeps hover previews still. [Walkthrough review and next fixes](docs/walkthroughs.md).
+The workstation’s Projects view contains 13 projects, including the Manta Ray and Pelagic Shark anatomy studies. Nine projects have recorded walkthroughs. Each project opens its recording or screenshot, a description and any available website or source links. [Walkthrough recording notes](docs/walkthroughs.md).
 
 ---
 
