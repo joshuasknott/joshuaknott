@@ -8,10 +8,12 @@ The local HTTP preview runs on port 8080. Checks use Chromium via CDP,
 
 ## Findings addressed
 
-- Project descriptions, subtitles and capture limitations existed in the embedded
-  data and no-script fallback but were absent from JavaScript-enabled previews.
-  The dialogs now show them beneath the media, with links outside the recording.
-- Walkthroughs now have playback controls and respect reduced motion. Modified
+- Project dialogs preserve the owner's screen-only design: muted looping
+  autoplay, no visible headings or descriptions, and small overlaid View links.
+  The accessible project name and visually hidden description remain available
+  to assistive technology. Capture limitations remain in the no-script fallback.
+- Reduced motion disables autoplay and exposes playback controls only in that
+  mode. Normal-motion recordings have no player controls. Modified
   project clicks retain ordinary link behavior; Back no longer replaces the
   section hash when closing a preview.
 - The hero preload targeted an older, unused image. It now targets the desktop
@@ -30,7 +32,7 @@ Reference: `joshuasknott/portfolio`, cloned to `/home/ubuntu/repos/portfolio-old
 | Older content | Decision |
 | --- | --- |
 | Politics, institutions, incentives and human systems (`PoliticsGrounding.tsx`) | Ported a compact sentence into the existing about section. |
-| Memvella care routines, reassurance and caregiver context (`WorkShowcase.astro`) | Already represented in the new project description; now visible in the dialog. Kept the new site's £1,500 funding wording rather than replacing it with the older £500 figure. |
+| Memvella care routines, reassurance and caregiver context (`WorkShowcase.astro`) | Already represented in the embedded description and no-script fallback; the modal description is visually hidden. Kept the new site's £1,500 funding wording rather than replacing it with the older £500 figure. |
 | Polis academic source-context project | Not ported: no corresponding current project capture, destination or status was established. |
 | AI, Neurotech and Business society implementation narratives (`SocietySystem.tsx`) | Existing current cards cover these sites. Did not add older newsletter, sponsorship-directory or hardware-library claims without current corroboration. |
 | Collaboration invitation (`ContactSection.astro`) | Existing email footer provides this action. Did not copy the placeholder `joshua.knott@example.com`. |
@@ -48,7 +50,7 @@ Reference: `joshuasknott/portfolio`, cloned to `/home/ubuntu/repos/portfolio-old
 - Main page at both widths: no horizontal document overflow, broken loaded
   images, console errors or uncaught page errors. Images have alt attributes;
   project images retain explicit dimensions and lazy loading.
-- axe WCAG A/AA checks: zero violations on the main page, a text-and-image
+- axe WCAG A/AA checks: zero violations on the main page, a screen-only
   project dialog and the 404 page at both widths. This is not a formal WCAG
   certification or a Lighthouse performance score.
 - Keyboard: skip link is first; Escape closes dialogs and restores opener;

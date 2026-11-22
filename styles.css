@@ -492,11 +492,11 @@ p {
   padding: 0;
   border: 0;
   border-radius: 8px;
-  width: min(1000px, calc(100vw - var(--modal-gutter) * 2));
+  width: min(1600px, calc(100vw - var(--modal-gutter) * 2), calc((100dvh - var(--modal-gutter) * 2) * var(--media-ratio, 1.6)));
   max-width: none;
   max-height: calc(100dvh - var(--modal-gutter) * 2);
-  overflow: auto;
-  background: var(--paper);
+  overflow: hidden;
+  background: #0c0914;
   color: var(--ink);
   box-shadow: 0 28px 100px #0b061b60;
 }
@@ -536,15 +536,17 @@ p {
   object-fit: contain;
 }
 .project-dialog__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 0 24px 24px;
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  z-index: 2;
+  max-width: calc(100% - 28px);
 }
-.project-dialog__details { padding: 24px; }
-.project-dialog__details h2 { margin-block: 6px 12px; font-size: 26px; }
-.project-dialog__details > p { line-height: 1.7; }
-.project-dialog__subtitle { color: var(--muted); font-size: 13px; }
+.project-dialog[aria-label="Mote preview"] .project-dialog__links {
+  top: 14px;
+  right: 70px;
+  bottom: auto;
+}
 .about-note__grounding { grid-column: 2; }
 .project-dialog__links > a {
   display: inline-flex;
@@ -802,7 +804,13 @@ body.has-dialog {
     height: 44px;
   }
   .project-dialog__links {
-    padding-inline: 24px;
+    bottom: 8px;
+    right: 8px;
+    max-width: calc(100% - 16px);
+  }
+  .project-dialog[aria-label="Mote preview"] .project-dialog__links {
+    top: 8px;
+    right: 64px;
   }
   .project-dialog__links > a {
     min-height: 44px;

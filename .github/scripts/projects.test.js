@@ -53,7 +53,7 @@ function setup({ reducedMotion = false } = {}) {
   const filterButtons = ['all', 'products', 'websites', 'experiments'].map(filter => element({ filter }));
   filters.querySelectorAll = () => filterButtons;
   const ids = new Map(['filter-status', 'dialog-image', 'dialog-links', 'walkthrough',
-    'dialog-title', 'dialog-subtitle', 'dialog-description', 'dialog-note']
+    'dialog-description']
     .map(id => [id, element()]));
   const closeButton = element();
   const dialog = Object.assign(element(), {
@@ -89,6 +89,9 @@ function setup({ reducedMotion = false } = {}) {
 }
 
 test('every project cover and title opens the modal, including website projects', async () => {
+  const modal = html.match(/<dialog\s+class="project-dialog"[\s\S]*?<\/dialog>/)[0];
+  assert.doesNotMatch(modal, /<h[1-6]\b|\bcontrols\b/);
+  assert.match(modal, /<p class="sr-only" id="dialog-description"><\/p>/);
   const app = setup();
   for (const card of app.cards) {
     for (const trigger of [card.cover, card.title]) {
@@ -96,10 +99,10 @@ test('every project cover and title opens the modal, including website projects'
       assert.equal(app.dialog.open, true, card.id);
       const project = projects.find(project => project.id === card.id);
       assert.equal(app.dialog.getAttribute('aria-label'), `${project.name} preview`);
-      assert.equal(app.ids.get('dialog-title').textContent, project.name);
       assert.equal(app.ids.get('dialog-description').textContent, project.description);
-      assert.equal(app.ids.get('dialog-subtitle').textContent, project.subtitle || '');
-      assert.equal(app.ids.get('dialog-note').textContent, project.note || '');
+      assert.equal(app.ids.get('walkthrough').autoplay, true);
+      assert.equal(app.ids.get('walkthrough').controls, false);
+      assert.equal(app.ids.get('walkthrough').tabIndex, -1);
       assert.equal(app.ids.get('dialog-image').hidden, Boolean(project.video));
       assert.equal(app.ids.get('walkthrough').paused, !project.video);
       const destination = project.visit || project.source;
@@ -175,4 +178,7 @@ test('reduced motion keeps the walkthrough paused and modified clicks preserve n
   assert.equal(app.dialog.open, true);
   assert.equal(app.ids.get('walkthrough').paused, true);
   assert.equal(app.ids.get('walkthrough').hidden, false);
+  assert.equal(app.ids.get('walkthrough').autoplay, false);
+  assert.equal(app.ids.get('walkthrough').controls, true);
+  assert.equal(app.ids.get('walkthrough').tabIndex, 0);
 });

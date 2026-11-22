@@ -179,10 +179,7 @@
       document.querySelector(`[data-project="${id}"]`) ||
       document.activeElement;
     dialog.setAttribute("aria-label", `${project.name} preview`);
-    document.getElementById("dialog-title").textContent = project.name;
-    document.getElementById("dialog-subtitle").textContent = project.subtitle || "";
     document.getElementById("dialog-description").textContent = project.description;
-    document.getElementById("dialog-note").textContent = project.note || "";
     const poster = card?.querySelector(".project-card__image");
     dialog.style.setProperty("--media-ratio", poster?.naturalWidth && poster.naturalHeight
       ? poster.naturalWidth / poster.naturalHeight : 1.6);
@@ -191,6 +188,9 @@
     image.hidden = Boolean(project.video);
     video.hidden = !project.video;
     video.pause();
+    video.autoplay = !reducedMotion.matches;
+    video.controls = reducedMotion.matches;
+    video.tabIndex = reducedMotion.matches ? 0 : -1;
     video.removeAttribute("src");
     video.load();
     if (project.video) {
