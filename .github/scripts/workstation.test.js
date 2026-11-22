@@ -83,6 +83,9 @@ test("guide handles aliases, typos, specific fields, lists and navigation links"
   assert.match((await answer('Link to Poppyfish')).text, /No public website/);
   assert.deepEqual((await answer('What games has he made?')).matches.map(note => note.route), ['poppycheese', 'poppyfish']);
   assert.ok((await answer('What AI projects has Josh built?')).matches.some(note => note.route === 'mivlet'));
+  const namedSociety = await answer('What AI projects did Surrey AI Society do?');
+  assert.equal(namedSociety.matches[0].route, 'surrey-ai');
+  assert.ok(!namedSociety.text.startsWith('AI projects in the portfolio:'));
   assert.match((await answer('hello!')).text, /Hi!/);
   assert.match((await answer('thank you')).text, /welcome/);
   for (const question of ['', 'What is his favourite ice cream?']) {

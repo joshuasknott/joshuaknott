@@ -82,7 +82,7 @@ export function matchNotes(question, notes, previous = []) {
     const body = words(note.text);
     const isProject = Boolean(note.project);
     const named = (isProject || title.includes('society')) && phrase.includes(' ' + title.join(' ') + ' ');
-    let score = named ? 10 : 0;
+    let score = named ? (isProject ? 14 : 10) : 0;
     for (const word of keywords) {
       if (title.some(term => near(word, term))) score += 3;
       if (tags.some(term => near(word, term))) score += 2.5;
@@ -111,7 +111,7 @@ export function createGuide(portfolio) {
     if (/^(hi|hello|hey|good morning|good evening)( there)?$/.test(simple)) return {...base, text: 'Hi! What would you like to know about Josh’s work?', suggestions: suggestedQuestions};
     if (/^(thanks|thank you|cheers)( a lot)?$/.test(simple)) return {...base, text: 'You’re welcome! Happy to help you explore Josh’s work.'};
     const tokens = words(question);
-    if (/\b(what|which|list|show)\b/i.test(question) && !portfolio.projects.some(p => tokens.includes(words(p.name).join(' '))) && /\b(games?|ai projects)\b/i.test(question)) {
+    if (/\b(what|which|list|show)\b/i.test(question) && !portfolio.projects.some(p => words(p.name).every(word => tokens.includes(word))) && /\b(games?|ai projects)\b/i.test(question)) {
       const games = /\bgames?\b/i.test(question);
       const matches = notes.filter(n => n.project && (games ? /game/i : /\bAI\b/i).test(n.tags + ' ' + n.project.description));
       return {...base, matches, text: (games ? 'Games' : 'AI projects') + ' in the portfolio: ' + matches.map(n => n.title).join(', ') + '.', links: matches.map(source)};
