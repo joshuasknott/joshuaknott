@@ -328,6 +328,7 @@
 }
 /* At desk distance on a phone, keep the controls legible on the physical monitor. */
 @container (max-width: 540px) and (min-aspect-ratio: 1/1) {
+  .composer-suggestions { display: none; }
   .portfolio-composer { width: 66%; height: max(55px, 17cqw); }
   .portfolio-composer input { font-size: max(13px, 3.8cqw); }
   .composer-apps { bottom: 3%; gap: 3cqw; }
