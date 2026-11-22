@@ -35,7 +35,28 @@ test("the local portfolio guide distinguishes named projects, CV facts and missi
   assert.equal((await answer("Tell me more about it", [funding])).matches[0].route, "memvella");
   assert.match((await answer("When does Josh graduate?", [])).text, /June 2027/);
   assert.match((await answer("How can I get in touch?", [])).text, /joshhknott@gmail\.com/);
+  assert.match((await answer("Pianoforte", [])).text, /live AI tutor replies were not verified/);
   assert.equal((await answer("What is his favourite ice cream?", [])).matches.length, 0);
+});
+
+test("the no-script portfolio retains every catalog project and a direct CV link", async () => {
+  const { projects } = await portfolioFromPage();
+  const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
+  const fallback = html.match(/<noscript>([\s\S]*?)<\/noscript>/)[1];
+  const ids = [...fallback.matchAll(/data-fallback-project="([^"]+)"/g)].map(match => match[1]);
+  assert.deepEqual(ids, projects.map(project => project.id));
+  assert.match(fallback, /href="assets\/documents\/Joshua-Knott-CV.pdf"/);
+  assert.match(fallback, /href="mailto:joshhknott@gmail.com"/);
+});
+
+test("project recordings retain evidence limitations without inventing website capture notes", async () => {
+  const { projects } = await portfolioFromPage();
+  for (const project of projects.filter(project => project.video)) {
+    assert.match(project.note, /Recorded.*2026/, project.id);
+  }
+  assert.match(projects.find(project => project.id === "betwfriends").note, /demo credit.*not tested/);
+  assert.match(projects.find(project => project.id === "pianoforte").note, /silent.*not verified/);
+  assert.equal(projects.find(project => project.id === "surrey-ai").note, undefined);
 });
 
 test("the workstation loads its entry point, styles and fallback from the static site", () => {

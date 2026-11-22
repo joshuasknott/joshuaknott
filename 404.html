@@ -10,13 +10,13 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Instrument+Sans:wght@500;600;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap"
-      rel="stylesheet"
-    >
     <style>
+      @font-face {
+        font-family: Manrope;
+        src: url('/assets/fonts/manrope-variable.woff2') format('woff2');
+        font-weight: 200 800;
+        font-display: swap;
+      }
       :root {
         --paper: #f7f3e9;
         --ink: #10213d;
@@ -65,7 +65,7 @@
         right: 0;
         width: 48%;
         height: 100%;
-        background: url("/assets/og-portfolio-v2.webp") center / cover no-repeat;
+        background: url("/assets/machine/workstation.webp") center / cover no-repeat;
         content: "";
         opacity: 0.96;
       }
@@ -92,7 +92,7 @@
       .code {
         margin: 0 0 1rem;
         color: var(--muted);
-        font-family: "IBM Plex Mono", monospace;
+        font-family: monospace;
         font-size: 0.66rem;
         letter-spacing: 0.04em;
       }
@@ -100,7 +100,7 @@
       h1 {
         max-width: 7ch;
         margin: 0 0 1.3rem;
-        font-family: "Instrument Sans", sans-serif;
+        font-family: Manrope, Arial, sans-serif;
         font-size: clamp(4rem, 8vw, 6.2rem);
         font-weight: 650;
         letter-spacing: -0.06em;

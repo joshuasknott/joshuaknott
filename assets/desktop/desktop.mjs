@@ -13,6 +13,7 @@ function photo(src, alt, className) {
   const img = el('img', className);
   img.src = src;
   img.alt = alt;
+  img.decoding = 'async';
   img.draggable = false;
   return img;
 }
@@ -54,6 +55,7 @@ function projectDetails(project) {
   const copy = el('div');
   copy.append(el('h3', '', project.label), el('p', '', project.description));
   if (project.build) copy.append(el('p', '', project.build));
+  if (project.note) copy.append(el('p', 'project-note', project.note));
   const links = el('div', 'detail-links');
   if (project.website) links.append(link('Visit website', project.website));
   if (project.source) links.append(link('View source', project.source));
@@ -66,7 +68,7 @@ function about(person, openCV) {
   const article = el('article', 'desktop-article');
   const intro = el('div', 'about-intro');
   const copy = el('div');
-  copy.append(el('h3', '', person.name), el('p', 'location', bio.location), el('p', '', bio.intro), el('p', '', bio.work));
+  copy.append(el('h3', '', person.name), el('p', 'location', bio.location), el('p', '', bio.intro), el('p', '', bio.grounding), el('p', '', bio.work));
   const cv = el('button', 'answer-source', 'Read my CV');
   cv.type = 'button';
   cv.addEventListener('click', () => openCV(cv));

@@ -278,6 +278,7 @@
 .project-card:hover .project-cover { border-color: #737373; filter: grayscale(1) brightness(1.08); }
 .project-name { margin-top: .48em; font-size: clamp(15px, 2.05cqw, 29px); font-weight: 550; line-height: 1.15; letter-spacing: -.036em; }
 .project-label { margin-top: .18em; color: var(--muted); font-size: var(--small); }
+.project-note { color: var(--muted); font-size: .85em; }
 .project-grid.is-list { display: block; }
 .project-grid.is-list .project-card {
   display: grid;

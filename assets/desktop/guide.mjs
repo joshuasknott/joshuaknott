@@ -4,7 +4,7 @@ import {bio} from './portfolio.mjs';
 // The local index also serves browsers without an installed language model.
 export function portfolioNotes({projects, contacts, person}) {
   const notes = projects.map(p => ({
-    route: p.id, title: p.name, tags: [p.label, p.topics].filter(Boolean).join(' '), text: [p.description, p.build].filter(Boolean).join(' '),
+    route: p.id, title: p.name, tags: [p.label, p.topics].filter(Boolean).join(' '), text: [p.description, p.build, p.note].filter(Boolean).join(' '),
   }));
   const note = (route, title, tags, text) => notes.push({route, title, tags, text});
   note('projects', 'Projects', 'portfolio overview collection all apps projects products built made work examples',

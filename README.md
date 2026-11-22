@@ -79,3 +79,6 @@ node --check main.js
 ```
 
 Open to internships and collaborations — [joshhknott@gmail.com](mailto:joshhknott@gmail.com).
+
+Without JavaScript, the homepage provides a compact project directory, direct
+contact links and the original CV PDF. [Workstation polish QA](docs/new-portfolio-polish-qa.md).
