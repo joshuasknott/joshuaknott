@@ -101,7 +101,7 @@ export function matchNotes(question, notes, previous = []) {
 export const suggestedQuestions = ['What AI projects has Josh built?', 'What games has he made?', 'How can I contact Josh?'];
 
 function source(note) {
-  return {label: note.title, route: note.route, href: note.route === 'cv' ? 'assets/documents/Joshua-Knott-CV.pdf' : '#' + note.route};
+  return {label: note.route === 'about' ? 'About Josh' : note.title, route: note.route, href: note.route === 'cv' ? 'assets/documents/Joshua-Knott-CV.pdf' : '#' + note.route};
 }
 
 export function createGuide(portfolio) {
@@ -115,7 +115,7 @@ export function createGuide(portfolio) {
     const tokens = words(question);
     if (/\b(what|which|list|show)\b/i.test(question) && !portfolio.projects.some(p => words(p.name).every(word => tokens.includes(word))) && /\b(games?|ai projects)\b/i.test(question)) {
       const games = /\bgames?\b/i.test(question);
-      const matches = notes.filter(n => n.project && (games ? /game/i : /\bAI\b/i).test(n.tags + ' ' + n.project.description));
+      const matches = notes.filter(n => n.project && (games ? /game/i : /\bAI\b/i).test([n.tags, n.project.description, n.project.build].filter(Boolean).join(' ')));
       return {...base, matches, text: (games ? 'Games' : 'AI projects') + ' in the portfolio: ' + matches.map(n => n.title).join(', ') + '.', links: matches.map(source)};
     }
     const matches = matchNotes(question, notes, history.at(-1)?.matches);

@@ -82,13 +82,22 @@ test("guide handles aliases, typos, specific fields, lists and navigation links"
   assert.ok((await answer('Link to Memvella')).links.some(link => link.href === 'https://memvella.me'));
   assert.match((await answer('Link to Poppyfish')).text, /No public website/);
   assert.deepEqual((await answer('What games has he made?')).matches.map(note => note.route), ['poppycheese', 'poppyfish']);
-  assert.ok((await answer('What AI projects has Josh built?')).matches.some(note => note.route === 'mivlet'));
+  const aiProjects = await answer('What AI projects has Josh built?');
+  const portfolio = await portfolioFromPage();
+  const expectedAI = portfolio.projects.filter(project => /\bAI\b/i.test([project.label, project.topics, project.description, project.build].filter(Boolean).join(' ')));
+  assert.deepEqual(aiProjects.matches.map(note => note.route), expectedAI.map(project => project.id));
+  assert.ok(aiProjects.matches.some(note => note.route === 'ollo'));
+  assert.ok(aiProjects.links.some(link => link.route === 'ollo'));
   const namedSociety = await answer('What AI projects did Surrey AI Society do?');
   assert.equal(namedSociety.matches[0].route, 'surrey-ai');
   assert.ok(!namedSociety.text.startsWith('AI projects in the portfolio:'));
   const presidency = await answer('What did Josh do as President of Surrey AI Society?');
   assert.equal(presidency.matches[0].route, 'about');
   assert.match(presidency.text, /President.*160\+.*14-person committee/);
+  assert.equal(presidency.links[0].label, 'About Josh');
+  assert.ok(presidency.related.some(link => link.route === 'surrey-ai' && link.label === 'Surrey AI Society'));
+  const presidencyLinks = [...presidency.links, ...presidency.related];
+  assert.equal(new Set(presidencyLinks.map(link => link.label)).size, presidencyLinks.length);
   assert.match((await answer('hello!')).text, /Hi!/);
   assert.match((await answer('thank you')).text, /welcome/);
   for (const question of ['', 'What is his favourite ice cream?']) {
