@@ -86,6 +86,9 @@ test("guide handles aliases, typos, specific fields, lists and navigation links"
   const namedSociety = await answer('What AI projects did Surrey AI Society do?');
   assert.equal(namedSociety.matches[0].route, 'surrey-ai');
   assert.ok(!namedSociety.text.startsWith('AI projects in the portfolio:'));
+  const presidency = await answer('What did Josh do as President of Surrey AI Society?');
+  assert.equal(presidency.matches[0].route, 'about');
+  assert.match(presidency.text, /President.*160\+.*14-person committee/);
   assert.match((await answer('hello!')).text, /Hi!/);
   assert.match((await answer('thank you')).text, /welcome/);
   for (const question of ['', 'What is his favourite ice cream?']) {

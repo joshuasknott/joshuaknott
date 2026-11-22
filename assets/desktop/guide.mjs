@@ -23,6 +23,7 @@ export function portfolioNotes({projects, contacts, person}) {
   for (const [name, role, text] of bio.societies) {
     note('about', name, 'leadership led lead member society societies committee ' + role,
       name + ' · ' + role + '. ' + text);
+    notes.at(-1).societyRole = true;
   }
   note('contact', 'Contact', 'reach touch contact connect collaborate collaboration message get hold social profiles',
     'Email Josh at ' + contacts[0].value + '. His GitHub and LinkedIn profiles are linked in Contact.');
@@ -83,6 +84,7 @@ export function matchNotes(question, notes, previous = []) {
     const isProject = Boolean(note.project);
     const named = (isProject || title.includes('society')) && phrase.includes(' ' + title.join(' ') + ' ');
     let score = named ? (isProject ? 14 : 10) : 0;
+    if (named && note.societyRole && /\b(president|vice president|role|roles|positions?|leadership|committee)\b/i.test(question)) score += 10;
     for (const word of keywords) {
       if (title.some(term => near(word, term))) score += 3;
       if (tags.some(term => near(word, term))) score += 2.5;
