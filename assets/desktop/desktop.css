@@ -44,49 +44,7 @@
   background: linear-gradient(#52445f, #ce7c81 34%, #ffc188 49%, #587282 49%, #38576d 74%, #ab6b58 74%, #80494a);
 }
 .welcome-sunset { filter: brightness(.68); }
-.desktop-sunset.ball-ready { cursor: pointer; }
-.portfolio-desktop[data-open] :is(.desktop-sunset, .sunset-game) { visibility: hidden; }
-.sunset-game {
-  position: absolute;
-  z-index: 1;
-  left: 50%;
-  bottom: max(4%, env(safe-area-inset-bottom), 6px);
-  transform: translateX(-50%);
-  display: grid;
-  justify-items: center;
-  gap: 4px;
-  color: #fff5e8;
-  font-size: clamp(9px, 1.22cqw, 14px);
-  white-space: nowrap;
-}
-.sunset-feedback { color: #321d31; font-weight: 800; }
-.sunset-controls {
-  display: flex;
-  align-items: center;
-  padding: 3px;
-  border: 1px solid #ffd3a98c;
-  border-radius: 50px;
-  background: #362433;
-  box-shadow: 0 3px 9px #351a2d4d;
-}
-.portfolio-desktop .sunset-pass {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .35em;
-  min-width: 8.35em;
-  min-height: 2.45em;
-  padding-inline: .65em;
-  border-radius: 50px;
-  background: #fff0da;
-  color: #302135;
-  font-weight: 800;
-}
-.portfolio-desktop .sunset-pass:hover { background: #ffdbb1; }
-.portfolio-desktop .sunset-pass[data-catch] { background: #ffb759; }
-.portfolio-desktop .sunset-pass:focus-visible { outline-color: #fff0da; }
-.sunset-pass svg { width: 1.2em; height: 1.2em; }
-.sunset-score { min-width: 6em; padding-inline: .7em; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.portfolio-desktop[data-open] .desktop-sunset { visibility: hidden; }
 
 /* The same writing surface travels from the middle of the glass to its foot. */
 .portfolio-composer {
@@ -160,6 +118,11 @@
 .composer-send img { width: 52%; transform: rotate(180deg); filter: invert(1); }
 .portfolio-desktop .composer-send:hover { background: #444; }
 .composer-send:disabled { opacity: .45; cursor: wait; }
+.composer-suggestions { position: absolute; top: calc(100% + 14px); left: 0; width: 100%; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.composer-suggestions[hidden] { display: none; }
+.portfolio-desktop .question-chip { padding: 6px 10px; margin: 3px; border: 1px solid #aaa; border-radius: 16px; background: #fff; color: #292929; font-size: clamp(11px, 1.2cqw, 14px); line-height: 1.4; }
+.portfolio-desktop .question-chip:hover { background: #eee; }
+.related { margin-top: .7em; font-size: .9em; }
 
 [data-open] > .portfolio-composer {
   bottom: var(--foot);
@@ -265,6 +228,9 @@
   padding: 3px var(--inset) 1.6cqw;
 }
 .portfolio-desktop .project-card { min-width: 0; display: grid; align-content: start; text-align: left; }
+.project-media { position: relative; display: block; min-width: 0; }
+.project-preview { position: absolute; inset: 0; height: 100%; opacity: 0; pointer-events: none; }
+.is-playing .project-preview { opacity: 1; }
 .project-cover {
   display: block;
   width: 100%;
@@ -273,11 +239,11 @@
   border: 1px solid #dadada;
   border-radius: clamp(5px, .85cqw, 13px);
   background: #f0f0f0;
-  filter: grayscale(1);
 }
-.project-card:hover .project-cover { border-color: #737373; filter: grayscale(1) brightness(1.08); }
+.project-card:hover .project-cover { border-color: #737373; }
 .project-name { margin-top: .48em; font-size: clamp(15px, 2.05cqw, 29px); font-weight: 550; line-height: 1.15; letter-spacing: -.036em; }
 .project-label { margin-top: .18em; color: var(--muted); font-size: var(--small); }
+.project-note { color: var(--muted); font-size: .85em; }
 .project-grid.is-list { display: block; }
 .project-grid.is-list .project-card {
   display: grid;
@@ -291,7 +257,7 @@
 .project-grid.is-list .project-card:hover { background-color: #f5f5f5; }
 .project-grid.is-list .project-name { margin: 0; font-size: clamp(14px, 1.7cqw, 22px); }
 .project-grid.is-list .project-label { margin: 0; }
-.project-grid.is-list .project-cover { aspect-ratio: 1.75; border-radius: 4px; }
+.project-grid.is-list .project-cover { border-radius: 4px; }
 
 .desktop-article {
   width: 100%;
@@ -362,8 +328,7 @@
 }
 /* At desk distance on a phone, keep the controls legible on the physical monitor. */
 @container (max-width: 540px) and (min-aspect-ratio: 1/1) {
-  .sunset-game { bottom: 6px; }
-  .sunset-feedback { display: none; }
+  .composer-suggestions { display: none; }
   .portfolio-composer { width: 66%; height: max(55px, 17cqw); }
   .portfolio-composer input { font-size: max(13px, 3.8cqw); }
   .composer-apps { bottom: 3%; gap: 3cqw; }
@@ -373,8 +338,6 @@
   [data-open] .composer-send { width: calc(var(--compose-height) * .75); }
 }
 @container (max-aspect-ratio: 1/1) {
-  .sunset-game { bottom: max(5%, calc(env(safe-area-inset-bottom) + 10px)); font-size: 14px; }
-  .portfolio-desktop .sunset-pass { min-height: 44px; }
   .portfolio-composer { --edge: 19px; width: min(84%, 550px); height: clamp(90px, 22cqw, 108px); }
   .portfolio-composer input { font-size: clamp(17px, 4.4cqw, 23px); }
   .composer-apps { bottom: 5%; gap: 16px; }

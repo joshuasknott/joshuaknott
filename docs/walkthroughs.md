@@ -1,5 +1,16 @@
 # Portfolio walkthroughs
 
+## Workstation branch
+
+The current workstation has 13 projects and nine recordings. Projects open
+detail pages with player controls, descriptions, capture limitations where
+available, and website/source links. Playback is visitor-controlled. This is
+the workstation design documented in the README, not the screen-only modal
+used by the older main-branch portfolio. The notes below are historical
+recording evidence; they do not describe the workstation's navigation.
+
+## Earlier main-branch review
+
 Reviewed locally on 7 October 2026. These are the recordings from 6 October; this review does not establish that the underlying product issues have since been fixed.
 
 The portfolio contains 15 projects, 11 full recordings and four still website covers (the three societies and Memvella). Video covers play muted on hover or keyboard focus. Clicking or tapping any project cover or name opens a larger screen-only modal. Recordings autoplay muted on repeat without player controls; still projects show their screenshot. A single View link opens the available project site or source. Reduced motion disables hover playback; the modal starts after the visitor explicitly opens it.

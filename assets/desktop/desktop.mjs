@@ -1,5 +1,6 @@
 import {bio, readPortfolio} from './portfolio.mjs';
-import {createGuide} from './guide.mjs';
+import {createGuide, suggestedQuestions} from './guide.mjs';
+import {previewCards} from './previews.mjs';
 import {createSunset} from './sunset.mjs';
 
 function el(tag, className, text) {
@@ -13,6 +14,7 @@ function photo(src, alt, className) {
   const img = el('img', className);
   img.src = src;
   img.alt = alt;
+  img.decoding = 'async';
   img.draggable = false;
   return img;
 }
@@ -31,9 +33,21 @@ function projectCard(project, index) {
   const card = el('button', 'project-card');
   card.type = 'button';
   card.dataset.open = project.id;
-  const cover = photo(project.cover || project.image, '', project.cover ? 'project-cover artwork' : 'project-cover');
+  const media = el('span', 'project-media');
+  const cover = photo(project.image, '', 'project-cover');
   if (index > 2) cover.loading = 'lazy';
-  card.append(cover, el('span', 'project-name', project.name), el('span', 'project-label', project.label));
+  media.append(cover);
+  if (project.video) {
+    const video = el('video', 'project-cover project-preview');
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.preload = 'none';
+    video.dataset.src = project.video;
+    video.setAttribute('aria-hidden', 'true');
+    media.append(video);
+  }
+  card.append(media, el('span', 'project-name', project.name), el('span', 'project-label', project.label));
   return card;
 }
 
@@ -54,6 +68,7 @@ function projectDetails(project) {
   const copy = el('div');
   copy.append(el('h3', '', project.label), el('p', '', project.description));
   if (project.build) copy.append(el('p', '', project.build));
+  if (project.note) copy.append(el('p', 'project-note', project.note));
   const links = el('div', 'detail-links');
   if (project.website) links.append(link('Visit website', project.website));
   if (project.source) links.append(link('View source', project.source));
@@ -66,7 +81,7 @@ function about(person, openCV) {
   const article = el('article', 'desktop-article');
   const intro = el('div', 'about-intro');
   const copy = el('div');
-  copy.append(el('h3', '', person.name), el('p', 'location', bio.location), el('p', '', bio.intro), el('p', '', bio.work));
+  copy.append(el('h3', '', person.name), el('p', 'location', bio.location), el('p', '', bio.intro), el('p', '', bio.grounding), el('p', '', bio.work));
   const cv = el('button', 'answer-source', 'Read my CV');
   cv.type = 'button';
   cv.addEventListener('click', () => openCV(cv));
@@ -133,29 +148,63 @@ export function createDesktop(screen, {readCV, onExpand}) {
   let route = null;
   let list = false;
   let pending = false;
+  let previews;
+  let generation;
+  const suggestions = el('div', 'composer-suggestions');
+  suggestions.setAttribute('aria-label', 'Suggested questions');
+  for (const question of suggestedQuestions) {
+    const button = el('button', 'question-chip', question);
+    button.type = 'button';
+    button.dataset.question = question;
+    suggestions.append(button);
+  }
+  form.append(suggestions);
+  const updateSuggestions = () => { suggestions.hidden = Boolean(input.value.trim()) || Boolean(route); };
+  input.addEventListener('input', updateSuggestions);
+
+  function answerLinks(items, className) {
+    const links = el('div', className);
+    for (const item of items || []) {
+      const a = el('a', 'answer-source', item.label);
+      a.href = item.href;
+      if (item.route) a.dataset.open = item.route;
+      else { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+      links.append(a);
+    }
+    return links;
+  }
 
   function app() { return projects.has(route) ? 'projects' : route; }
 
   function questions() {
     const log = el('div', 'desktop-article question-thread');
+    log.setAttribute('role', 'log');
+    log.setAttribute('aria-label', 'Portfolio answers');
+    log.setAttribute('aria-live', 'polite');
     for (const turn of turns) {
       const article = el('article');
       article.append(el('h3', '', turn.question), el('p', '', turn.text || 'Looking through the portfolio…'));
-      const sources = el('div', 'answer-sources');
-      const routes = new Set(turn.matches?.map(note => note.route));
-      for (const id of routes) {
-        const button = el('button', 'answer-source', projects.get(id)?.name || appTitles[id]);
-        button.type = 'button';
-        button.dataset.open = id;
-        sources.append(button);
+      article.append(answerLinks(turn.links, 'answer-sources'));
+      if (turn.related?.length) {
+        const related = answerLinks(turn.related, 'answer-sources related');
+        related.prepend(el('span', '', 'Related:'));
+        article.append(related);
       }
-      article.append(sources);
+      for (const question of turn.suggestions || []) {
+        const button = el('button', 'question-chip', question);
+        button.type = 'button';
+        button.dataset.question = question;
+        article.append(button);
+      }
       log.append(article);
     }
     return log;
   }
 
   function draw() {
+    previews?.dispose();
+    previews = null;
+    updateSuggestions();
     win.hidden = !route;
     desktop.toggleAttribute('data-open', Boolean(route));
     for (const button of appButtons) {
@@ -188,6 +237,7 @@ export function createDesktop(screen, {readCV, onExpand}) {
       const grid = el('div', 'project-grid' + (list ? ' is-list' : ''));
       grid.append(...portfolio.projects.map(projectCard));
       content.replaceChildren(grid);
+      previews = previewCards(grid);
     }
     content.scrollTop = 0;
   }
@@ -242,11 +292,21 @@ export function createDesktop(screen, {readCV, onExpand}) {
     if (compact.matches && !dialog.open) setExpanded(true);
   }
 
-  createSunset(desktop, expandIfSmall);
+  createSunset(desktop);
 
   desktop.addEventListener('click', event => {
-    const button = event.target.closest('button[data-app], button[data-open]');
+    const chip = event.target.closest('[data-question]');
+    if (chip) { input.value = chip.dataset.question; form.requestSubmit(); return; }
+    const button = event.target.closest('button[data-app], [data-open].answer-source, button[data-open]');
     if (!button) return;
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    if (button.dataset.open === 'cv') {
+      const expanded = dialog.open;
+      if (expanded) setExpanded(false);
+      readCV(button, () => { if (expanded) setExpanded(true); });
+      return;
+    }
     expandIfSmall();
     navigate(button.dataset.app || button.dataset.open, {opener: button.dataset.open});
   });
@@ -269,7 +329,11 @@ export function createDesktop(screen, {readCV, onExpand}) {
     if (event.defaultPrevented || event.isComposing || document.fullscreenElement) return;
     if (event.key === 'Escape') {
       event.preventDefault();
-      if (!event.repeat) escapeDesktop();
+      if (!event.repeat) {
+        generation?.abort();
+        if (input.value) { input.value = ''; updateSuggestions(); input.focus(); }
+        else escapeDesktop();
+      }
       return;
     }
     const card = event.target.closest('.project-card');
@@ -309,32 +373,46 @@ export function createDesktop(screen, {readCV, onExpand}) {
     if (!question) return;
     expandIfSmall();
     const command = question.toLowerCase().replace(/^open\s+/, '').replace(/\s+/g, ' ');
-    if (commands.has(command)) {
+    if (/^open\s+/i.test(question) && commands.has(command)) {
       input.value = '';
       navigate(commands.get(command));
       return;
     }
     if (pending) return;
     const previous = turns.slice();
+    generation?.abort();
+    generation = new AbortController();
     const turn = {question, text: ''};
     turns.push(turn);
     input.value = '';
     pending = true;
+    form.setAttribute('aria-busy', 'true');
+    status.textContent = 'Looking through the portfolio…';
     send.disabled = true;
     navigate('questions', {focus: false});
     content.scrollTop = content.scrollHeight;
     input.focus({preventScroll: true});
     try {
-      Object.assign(turn, await ask(question, previous));
+      await new Promise(resolve => requestAnimationFrame(resolve));
+      const refreshAnswer = result => {
+        Object.assign(turn, result);
+        if (route === 'questions') {
+          const article = content.querySelectorAll('.question-thread article')[turns.indexOf(turn)];
+          const paragraph = article?.querySelector('p');
+          if (paragraph) paragraph.textContent = turn.text;
+        }
+      };
+      Object.assign(turn, await ask(question, previous, {signal: generation.signal, onUpdate: refreshAnswer}));
     } catch {
       turn.text = 'The guide couldn’t finish that answer. Try asking again or open Projects, About or Contact.';
     } finally {
       pending = false;
+      form.removeAttribute('aria-busy');
       send.disabled = false;
       if (route === 'questions' && !win.hidden) {
         draw();
         content.scrollTop = content.querySelector('.question-thread article:last-child').offsetTop;
-        status.textContent = turn.text;
+        status.textContent = 'Answer ready.';
       }
     }
   });
@@ -360,6 +438,6 @@ export function createDesktop(screen, {readCV, onExpand}) {
         navigate(id);
       } else draw();
     },
-    pauseMedia() { content.querySelector('video')?.pause(); },
+    pauseMedia() { previews?.pause(); content.querySelectorAll('video').forEach(video => video.pause()); },
   };
 }

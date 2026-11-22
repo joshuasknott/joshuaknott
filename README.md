@@ -67,6 +67,12 @@ Three society sites — AI, Business, Neurotech — with shared infrastructure a
 
 The workstation’s Projects view contains 13 projects, including the Manta Ray and Pelagic Shark anatomy studies. Nine projects have recorded walkthroughs. Each project opens its recording or screenshot, a description and any available website or source links. [Walkthrough recording notes](docs/walkthroughs.md).
 
+Cards use real project screenshots, with muted video previews on hover or focus.
+Reduced motion keeps cards still. The quiet coastal background has a slow tide
+and pauses when hidden. The portfolio guide answers from local project and CV
+notes, with suggested questions, navigation links and optional on-device streaming.
+[Media and assistant QA](docs/portfolio-v2-qa.md).
+
 ---
 
 ### This repo
@@ -79,3 +85,6 @@ node --check main.js
 ```
 
 Open to internships and collaborations — [joshhknott@gmail.com](mailto:joshhknott@gmail.com).
+
+Without JavaScript, the homepage provides a compact project directory, direct
+contact links and the original CV PDF. [Workstation polish QA](docs/new-portfolio-polish-qa.md).

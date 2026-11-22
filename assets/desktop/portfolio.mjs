@@ -9,17 +9,17 @@ const media = [
     website: "https://getmivlet.vercel.app/",
     source: "https://github.com/joshuasknott/mivlet",
     build: "Josh built the interface in React and TypeScript and the desktop backend in Rust and Tauri. Agents can work in separate copies of a repository, run checks and present changes for approval. The app uses encrypted SQLite storage.",
-    cover: "assets/desktop/mivlet.webp",
+    note: "Recorded 6 October 2026: an existing model response, model controls and workspace navigation. Personal account details are omitted.",
   },
   {
     id: "memvella",
     label: "Memory companion",
-    image: "memvella-companion-20261021.webp",
-    alt: "Memvella’s Companion tablet demo with a family story, a gentle reminder and Tap to talk",
+    image: "assets/projects/2026-11/memvella-20261122.webp",
+    alt: "Memvella’s public companion tablet website",
     website: "https://memvella.me",
     source: "https://github.com/joshuasknott/memvella",
     build: "Josh connected the family workspace and tablet companion using Next.js and Convex. He secured funding for the project through competitive pitches.",
-    cover: "assets/desktop/memvella.webp",
+    note: "Public website captured 22 November 2026. The companion preview uses fictional example stories and reminders.",
   },
   {
     id: "ollo",
@@ -30,7 +30,7 @@ const media = [
     video: "ollo.mp4",
     website: "https://getollo.vercel.app/",
     build: "Built for Windows, Ollo uses CV context, job preferences and a choice of AI providers to help people find relevant roles and review applications.",
-    cover: "assets/desktop/ollo.webp",
+    note: "Recorded 6 October 2026. The connected job search returned no confirmed matches; the application tracker and model controls are also shown.",
   },
   {
     id: "tokenmaxxer",
@@ -40,6 +40,7 @@ const media = [
     video: "tokenmaxxer-usage-20261016.mp4",
     website: "https://tokenmaxxer-joshuaknotts-projects.vercel.app",
     source: "https://github.com/joshuasknott/tokenmaxxer",
+    note: "Recorded 16 October 2026 with a connected Codex account. Live quota readings, refresh and saved usage history are shown. Account email is masked.",
   },
   {
     id: "betwfriends",
@@ -48,32 +49,36 @@ const media = [
     alt: "BetWFriends with a group created through its app",
     video: "betwfriends.mp4",
     source: "https://github.com/joshuasknott/BetWFriends",
+    note: "Recorded 6 October 2026 with an isolated local backend. The wallet uses demo credit; live payments and settlement were not tested.",
   },
   {
     id: "surrey-ai",
     label: "Student community",
     title: "Surrey AI Society",
-    image: "surrey-ai-home.webp",
+    image: "assets/projects/2026-11/surrey-ai-20261122.webp",
     alt: "The Surrey AI Society homepage",
     website: "https://surreyaisociety.org",
+    note: "Public website captured 22 November 2026.",
     source: "https://github.com/joshuasknott/surreysocieties",
     build: "One of three society websites Josh built with shared Astro and TypeScript components.",
   },
   {
     id: "surrey-business",
     label: "Student community",
-    image: "surrey-business.webp",
+    image: "assets/projects/2026-11/surrey-business-20261122.webp",
     alt: "The Surrey Business Society homepage",
     website: "https://surreybusinesssociety.org",
+    note: "Public website captured 22 November 2026.",
     source: "https://github.com/joshuasknott/surreysocieties",
     build: "One of three society websites Josh built with shared Astro and TypeScript components.",
   },
   {
     id: "surrey-neurotech",
     label: "Student community",
-    image: "surrey-neurotech.webp",
+    image: "assets/projects/2026-11/surrey-neurotech-20261122.webp",
     alt: "The Surrey Neurotech Society homepage",
     website: "https://surreyneurotechsociety.org",
+    note: "Public website captured 22 November 2026.",
     source: "https://github.com/joshuasknott/surreysocieties",
     build: "One of three society websites Josh built with shared Astro and TypeScript components.",
   },
@@ -84,6 +89,7 @@ const media = [
     alt: "The giant manta ray model in the Manta Ray anatomy study",
     video: "mantaray.mp4",
     source: "https://github.com/joshuasknott/mantaray",
+    note: "Recorded 6 October 2026. An artist-built educational model with schematic cartilage; rotation, dissection and isolation are shown.",
   },
   {
     id: "poppycheese",
@@ -93,6 +99,7 @@ const media = [
     alt: "Poppycheese’s Alpenmarkt Express game",
     video: "poppycheese-gameplay-20261021.webm",
     website: "games/poppycheese/",
+    note: "Recorded 21 October 2026. Real keyboard controls show lane changes, jumps, slides and cheese collection.",
   },
   {
     id: "pianoforte",
@@ -101,6 +108,7 @@ const media = [
     alt: "Pianoforte’s Android lesson with sheet music and piano keyboard",
     video: "pianoforte.mp4",
     source: "https://github.com/joshuasknott/pianoforte",
+    note: "Recorded on an Android emulator, 6 October 2026. The clip is silent; live AI tutor replies were not verified.",
   },
   {
     id: "poppyfish",
@@ -108,6 +116,7 @@ const media = [
     image: "poppyfish.webp",
     alt: "Poppyfish’s playable ocean game",
     video: "poppyfish.mp4",
+    note: "Recorded 6 October 2026. Swimming and boost are shown; eating and score progression are outside this recording.",
   },
   {
     id: "3danatomy",
@@ -116,6 +125,7 @@ const media = [
     alt: "The whale shark model in the Pelagic Shark anatomy exhibit",
     video: "3danatomy.mp4",
     website: "https://pelagic-whale-shark.vercel.app",
+    note: "Recorded 6 October 2026. Rotation, anatomical layers and separated structures are shown in the WebGL exhibit.",
   },
 ];
 
@@ -124,6 +134,7 @@ const media = [
 export const bio = {
   location: 'Guildford, Surrey',
   intro: 'I study Politics and International Relations at the University of Surrey. I build desktop tools for working with AI and software that helps families care for one another.',
+  grounding: 'Politics keeps my work grounded in institutions, incentives and the people software is built to serve.',
   education: 'BSc Politics & International Relations, University of Surrey. Expected graduation in June 2027.',
   work: 'I’m looking for 2027 graduate roles in product management and technology.',
   skills: 'TypeScript, JavaScript, Rust, React, Next.js, Astro, Tauri, Electron, Convex and SQLite.',
@@ -142,7 +153,7 @@ export function readPortfolio(graph) {
     const record = descriptions.get(item.id);
     return {
       ...item, name: item.title || record.name, description: record.description,
-      image: 'assets/projects/2026-10/' + item.image,
+      image: item.image.startsWith('assets/') ? item.image : 'assets/projects/2026-10/' + item.image,
       video: item.video && 'assets/projects/2026-10/' + item.video,
     };
   });
@@ -155,4 +166,3 @@ export function readPortfolio(graph) {
   ];
   return {person, projects, contacts};
 }
-

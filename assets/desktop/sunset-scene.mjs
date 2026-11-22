@@ -1,7 +1,6 @@
 // The coast is drawn in CSS pixels, then rasterized at the display's density.
 export function beachLayout(width, height) {
   const portrait = width <= height;
-  const small = width <= 540 && !portrait;
   const horizon = height * (portrait ? .386 : .498);
   const sun = {
     x: width * (portrait ? .72 : .805),
@@ -22,18 +21,7 @@ export function beachLayout(width, height) {
   }
   water.closePath();
 
-  const size = Math.min(height * (portrait ? .127 : .186), width * (portrait ? .218 : .11));
-  const player = {
-    x: width * (portrait ? .235 : small ? .127 : .335),
-    y: height * (portrait ? .856 : .892),
-    size, direction: 1, shirt: '#ebc39b', shade: '#b57360', skin: '#9e5546', hair: '#362638',
-  };
-  const friend = {
-    x: width * (portrait ? .743 : small ? .857 : .667),
-    y: height * (portrait ? .81 : .856),
-    size: size * .93, direction: -1, shirt: '#b64e50', shade: '#713c49', skin: '#e49e70', hair: '#452c38',
-  };
-  return {width, height, portrait, horizon, sun, shore, water, player, friend};
+  return {width, height, portrait, horizon, sun, shore, water};
 }
 
 function linear(ctx, x0, y0, x1, y1, stops) {
@@ -274,7 +262,7 @@ export function paintBeach(ctx, scene) {
   paintForeground(ctx, scene, random);
 }
 
-export function paintTide(ctx, scene, time, ripple) {
+export function paintTide(ctx, scene, time) {
   const {width: w, height: h, horizon, shore, water, sun} = scene;
   ctx.save();
   ctx.clip(water);
@@ -309,81 +297,5 @@ export function paintTide(ctx, scene, time, ripple) {
     ctx.fillRect(x - sun.radius * .22, y, sun.radius * (.18 + .74 * depth), .65 + depth * 2);
   }
   ctx.globalAlpha = 1;
-  if (ripple) {
-    const opacity = 1 - ripple.progress;
-    const radius = Math.min(w, h) * (.015 + .128 * ripple.progress);
-    ctx.strokeStyle = '#fff2d8';
-    ctx.lineWidth = Math.max(.8, opacity * 2);
-    for (const scale of [1, .62]) {
-      ctx.globalAlpha = opacity * scale;
-      ctx.beginPath();
-      ctx.ellipse(ripple.x * w, ripple.y * h, radius * scale, radius * scale * .28, 0, 0, 2 * Math.PI);
-      ctx.stroke();
-    }
-  }
   ctx.restore();
-}
-
-export function hand(person, reach) {
-  return {
-    x: person.x + person.direction * person.size * (.25 + .21 * reach),
-    y: person.y - person.size * (.49 + .25 * reach),
-  };
-}
-
-export function paintPlayer(ctx, person, reach) {
-  const {x, y, size, direction, shirt, shade, skin, hair} = person;
-  ellipse(ctx, x - size * .19, y - size * .008, size * .51, size * .053, '#68405066', -.072);
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.scale(size * direction, size);
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-  path(ctx, [[-.071,-.35],[-.14,-.181],[-.20,-.035],[-.128,-.027]], '#7b4750', .066);
-  path(ctx, [[.061,-.35],[.12,-.205],[.149,-.033],[.216,-.025]], skin, .075);
-  path(ctx, [[-.132,-.454],[.135,-.438],[.135,-.298],[.035,-.278],[.0,-.339],
-    [-.061,-.279],[-.188,-.328]], '#393349');
-  path(ctx, [[-.12,-.678],[.028,-.656],[.001,-.558],[.1,-.516]], '#76434e', .061);
-  path(ctx, [[-.136,-.72],[-.042,-.765],[.09,-.713],[.134,-.633],[.098,-.574],[.137,-.442],
-    [.003,-.418],[-.155,-.454],[-.136,-.584],[-.177,-.656]], shirt);
-  path(ctx, [[-.171,-.655],[-.111,-.629],[-.105,-.494],[.137,-.442],[.003,-.418],[-.155,-.454]], shade);
-  path(ctx, [[-.01,-.717],[.013,-.632]], shade, .074);
-  path(ctx, [[.022,-.661],[.106 + reach * .09,-.551 - reach * .07],[.25 + .21 * reach,-.49 - .25 * reach]], skin, .062);
-  ellipse(ctx, .25 + .21 * reach, -.49 - .25 * reach, .036, .027, skin, -.35);
-  path(ctx, [[-.035,-.808],[-.017,-.736],[.044,-.723],[.055,-.813]], skin);
-  ellipse(ctx, .003, -.861, .093, .102, hair);
-  if (direction < 0) ellipse(ctx, -.1, -.836, .051, .065, hair, .49);
-  path(ctx, [[-.011,-.899],[.072,-.895],[.089,-.862],[.115,-.83],[.084,-.824],
-    [.077,-.784],[.024,-.781],[-.021,-.802],[-.026,-.848]], skin);
-  ellipse(ctx, .064, -.853, .011, .009, '#382534');
-  ctx.restore();
-}
-
-export function paintBall(ctx, x, y, radius, rotation) {
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.rotate(rotation);
-  ctx.scale(radius, radius);
-  ellipse(ctx, 0, 0, 1, 1, '#fff2cf');
-  ctx.clip();
-  ctx.fillStyle = '#ea684d';
-  ctx.beginPath();
-  ctx.moveTo(-.4,-1);
-  ctx.bezierCurveTo(-.57,-.53,.1,.15,.73,.68);
-  ctx.lineTo(1.14,.19);
-  ctx.quadraticCurveTo(.16,-.08,.2,-1.18);
-  ctx.fill();
-  ctx.fillStyle = '#52a9a4';
-  ctx.beginPath();
-  ctx.moveTo(-1.03,-.44);
-  ctx.bezierCurveTo(-.62,-.32,-.55,.49,.13,1.08);
-  ctx.lineTo(-1.15,.9);
-  ctx.fill();
-  ellipse(ctx, -.22, -.35, .27, .14, '#fff8e49c', -.53);
-  ctx.restore();
-  ctx.beginPath();
-  ctx.arc(x, y, radius, 0, 2 * Math.PI);
-  ctx.strokeStyle = '#5b364bc9';
-  ctx.lineWidth = Math.max(.6, radius * .12);
-  ctx.stroke();
 }

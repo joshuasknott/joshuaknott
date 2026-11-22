@@ -104,47 +104,6 @@
               "Student Communities",
               "Politics",
               "International Relations"
-            ],
-            "workExample": [
-              {
-                "@id": "https://joshuaknott.tech/#mivlet"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#memvella"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#ollo"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#tokenmaxxer"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#betwfriends"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#surrey-ai"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#surrey-business"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#surrey-neurotech"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#mantaray"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#poppycheese"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#pianoforte"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#poppyfish"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#3danatomy"
-              }
             ]
           },
           {
@@ -291,6 +250,43 @@
     </script>
   </head>
   <body>
+    <noscript>
+      <style>
+        .studio { display: none; }
+        body { background: #f4f4f2; color: #191919; }
+        .fallback { max-width: 760px; margin: auto; padding: 36px 24px; font: 16px/1.7 Inter, Arial, sans-serif; }
+        .fallback h1 { line-height: 1.2; }
+        .fallback a { color: #174b8b; text-underline-offset: 3px; }
+        .fallback li { margin-block: 12px; }
+        .fallback a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+      </style>
+      <main class="fallback">
+        <h1>Joshua Knott</h1>
+        <p>Politics and International Relations student at the University of Surrey.
+          I build desktop tools for working with AI and software that helps families care for one another.</p>
+        <p>The interactive workstation needs JavaScript. You can still explore my work and get in touch here.</p>
+        <p><a href="assets/documents/Joshua-Knott-CV.pdf">Read my CV (PDF)</a> ·
+          <a href="mailto:joshhknott@gmail.com">Email</a> ·
+          <a href="https://github.com/joshuasknott">GitHub</a> ·
+          <a href="https://www.linkedin.com/in/joshuasknott/">LinkedIn</a></p>
+        <h2>Projects</h2>
+        <ul>
+          <li data-fallback-project="mivlet"><a href="https://getmivlet.vercel.app/">Mivlet</a> — a provider-neutral AI-agent workspace.</li>
+          <li data-fallback-project="memvella"><a href="https://memvella.me">Memvella</a> — a family app and voice-first Companion tablet for older people. Public website capture updated 22 November 2026.</li>
+          <li data-fallback-project="ollo"><a href="https://getollo.vercel.app/">Ollo</a> — a Windows job-search workspace.</li>
+          <li data-fallback-project="tokenmaxxer"><a href="https://tokenmaxxer-joshuaknotts-projects.vercel.app">TokenMaxxer</a> — AI account quotas, balances and usage history.</li>
+          <li data-fallback-project="betwfriends"><a href="https://github.com/joshuasknott/BetWFriends">BetWFriends source</a> — private group wagers. The recording uses demo credit; live payments were not tested.</li>
+          <li data-fallback-project="surrey-ai"><a href="https://surreyaisociety.org">Surrey AI Society</a> — events, membership and committee applications.</li>
+          <li data-fallback-project="surrey-business"><a href="https://surreybusinesssociety.org">Surrey Business Society</a> — events, careers and membership.</li>
+          <li data-fallback-project="surrey-neurotech"><a href="https://surreyneurotechsociety.org">Surrey Neurotech Society</a> — people, research and events.</li>
+          <li data-fallback-project="mantaray"><a href="https://github.com/joshuasknott/mantaray">Manta Ray source</a> — an artist-built educational anatomy study with schematic cartilage.</li>
+          <li data-fallback-project="poppycheese"><a href="games/poppycheese/">Play Poppycheese</a> — a 3D railway runner.</li>
+          <li data-fallback-project="pianoforte"><a href="https://github.com/joshuasknott/pianoforte">Pianoforte source</a> — an Android piano-learning app.</li>
+          <li data-fallback-project="poppyfish"><a href="assets/projects/2026-10/poppyfish.mp4">Poppyfish recording</a> — an ocean game. Swimming and boost are shown, not eating or score progression.</li>
+          <li data-fallback-project="3danatomy"><a href="https://pelagic-whale-shark.vercel.app">Pelagic Shark</a> — a browser-based whale shark anatomy exhibit.</li>
+        </ul>
+      </main>
+    </noscript>
     <main class="studio" aria-labelledby="portfolio-title" aria-describedby="controls">
       <h1 id="portfolio-title" class="visually-hidden">Joshua Knott’s workstation</h1>
       <p id="controls" class="visually-hidden">
@@ -300,8 +296,8 @@
         A framed GitHub calendar shows Josh’s daily contributions.
       </p>
       <div class="print" aria-hidden="true">
-        <img class="machine-print" src="assets/machine/workstation.webp" alt="" />
-        <img class="initial-mouse" src="assets/machine/mouse-start.webp" alt="" />
+        <img class="machine-print" src="assets/machine/workstation.webp" alt="" width="2400" height="1420" fetchpriority="high" />
+        <img class="initial-mouse" src="assets/machine/mouse-start.webp" alt="" width="288" height="193" />
       </div>
       <canvas class="viewport" aria-hidden="true"></canvas>
       <section class="monitor-screen" aria-label="Workstation display" hidden>
@@ -343,23 +339,12 @@
             </nav>
             <button class="composer-send" type="submit" aria-label="Send" title="Send"><img src="assets/icons/arrow-down.svg" alt="" /></button>
           </form>
-          <div class="sunset-game" role="group" aria-label="Beach catch" hidden>
-            <span class="sunset-feedback" role="status">Catch the return</span>
-            <div class="sunset-controls">
-              <button class="sunset-pass" type="button" aria-describedby="sunset-help">
-                <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M4 9c7-3 13 1 15 7M9 4c5 6 4 12 1 16"/></svg>
-                <span>Toss ball</span>
-              </button>
-              <span class="sunset-score">0 catches</span>
-            </div>
-            <span id="sunset-help" class="visually-hidden">Toss the ball to your friend, then press again when the button says Catch ball.</span>
-          </div>
           <button class="screen-expand" type="button" aria-label="Expand desktop" title="Expand desktop"><img src="assets/icons/expand.svg" alt="" /></button>
           <div class="desktop-status visually-hidden" role="status"></div>
         </div>
       </section>
       <button class="desk-cv" type="button" aria-label="Pick up Joshua Knott’s CV" aria-haspopup="dialog" title="Read CV" hidden>
-        <img src="assets/documents/Joshua-Knott-CV-thumb.webp" alt="" draggable="false" />
+        <img src="assets/documents/Joshua-Knott-CV-thumb.webp" alt="" width="430" height="608" draggable="false" />
         <span class="cv-tab" aria-hidden="true">CV</span>
       </button>
       <button class="power" type="button" aria-label="Workstation power" aria-pressed="true" hidden></button>
