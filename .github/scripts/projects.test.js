@@ -8,7 +8,7 @@ const root = path.join(__dirname, '../..');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const projects = JSON.parse(html.match(/id="project-data"[^>]*>([\s\S]*?)<\/script>/)[1]);
 
-function setup() {
+function setup({ reducedMotion = false } = {}) {
   let document;
   function element(dataset = {}) {
     const listeners = new Map(), attributes = new Map(), classes = new Set();
@@ -52,7 +52,8 @@ function setup() {
   const filters = element();
   const filterButtons = ['all', 'products', 'websites', 'experiments'].map(filter => element({ filter }));
   filters.querySelectorAll = () => filterButtons;
-  const ids = new Map(['filter-status', 'dialog-image', 'dialog-links', 'walkthrough']
+  const ids = new Map(['filter-status', 'dialog-image', 'dialog-links', 'walkthrough',
+    'dialog-title', 'dialog-subtitle', 'dialog-description', 'dialog-note']
     .map(id => [id, element()]));
   const closeButton = element();
   const dialog = Object.assign(element(), {
@@ -79,7 +80,7 @@ function setup() {
     history: { pushState(_state, _unused, url) { location.hash = url; }, replaceState() {} },
     window: {
       addEventListener() {},
-      matchMedia: query => ({ matches: query.includes('pointer: fine'), addEventListener() {} }),
+      matchMedia: query => ({ matches: query.includes('pointer: fine') || reducedMotion, addEventListener() {} }),
     },
     fetch: async () => ({ ok: false }),
   });
@@ -95,6 +96,10 @@ test('every project cover and title opens the modal, including website projects'
       assert.equal(app.dialog.open, true, card.id);
       const project = projects.find(project => project.id === card.id);
       assert.equal(app.dialog.getAttribute('aria-label'), `${project.name} preview`);
+      assert.equal(app.ids.get('dialog-title').textContent, project.name);
+      assert.equal(app.ids.get('dialog-description').textContent, project.description);
+      assert.equal(app.ids.get('dialog-subtitle').textContent, project.subtitle || '');
+      assert.equal(app.ids.get('dialog-note').textContent, project.note || '');
       assert.equal(app.ids.get('dialog-image').hidden, Boolean(project.video));
       assert.equal(app.ids.get('walkthrough').paused, !project.video);
       const destination = project.visit || project.source;
@@ -159,4 +164,15 @@ test('category filters hide empty groups as well as nonmatching cards', async ()
       assert.equal(card.hidden, button.dataset.filter !== 'all' && card.dataset.category !== button.dataset.filter);
     }
   }
+});
+
+test('reduced motion keeps the walkthrough paused and modified clicks preserve navigation', async () => {
+  const app = setup({ reducedMotion: true });
+  const card = app.cards.find(card => card.id === 'mivlet');
+  await card.cover.fire('click', { ctrlKey: true, preventDefault() { assert.fail('modified link intercepted'); } });
+  assert.equal(app.dialog.open, false);
+  await app.click(card.cover);
+  assert.equal(app.dialog.open, true);
+  assert.equal(app.ids.get('walkthrough').paused, true);
+  assert.equal(app.ids.get('walkthrough').hidden, false);
 });

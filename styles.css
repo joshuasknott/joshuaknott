@@ -492,11 +492,11 @@ p {
   padding: 0;
   border: 0;
   border-radius: 8px;
-  width: min(1600px, calc(100vw - var(--modal-gutter) * 2), calc((100dvh - var(--modal-gutter) * 2) * var(--media-ratio, 1.6)));
+  width: min(1000px, calc(100vw - var(--modal-gutter) * 2));
   max-width: none;
   max-height: calc(100dvh - var(--modal-gutter) * 2);
-  overflow: hidden;
-  background: #0c0914;
+  overflow: auto;
+  background: var(--paper);
   color: var(--ink);
   box-shadow: 0 28px 100px #0b061b60;
 }
@@ -536,18 +536,16 @@ p {
   object-fit: contain;
 }
 .project-dialog__links {
-  position: absolute;
-  bottom: 14px;
-  right: 14px;
-  z-index: 2;
-  max-width: calc(100% - 28px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 24px 24px;
 }
-/* Keep the animals at the bottom of Mote's recording visible. */
-.project-dialog[aria-label="Mote preview"] .project-dialog__links {
-  top: 14px;
-  right: 70px;
-  bottom: auto;
-}
+.project-dialog__details { padding: 24px; }
+.project-dialog__details h2 { margin-block: 6px 12px; font-size: 26px; }
+.project-dialog__details > p { line-height: 1.7; }
+.project-dialog__subtitle { color: var(--muted); font-size: 13px; }
+.about-note__grounding { grid-column: 2; }
 .project-dialog__links > a {
   display: inline-flex;
   align-items: center;
@@ -569,7 +567,7 @@ p {
 .capture-note {
   font-size: 11px;
   line-height: 1.6;
-  color: #706687;
+  color: #595080;
   margin-top: 10px;
 }
 body.has-dialog {
@@ -804,13 +802,7 @@ body.has-dialog {
     height: 44px;
   }
   .project-dialog__links {
-    bottom: 8px;
-    right: 8px;
-    max-width: calc(100% - 16px);
-  }
-  .project-dialog[aria-label="Mote preview"] .project-dialog__links {
-    top: 8px;
-    right: 64px;
+    padding-inline: 24px;
   }
   .project-dialog__links > a {
     min-height: 44px;

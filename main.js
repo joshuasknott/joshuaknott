@@ -179,6 +179,10 @@
       document.querySelector(`[data-project="${id}"]`) ||
       document.activeElement;
     dialog.setAttribute("aria-label", `${project.name} preview`);
+    document.getElementById("dialog-title").textContent = project.name;
+    document.getElementById("dialog-subtitle").textContent = project.subtitle || "";
+    document.getElementById("dialog-description").textContent = project.description;
+    document.getElementById("dialog-note").textContent = project.note || "";
     const poster = card?.querySelector(".project-card__image");
     dialog.style.setProperty("--media-ratio", poster?.naturalWidth && poster.naturalHeight
       ? poster.naturalWidth / poster.naturalHeight : 1.6);
@@ -210,7 +214,7 @@
       history.pushState(null, "", `#project-${project.id}`);
     }
     dialog.querySelector(".dialog-close").focus();
-    if (project.video) {
+    if (project.video && !reducedMotion.matches) {
       video.play().catch(() => {
         if (request === modalRequest && dialog.open) showModalPoster();
       });
@@ -218,6 +222,7 @@
   };
   document.querySelectorAll("[data-project]").forEach((trigger) =>
     trigger.addEventListener("click", (event) => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
       if (!dialog || typeof dialog.showModal !== "function") return;
       event.preventDefault();
       openProject(trigger.dataset.project, trigger);
@@ -229,7 +234,7 @@
   dialog?.addEventListener("keydown", (event) => {
     if (event.key !== "Tab" || !dialog.open) return;
     const stops = [
-      ...dialog.querySelectorAll("button, a[href]"),
+      ...dialog.querySelectorAll("button, a[href], video[controls]"),
     ].filter((element) => !element.disabled && element.getClientRects().length);
     const first = stops[0],
       last = stops.at(-1);
@@ -258,7 +263,7 @@
     video.removeAttribute("src");
     video.load();
     document.body.classList.remove("has-dialog");
-    history.replaceState(
+    if (location.hash.startsWith("#project-")) history.replaceState(
       null,
       "",
       `${location.pathname}${location.search}${previousHash}`,

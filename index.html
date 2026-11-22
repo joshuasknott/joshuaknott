@@ -83,7 +83,8 @@
     />
     <link
       rel="preload"
-      href="assets/world/project-studio-20261006.webp"
+      href="assets/world/project-studio-wide-20261008.webp"
+      media="(min-width: 701px)"
       as="image"
       fetchpriority="high"
     />
@@ -122,53 +123,6 @@
               "Student Communities",
               "Politics",
               "International Relations"
-            ],
-            "workExample": [
-              {
-                "@id": "https://joshuaknott.tech/#mivlet"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#memvella"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#ollo"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#tokenmaxxer"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#betwfriends"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#surrey-ai"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#surrey-business"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#surrey-neurotech"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#mote"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#mantaray"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#poppycheese"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#pianoforte"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#poppyfish"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#3danatomy"
-              },
-              {
-                "@id": "https://joshuaknott.tech/#elsewhere"
-              }
             ]
           },
           {
@@ -1358,6 +1312,10 @@
           engineering, lead student societies and turn ideas into working
           software.
         </p>
+        <p class="about-note__grounding">
+          Politics keeps my work grounded in institutions, incentives and the
+          people software is built to serve.
+        </p>
         <a href="assets/documents/Joshua-Knott-CV.pdf" data-cv-preview aria-haspopup="dialog" aria-controls="cv-dialog"
           >View my CV
           <img
@@ -1436,6 +1394,7 @@
       class="project-dialog"
       id="project-dialog"
       aria-label="Project preview"
+      aria-describedby="dialog-description"
     >
       <button class="dialog-close" type="button" aria-label="Close project">
         <img
@@ -1449,17 +1408,22 @@
       <div class="project-dialog__media">
         <video
           id="walkthrough"
-          autoplay
+          controls
           muted
           loop
           playsinline
           disablepictureinpicture
           disableremoteplayback
-          tabindex="-1"
           preload="none"
           hidden
         ></video
         ><img id="dialog-image" alt="" width="1440" height="900" hidden />
+      </div>
+      <div class="project-dialog__details">
+        <p class="project-dialog__subtitle" id="dialog-subtitle"></p>
+        <h2 id="dialog-title"></h2>
+        <p id="dialog-description"></p>
+        <p class="capture-note" id="dialog-note"></p>
       </div>
       <div class="project-dialog__links" id="dialog-links"></div>
     </dialog>

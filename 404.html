@@ -5,25 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Page not found — Joshua Knott</title>
     <meta name="robots" content="noindex, follow">
-    <meta name="theme-color" content="#f7f3e9">
+    <meta name="theme-color" content="#f0edff">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Instrument+Sans:wght@500;600;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap"
-      rel="stylesheet"
-    >
     <style>
+      @font-face {
+        font-family: Inter;
+        src: url('/assets/fonts/inter-variable.woff2') format('woff2');
+        font-display: swap;
+      }
       :root {
-        --paper: #f7f3e9;
-        --ink: #10213d;
-        --muted: #626d7d;
+        --paper: #f0edff;
+        --ink: #171044;
+        --muted: #595080;
         --line: rgba(16, 33, 61, 0.18);
-        --blue: #2a5bd7;
-        --coral: #ff6b50;
+        --blue: #7454ef;
+        --coral: #7454ef;
       }
 
       * {
@@ -39,7 +38,7 @@
           radial-gradient(circle at 12% 4%, rgba(55, 111, 238, 0.08), transparent 29rem),
           var(--paper);
         color: var(--ink);
-        font-family: "Manrope", sans-serif;
+        font-family: Inter, Arial, sans-serif;
       }
 
       main {
@@ -65,7 +64,7 @@
         right: 0;
         width: 48%;
         height: 100%;
-        background: url("/assets/og-portfolio-v2.webp") center / cover no-repeat;
+        background: url("/assets/world/project-studio-mobile-20261008.webp") center / cover no-repeat;
         content: "";
         opacity: 0.96;
       }
@@ -92,7 +91,7 @@
       .code {
         margin: 0 0 1rem;
         color: var(--muted);
-        font-family: "IBM Plex Mono", monospace;
+        font-family: monospace;
         font-size: 0.66rem;
         letter-spacing: 0.04em;
       }
@@ -100,7 +99,7 @@
       h1 {
         max-width: 7ch;
         margin: 0 0 1.3rem;
-        font-family: "Instrument Sans", sans-serif;
+        font-family: Georgia, serif;
         font-size: clamp(4rem, 8vw, 6.2rem);
         font-weight: 650;
         letter-spacing: -0.06em;
