@@ -54,7 +54,7 @@ Your next role, with a little help — private Windows job-search workspace.
 Memory support that doesn’t feel clinical. Founded for early-stage memory loss and the people around them. [memvella.me](https://memvella.me) · £1,500 from Surrey’s Innovation and Enterprise Hub.
 
 <p align="center">
-  <img src="assets/projects/2026-10/memvella.webp" width="720" alt="Memvella’s current welcome screen" />
+  <img src="assets/projects/2026-10/memvella-companion-20261021.webp" width="720" alt="Memvella’s Companion tablet demo with a family story and a gentle reminder" />
 </p>
 
 ## Surrey Societies
@@ -63,23 +63,38 @@ Three society sites — AI, Business, Neurotech — with shared infrastructure a
 
 |                                            AI                                            |                                               Business                                               |                                               Neurotech                                                |
 | :--------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
-| <img src="assets/projects/2026-10/surrey-ai.webp" width="260" alt="Surrey AI Society" /> | <img src="assets/projects/2026-10/surrey-business.webp" width="260" alt="Surrey Business Society" /> | <img src="assets/projects/2026-10/surrey-neurotech.webp" width="260" alt="Surrey Neurotech Society" /> |
+| <img src="assets/projects/2026-10/surrey-ai-home.webp" width="260" alt="Surrey AI Society" /> | <img src="assets/projects/2026-10/surrey-business.webp" width="260" alt="Surrey Business Society" /> | <img src="assets/projects/2026-10/surrey-neurotech.webp" width="260" alt="Surrey Neurotech Society" /> |
 
-The portfolio includes 15 projects and 11 walkthroughs recorded from current local source on 6 October 2026. Every project cover and name opens a larger screen-only modal with its recording or screenshot and one available website/source link. The AI Society cover was captured from the fully loaded public homepage on the same date. The native and browser clips show actual interactions. Recording evidence and configuration limits are documented in the walkthrough review. Memvella’s family workspace is omitted while email verification remains unresolved.
+The portfolio has 15 cards grouped into products, websites and experiments. Eleven have video walkthroughs; Memvella and the three society sites use still covers.
 
-Mote’s refreshed walkthrough was recorded on 21 October 2026 in the native Windows app. It uses a clean recording backdrop, a real window to explore, and the current native desktop behaviour.
-
-Projects sit on a compact canvas with names and logos beneath each cover. Walkthroughs play inline on hover or keyboard focus. Clicking or tapping a cover or project name opens a large modal: recordings autoplay muted on repeat, without player controls, headings or descriptions. A small View link opens the project website or source when available. Videos load on demand; hover previews pause offscreen, and modal playback stops when closed. Reduced motion keeps hover previews still. [Walkthrough review and next fixes](docs/walkthroughs.md).
+On devices with a fine hover pointer, video covers play muted previews on mouse hover or keyboard focus on the cover, unless reduced motion is enabled. Opening a cover or project name shows a larger recording or still in a dialog. Recordings loop muted without player controls, and the cover image appears if playback fails. Project links appear where configured. See the [walkthrough guide and capture review](docs/walkthroughs.md).
 
 ---
 
 ### This repo
 
-Static site for **joshuaknott.tech** — `index.html`, `styles.css`, `main.js`, `assets/`, `data/`. No build step.
+Static site for **joshuaknott.tech**, published from the root of `main` with GitHub Pages. No package install or build step is needed. To preview locally, run this from the repository root and open `http://localhost:8080/`:
 
 ```bash
 python3 -m http.server 8080
+```
+
+| Path | Purpose |
+| --- | --- |
+| `index.html`, `styles.css`, `main.js` | Portfolio markup, styles and browser interactions. Project cards, no-script fallbacks and the `project-data` JSON live in the HTML. |
+| `assets/` | Site artwork, brand marks, project media and the CV PDF and preview image. |
+| `games/poppycheese/` | Bundled browser game. Open `/games/poppycheese/` on the local server to play. |
+| `worker/index.js`, `404.html` | The asset-serving worker returns the custom page for missing files and keeps the 404 status. The Python server does not run the worker. |
+| `data/stats.json`, `.github/workflows/update-stats.yml` | GitHub Actions generates the activity snapshot and updates the sitemap's last-modified date on pushes to `main`, every six hours, or on manual runs. |
+
+The browser reads both the served activity snapshot and the raw copy from GitHub's `main` branch, keeping the newest usable result. The portfolio still works if neither snapshot loads.
+
+Run the repository checks with Node.js:
+
+```bash
 node --check main.js
+node --check worker/index.js
+node --test .github/scripts/*.test.js
 ```
 
 Open to internships and collaborations — [joshhknott@gmail.com](mailto:joshhknott@gmail.com).

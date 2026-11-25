@@ -6,7 +6,7 @@
 - `ollo-workspace-26.webp`: current Ollo source copied into an isolated development preview with the existing fictional roles and CV database. Captured at 1440 × 900. Model connection, job refresh and pause responses use local fixtures; no provider requests, real user records or application submissions. Replaces the JSearch image and branding.
 - `tokenmaxxer-dashboard-26.webp`: current `/demo/desktop` route with built-in example accounts. Captured directly in the browser at 1440 × 914, ending after the first four complete account cards instead of cutting through the next row.
 
-The portfolio displays one image per project, without captions or an enlarge viewer. Surrey Societies is the sole exception: its AI, Business and Neurotech buttons switch between one screenshot of each site. Sample content remains identified in image alt text and this provenance file.
+At the time of this capture, the portfolio displayed one image per project without an enlarge viewer. The Surrey Societies buttons switched between the three websites. This is historical capture provenance; see the [walkthrough guide](../../../docs/walkthroughs.md) for the current portfolio.
 
 ## 17 September update
 
